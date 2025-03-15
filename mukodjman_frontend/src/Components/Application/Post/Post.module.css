@@ -1,0 +1,178 @@
+.content {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    width: calc(100% - 20px);
+    height: 200px;
+    border-bottom: 2px solid rgb(49, 44, 85);
+    cursor: pointer;
+}
+
+.pfpdiv {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius:50%;
+    margin-right: 10px;
+}
+
+.pfpdiv img {
+    width: inherit;
+    height: inherit;
+    border-radius: 50%; 
+}
+
+.userinfo {
+    width: fit-content;
+    height: 50px;
+    display:flex;
+    flex-direction: column;
+    margin-top: 3px;
+    margin-right: 5px;
+}
+
+.userinfospan {
+    width: fit-content;
+}
+
+.timeposted {
+    font-size:10px;
+    color: rgb(148, 148, 148);
+}
+
+.restbruh {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+}
+
+.valamiwrapper {
+    display:flex;
+    flex-direction: row;
+    height: 50px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+h2 {
+    margin: 0;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.yappingtoncity {
+    overflow-y: hidden;
+    text-overflow: ellipsis;
+    white-space: wrap;
+    text-align: left;
+    height: 150px;
+    max-height: 100px;
+    position: relative;
+}
+
+.readMoreCover {
+    width: 100%;
+    height: 100px;
+    top: 50px;
+    position: absolute;
+    background: linear-gradient(to bottom, rgba(15, 8, 44, 0), rgba(15, 8, 44, 1) 20px);
+    z-index: 50;
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.readMoreCover span {
+    margin-top: 30px;
+}
+
+.hererakk {
+    background-color: rgba(0,0,0, 0.5);
+    border-radius: 50%;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+.reactions {
+    display: flex;
+    position: absolute;
+    bottom: 10px;
+    width: 150px;
+    left: 325px;
+    justify-content: space-between;
+    z-index: 99999;
+    
+}
+
+.d {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0, 0.25);
+    padding: 7px;
+    border-radius: 10px;
+}
+
+.modalContainer {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0px;
+    outline: none;
+}
+
+.innerModal {
+    width: 600px;
+    height: 400px;
+    background-color: rgba(15, 8, 44, 1);
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    border: 0px;
+    outline: none;
+}
+
+.userRow {
+    display: flex;
+
+}
+
+.userRow span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.textarea {
+    resize:none;
+    width: 300px;
+    height: fit-content;
+    min-height: 75px;
+    outline: none;
+    border: none;
+    background-color: rgb(15, 8, 44);
+    font-size: 18px;
+    font-family: 'CustomFont';
+    border: 2px solid rgb(49, 44, 85);
+    border-radius: 15px;
+    padding: 5px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.szaros {
+    display: flex;
+    flex-direction: column;
+}

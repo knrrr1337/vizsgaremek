@@ -4,7 +4,7 @@ CREATE TABLE dreams (
                         title VARCHAR(100) NOT NULL,
                         content TEXT NOT NULL,
                         tags VARCHAR(255),
-                        privacy ENUM('private', 'public') DEFAULT 'private',
+                        privacy ENUM('PRIVATE', 'FOLLOWER_ONLY', 'PUBLIC') DEFAULT 'PRIVATE',
                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );

@@ -1,0 +1,26 @@
+.container {
+    background-color: rgba(15, 8, 44, 1);
+    width: 500px;
+    height: 600px;   
+    padding: 20px;
+}
+
+.woah {
+    display: flex;
+    flex-direction: row;
+}
+
+.pfpdiv {
+    margin-right: 10px;
+}
+
+.userRow {
+    display: flex;
+    flex-direction: column;
+}
+
+.timeposted {
+    margin-top: 5px;
+    font-size:10px;
+    color: rgb(148, 148, 148);
+}

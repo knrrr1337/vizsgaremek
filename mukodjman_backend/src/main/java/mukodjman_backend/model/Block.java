@@ -21,9 +21,14 @@ public class Block {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "blocker_id", nullable = false)
+    private User blocker;
+
+    @ManyToOne
     @JoinColumn(name = "blocked_id", nullable = false)
     private User blocked;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime created_at;
+
 }

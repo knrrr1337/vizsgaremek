@@ -6,5 +6,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReactionService {
     @Autowired
-    private ReactionRepository repository;
+    private ReactionRepository reactionRepository;
+
+
+
 }

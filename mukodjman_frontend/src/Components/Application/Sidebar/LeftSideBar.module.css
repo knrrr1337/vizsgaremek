@@ -1,0 +1,145 @@
+body {
+    background-color: rgb(15, 8, 44);
+
+}
+
+.content{
+    text-align: center;
+    width: 300px;
+    margin: auto;
+    padding: 0px;
+    height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(15, 8, 44);
+    box-shadow: 0px 0px 1000px rgb(15, 8, 44);
+    min-width: fit-content;
+}
+
+* {
+    color: white;
+    -webkit-user-drag: none;
+}
+
+.sideBar {
+    height: 100vh;
+    width: 300px;
+    position: fixed;
+    padding-top: 50px;
+
+}
+
+.headerContent {
+    width: 100%;
+    height: 100%;
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.logo {
+    width: 75px;
+    height: 75px;
+    margin-bottom: 50px;
+}
+
+.logo, .logo * {
+    cursor: pointer;
+    -webkit-user-drag: none;
+}
+
+.logo img {
+    height: inherit;
+    width: inherit;
+}
+
+.profileBar {
+    min-width: 150px;
+    width: fit-content;
+    height: fit-content;
+    background-color: rgb(46, 39, 76);
+    border: 2px solid rgb(27, 23, 56);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.profileBar, .profileBar * {
+    cursor:pointer;
+    user-select: none;
+}
+
+.imgdiv {
+    width: 30px;
+    height: 30px;
+    border-radius: 25%;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.imgdiv img {
+    width: inherit;
+    height: inherit;
+    border-radius: 50%;
+}
+
+.optionswrapper {
+    width: calc(140px);
+    height: fit-content;
+    background-color: rgb(46, 39, 76);
+    border: 2px solid rgb(27, 23, 56);
+    border-top: none;
+    border-radius: 0px 0px 10px 10px;
+}
+
+
+.optionsul {
+    list-style-type: none;
+    padding: 5px 0px;
+    margin: 5px 0px;
+}
+
+.option {
+    display: flex;
+    width: 75%;
+    margin: auto;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.option * {
+    margin: 0px;
+}
+
+.option span {
+    width: 100%;
+    text-align: left;
+}
+
+
+.asd {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.asd img {
+    width: 24px;
+    height: 24px;
+}
+
+
+
+.logout:hover .asd,
+.logout:hover span {
+    color: red; /* Change this to the desired hover color */
+    /* Add any other hover styles you want */
+    filter: invert(42%) sepia(94%) saturate(6919%) hue-rotate(352deg) brightness(89%) contrast(130%);
+
+}

@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +20,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name="users")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User {
 
 //    @Id
@@ -62,14 +66,32 @@ public class User {
     @OneToMany(mappedBy = "followed")
     private List<Followers> following;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "userId")
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "userId")
     private List<Reaction> reactions;
 
     // Relationships for blocks
     @OneToMany(mappedBy = "blocked")
     private List<Block> blockedUsers;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", profilePicture='" + profilePicture + '\'' +
+                ", bio='" + bio + '\'' +
+                ", created_at=" + created_at +
+                ", dreams=" + dreams +
+                ", followers=" + followers +
+                ", following=" + following +
+                ", comments=" + comments +
+                ", reactions=" + reactions +
+                ", blockedUsers=" + blockedUsers +
+                '}';
+    }
 }

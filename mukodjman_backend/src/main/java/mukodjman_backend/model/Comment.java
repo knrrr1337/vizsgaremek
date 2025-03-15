@@ -19,13 +19,13 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "dream_id", nullable = false)
-    private Dream dream;
 
-    @ManyToOne
+    @JoinColumn(name = "dream_id", nullable = false)
+    private Long dreamId;
+
+
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private Long userId;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
