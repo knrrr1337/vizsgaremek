@@ -25,7 +25,7 @@ function App() {
                 <Route path="app" element={<Application />} />
                 <Route path="login" element={<LoginPage />} />
                 <Route path="register" element={<Register/>} />
-                <Route path="profile" element={<Profile/>}></Route>
+                <Route path="profile/:id" element={<Profile/>}></Route>
               </Route>
             </Routes>
           </BrowserRouter>

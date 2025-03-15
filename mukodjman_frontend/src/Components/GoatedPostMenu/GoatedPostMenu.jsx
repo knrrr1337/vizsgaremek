@@ -14,7 +14,7 @@ function GoatedPostMenu({open, what}) {
     const {followUser, blockUser, followedUsers, blockedUsers, isUserFollowed, unFollowUser} = useContext(UserContext)
 
     useEffect(() => {
-        console.log(authorId + " " + postId)
+
     }, [mousePos])
 
 

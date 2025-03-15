@@ -53,8 +53,14 @@ export function UserProvider({children}) {
     }
 
     const isUserFollowed = () => {
-        return followedUsers.some((user) => user.id === authorId)
+        return user && followedUsers.some((user) => user.id === authorId)
         
+    }
+
+    const isUserFollowed2 = (userId) => {
+        console.log("HE")
+        console.log(followedUsers.some((user) => user.id === userId))
+        return followedUsers.some((user) => user.id === userId)
     }
 
     
@@ -74,7 +80,7 @@ export function UserProvider({children}) {
     }
 
 
-    return <UserContext.Provider value={{blockUser, followUser, followedUsers, blockedUsers, isUserFollowed, unFollowUser}}>
+    return <UserContext.Provider value={{blockUser, followUser, followedUsers, blockedUsers, isUserFollowed, unFollowUser, isUserFollowed2}}>
             {children}
         </UserContext.Provider>
 }

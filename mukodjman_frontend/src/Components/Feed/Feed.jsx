@@ -91,7 +91,7 @@ function Feed({feedType, setFeedType}) {
     return (
         <>
         <div className={style.createPost}>
-                    <PFP size={{width: 40, height:40}} isUser={true}/>
+                    <PFP size={{width: 40, height:40}} profilePicture={user.profilePicture}/>
                     <div className={style.restbruh}>
                         <div className={style.textareawrapper}>
                             <input value={titleContent} onChange={(e) => {

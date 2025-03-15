@@ -25,6 +25,11 @@ public class UserController {
         return service.getUser(id);
     }
 
+    @GetMapping("/get-user/{id}")
+    public User getUserById(@PathVariable int id) {
+        return service.getUserr(id);
+    }
+
     @PostMapping("/block-user")
     public String blockUser(@RequestBody BlockUserRequest blockUserRequest) {
         System.out.println(blockUserRequest.getUserId() + " " + blockUserRequest.getAuthorId());

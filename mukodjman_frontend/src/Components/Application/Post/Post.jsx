@@ -28,6 +28,10 @@ function Post(props) {
         navigate(`/dream/${postId}`);
     };
 
+    const gotoProfile = (id) => {
+        navigate(`/profile/${id}`)
+    }
+
     const checkOverflow = (element) => {
         return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
     };
@@ -119,8 +123,8 @@ function Post(props) {
     return (
         <>
             <div className={style.content} onClick={() => setPostModal(true)}>
-                <div style={{marginRight:"10px"}}>
-                    <PFP size={{width:40, height:40}} profilePicture={props.pfp} isUser={false}/>
+                <div style={{marginRight:"10px"}} onClick={() => gotoProfile(props.authorId)}>
+                    <PFP size={{width:40, height:40}} profilePicture={props.pfp}/>
                 </div>
                 <div className={style.restbruh}>
                     <div className={style.valamiwrapper}>

@@ -84,6 +84,7 @@ public class DreamController {
         for (Dream dream : dreams) {
             anyad.add(convertToDTO(dream));
         }
+        anyad.sort((d1, d2) -> d2.getCreatedAt().compareTo(d1.getCreatedAt()));
         return anyad;
     }
 
@@ -94,6 +95,7 @@ public class DreamController {
         for (Dream dream : dreams) {
             anyad.add(convertToDTO(dream));
         }
+        anyad.sort((d1, d2) -> d2.getCreatedAt().compareTo(d1.getCreatedAt()));
         return anyad;
     }
 
@@ -128,6 +130,7 @@ public class DreamController {
         dto.setCreatedAt(dream.getCreated_at());
         dto.setComments(dream.getComments());
         dto.setReactions(dream.getReactions());
+        dto.setCreatedAt(dream.getCreated_at());
         return dto;
     }
 
@@ -137,6 +140,8 @@ public class DreamController {
         postUser.setId(user.getId());
         postUser.setUsername(user.getUsername());
         postUser.setProfilePicture(user.getProfilePicture());
+        postUser.setBio(user.getBio());
+        postUser.setCreated_at(user.getCreated_at());
         return postUser;
     }
 }

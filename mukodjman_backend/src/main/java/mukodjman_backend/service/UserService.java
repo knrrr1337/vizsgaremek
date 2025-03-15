@@ -42,6 +42,10 @@ public class UserService {
         return null;
     }
 
+    public User getUserr(long id) {
+        return repository.getReferenceById(id);
+    }
+
     public String createUser(User user) {
         if (!repository.existsByEmail(user.getEmail())) {
             repository.save(user);
