@@ -50,7 +50,7 @@ function Profile () {
                 response2.data.forEach((r) => {
                     console.log(r)
                     if (r.privacy === "PUBLIC") {a.push(r)}
-                    if (r.privacy === "FOLLOWERS_ONLY" && ((user && r.user.id === user.id) || (user && isUserFollowed2(userrr.id)))) {a.push(r)}
+                    if (r.privacy === "FOLLOWERS_ONLY" && ((user && r.user.id === user.id) || (userrr && isUserFollowed2(userrr.id)))) {a.push(r)}
                     if (r.privacy === "PRIVATE" && user && user.id === userrr.id) {a.push(r)}
                     
                 })
