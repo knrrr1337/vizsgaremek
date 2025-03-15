@@ -15,65 +15,10 @@ import PFP from "../../PFP/PFP"
 
 function Profile () {
 
-    const prettifyDate = (date) => {
-        const splitted = date.split("T");
-        const datePart = splitted[0].split("-");
-        const timePart = splitted[1].split(":");
 
-        const year = datePart[0];
-        const month = datePart[1];
-        const day = datePart[2];
-        const hour = timePart[0];
-        const minute = timePart[1];
-
-        let prettyMonth = "";
-
-        switch (month) {
-            case "01":
-                prettyMonth = "Jan";
-                break;
-            case "02":
-                prettyMonth = "Feb";
-                break;
-            case "03":
-                prettyMonth = "Mar";
-                break;
-            case "04":
-                prettyMonth = "Apr";
-                break;
-            case "05":
-                prettyMonth = "May";
-                break;
-            case "06":
-                prettyMonth = "Jun";
-                break;
-            case "07":
-                prettyMonth = "Jul";
-                break;
-            case "08":
-                prettyMonth = "Aug";
-                break;
-            case "09":
-                prettyMonth = "Sep";
-                break;
-            case "10":
-                prettyMonth = "Oct";
-                break;
-            case "11":
-                prettyMonth = "Nov";
-                break;
-            case "12":
-                prettyMonth = "Dec";
-                break;
-            default:
-                prettyMonth = month;
-        }
-
-        return `${year} ${prettyMonth}. ${day} at ${hour}:${minute}`;
-    };
 
     const {user, setUser} = useContext(AuthContext)
-    const {mydreams} = useContext(PostHandlerContext)
+    const {mydreams, prettifyDate} = useContext(PostHandlerContext)
 
 
 
