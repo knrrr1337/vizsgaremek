@@ -7,6 +7,7 @@ import mukodjman_backend.dto.dream.CommentRequest;
 import mukodjman_backend.dto.dream.CreateDreamRequest;
 import mukodjman_backend.dto.dream.LikeRequest;
 import mukodjman_backend.dto.user.PostUser;
+import mukodjman_backend.enums.Privacy;
 import mukodjman_backend.model.Block;
 import mukodjman_backend.model.Dream;
 import mukodjman_backend.model.Reaction;
@@ -15,6 +16,7 @@ import mukodjman_backend.service.CommentService;
 import mukodjman_backend.service.DreamService;
 import mukodjman_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -56,10 +58,35 @@ public class DreamController {
         dreamService.deleteDream(id);
     }
 
-    @PostMapping("create-dream")
-    public void createDream(@RequestBody CreateDreamRequest cdr) {
-//        System.out.println(cdr.getUserId());
-        dreamService.createDream(cdr.getUserId(), cdr.getTitle(), cdr.getContent(), cdr.getPrivacy());
+//    @PostMapping("create-dream")
+//    public void createDream(@RequestBody CreateDreamRequest cdr) {
+////        System.out.println(cdr.getUserId());
+//        dreamService.createDream(cdr.getUserId(), cdr.getTitle(), cdr.getContent(), cdr.getPrivacy());
+//    }
+
+    @PostMapping(value = "create-dream", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void createDream(
+            @RequestParam("title") String title,
+            @RequestParam("content") String content,
+            @RequestParam("userId") Long userId,
+            @RequestParam("privacy") Privacy privacy,
+//            @RequestParam("tags") String tags,
+            @RequestParam(value = "images", required = false) List<MultipartFile> images
+    ) throws IOException {
+        String uploadDir = "uploads/";
+        List<String> imageUrls = new ArrayList<>();
+
+        if (images != null) {
+            for (MultipartFile image : images) {
+                String fileName = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
+                Path path = Paths.get(uploadDir + fileName);
+                Files.createDirectories(path.getParent());
+                Files.write(path, image.getBytes());
+                imageUrls.add(fileName);
+            }
+        }
+
+        dreamService.createDream(userId, title, content, privacy, imageUrls);
     }
 
     @GetMapping("get-user-dreams/{id}")

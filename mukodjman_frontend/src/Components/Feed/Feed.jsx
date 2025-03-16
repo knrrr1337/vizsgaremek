@@ -12,6 +12,7 @@ import GoatedPostMenu from '../GoatedPostMenu/GoatedPostMenu';
 import RightSideBar from '../Application/Sidebar/RightSideBar';
 import Button from "../Button/Button";
 import PFP from "../PFP/PFP";
+import IUB from "../ImageUploadButton/IUB";
 
 
 function Feed({feedType, setFeedType}) {
@@ -87,6 +88,21 @@ function Feed({feedType, setFeedType}) {
     }
 
     const [publicity, setPublicity] = useState("PUBLIC")
+    const [images, setImages] = useState([])
+
+    const [imageUrls, setImageUrls] = useState([]);
+
+    useEffect(() => {
+        // Create object URLs when images array changes
+        const urls = images.map(image => URL.createObjectURL(image));
+        setImageUrls(urls);
+    
+        // Cleanup function to revoke URLs when component unmounts or images change
+        return () => {
+            urls.forEach(url => URL.revokeObjectURL(url));
+        };
+    }, [images]);
+
 
     return (
         <>
@@ -102,17 +118,35 @@ function Feed({feedType, setFeedType}) {
                                 setPostContent(e.target.value)
                                 checkIfValid(titleContent, e.target.value)
                             }} placeholder='What did you dream about?'/>
+                            <div className={style.images} style={{display: images.length === 0 ? "none" : "flex"}}>
+                                {images.map((image, index) => {
+                                    // TODO: diveknek berakni background imagebe
+                                    return <div style={{
+                                        backgroundImage: `url(${imageUrls[index]})`,
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'center',
+                                        width: '200px',
+                                        height: '200px',
+                                        borderRadius: '8px',
+                                        cursor: 'pointer'
+                                    }} onClick={() => setImages(images.filter((_, i) => i !== index))}/>
+                                    // return <img key={index} onClick={() => setImages(images.filter((_,i) => i !== index))} className={style.image} src={URL.createObjectURL(image)}/>
+                                })}
+                            </div>
                         </div>
                         <div className={style.postrow}>
+                            <IUB setImages={setImages} images={images} onClick={() => {console.log("image")}}/>
                             <select className={style.publicitySelector} value={publicity} onChange={(e) => setPublicity(e.target.value)}>
                                 <option value="PUBLIC" onClick={(e) => setPublicity(e.target.value)}>Public</option>
                                 <option value="FOLLOWERS_ONLY" onClick={(e) => setPublicity(e.target.value)}>Follower-only</option>
                                 <option value="PRIVATE" onClick={(e) => setPublicity(e.target.value)}>Private</option>
                             </select>
                             <Button valid={valid} text="POST" onClick={() => {
-                                createPost(titleContent, postContent, publicity)
+                                createPost(titleContent, postContent, publicity, images)
                                 setPostContent("")
                                 setTitleContent("")
+                                setImages([])
+                                setImageUrls([])
                                 
                             }}/>
                         </div>

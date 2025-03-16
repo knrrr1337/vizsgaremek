@@ -90,7 +90,6 @@ export function PostHandlerProvider({children}) {
 
 
         axios.get(`http://localhost:4400/dream/list-dreams-all/${id}`).then((response) => {
-            console.log(response.data)
             setDreams(response.data);
         }).catch((error) => console.log(error));
 
@@ -133,25 +132,52 @@ export function PostHandlerProvider({children}) {
         }).catch((error) => console.log(error))
     }
 
-
-
-
-    const createPost = (title, content, publicity) => {
-        console.log(title + " " + content + " " + publicity + " " + user.id)
-        axios.post("http://localhost:4400/dream/create-dream", {title:title, content:content, userId:user.id, tags:"", privacy:publicity}).then((response) => {
-            console.log(response)
-            axios.get(`http://localhost:4400/dream/list-dreams-all/${user.id}`).then((response) => {
-                setDreams(response.data)
-            }).catch((error) => console.log(error))
-            axios.get(`http://localhost:4400/dream/get-user-dreams/${user.id}`).then((response) => {
-                setMydreams(response.data)
-            })
+    // const createPost = (title, content, publicity, images) => {
+    //     console.log(images)
+    //     // TODO: megbaszni a kepeket 
+    //     console.log(title + " " + content + " " + publicity + " " + user.id)
+    //     // axios.post("http://localhost:4400/dream/create-dream", {title:title, content:content, userId:user.id, tags:"", privacy:publicity}).then((response) => {
+    //     //     console.log(response)
+    //     //     axios.get(`http://localhost:4400/dream/list-dreams-all/${user.id}`).then((response) => {
+    //     //         setDreams(response.data)
+    //     //     }).catch((error) => console.log(error))
+    //     //     axios.get(`http://localhost:4400/dream/get-user-dreams/${user.id}`).then((response) => {
+    //     //         setMydreams(response.data)
+    //     //     })
             
-        }).catch((error) => console.log(error))
-    }
+    //     // }).catch((error) => console.log(error))
+    // }
+    const createPost = (title, content, publicity, images) => {
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("content", content);
+        formData.append("userId", user.id);
+        formData.append("privacy", publicity);
+        formData.append("tags", "");
+        
+        // Append each image with a unique key
+        images.forEach((image, index) => {
+            formData.append(`images`, image);
+        });
+    
+        axios.post("http://localhost:4400/dream/create-dream", formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then((response) => {
+            console.log(response);
+            axios.get(`http://localhost:4400/dream/list-dreams-all/${user.id}`).then((response) => {
+                setDreams(response.data);
+            }).catch((error) => console.log(error));
+            
+            axios.get(`http://localhost:4400/dream/get-user-dreams/${user.id}`).then((response) => {
+                setMydreams(response.data);
+            });
+        }).catch((error) => console.log(error));
+    };
 
     const editPost = () => {
-
+        // todo
     }
 
     const deletePost = (dreamId) => {
@@ -166,8 +192,6 @@ export function PostHandlerProvider({children}) {
         }).catch((error) => console.log(error))
     }
 
-
-
     const apad = (authorId, id) => {
         setOpenPostMenu(true)
         setAuthorId(authorId)
@@ -178,11 +202,6 @@ export function PostHandlerProvider({children}) {
         setOpenPostMenu(false)
     }
 
-
-
-
-
-    
     return (
         <PostHandlerContext.Provider key={keyy} value={{dreams, setDreams, getPosts, openPostMenu, apad, anyad, mousePos, setMousePos, authorId, followedDreams, setFollowedDreams, blockedDreams, keyy, likePost, commentOnPost, likedPosts, setLikedPosts, unLikePost, createPost, editPost, deletePost, postId, mydreams, setMydreams, prettifyDate}}>
             {children}

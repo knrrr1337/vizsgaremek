@@ -16,12 +16,6 @@ function PFP({size, isUser, profilePicture}) {
     return (
         <>
         <div className={style.pfpdiv} style={{width:`${size.width}px`, height:`${size.height}px`}}>
-            {/* {(user && isUser) ? <img src={`http://localhost:4400/uploads/${user.profilePicture}`} alt="Profile" /> : (profilePicture !== "default" ? (
-    
-                    <img src={`http://localhost:4400/uploads/${profilePicture}`} alt="Profile" />
-                ) : (
-                    <Person2Icon style={{width:`${size.width * 0.65}px`, height:`${size.height * 0.65}px`}}/>        
-                ))} */}
             {(profilePicture === "default" ? <Person2Icon style={{width:`${size.width * 0.65}px`, height:`${size.height * 0.65}px`}}/> : <img src={`http://localhost:4400/uploads/${profilePicture}`} alt="Profile" />)}
         </div>
         </>

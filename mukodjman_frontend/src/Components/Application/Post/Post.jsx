@@ -122,8 +122,6 @@ function Post(props) {
 
     return (
         <>
-
-        {console.log(props)}
             <div className={style.content} onClick={() => setPostModal(true)}>
                 <div style={{marginRight:"10px"}} onClick={() => gotoProfile(props.authorId)}>
                     <PFP size={{width:40, height:40}} profilePicture={props.pfp}/>
@@ -141,8 +139,20 @@ function Post(props) {
                     <div className={style.postcontent}>
                         <h2>{props.title}</h2>
                         <div className={style.yappingtoncity} ref={contentRef}>
-                            {NeedReadMore === true ? renderReadMore() : ""}
+                            {/* {NeedReadMore === true ? renderReadMore() : ""} */}
                             {props.content}
+                        </div>
+                        <div className={style.images}>
+                            {props.images.map((image) => {
+                                return <div style={{backgroundImage: `url(${`http://localhost:4400/uploads/${image.imageUrl}`})`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                width: '200px',
+                                height: '200px',
+                                borderRadius: '8px',
+                                zIndex:1000000,
+                                cursor: 'pointer'}}/>
+                            })}
                         </div>
                     </div>
                     <div className={style.reactions}>

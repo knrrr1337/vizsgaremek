@@ -3,7 +3,7 @@
     flex-direction: row;
     padding: 10px;
     width: calc(100% - 20px);
-    height: 200px;
+    height: fit-content;
     border-bottom: 2px solid rgb(49, 44, 85);
     cursor: pointer;
 }
@@ -38,6 +38,10 @@
     width: fit-content;
 }
 
+.postcontent {
+    height: fit-content;
+}
+
 .timeposted {
     font-size:10px;
     color: rgb(148, 148, 148);
@@ -69,9 +73,10 @@ h2 {
     text-overflow: ellipsis;
     white-space: wrap;
     text-align: left;
-    height: 150px;
+    height: fit-content;
     max-height: 100px;
     position: relative;
+    margin-bottom: 10px;
 }
 
 .readMoreCover {
@@ -175,4 +180,8 @@ h2 {
 .szaros {
     display: flex;
     flex-direction: column;
+}
+
+.images {
+    margin-bottom: 50px;
 }

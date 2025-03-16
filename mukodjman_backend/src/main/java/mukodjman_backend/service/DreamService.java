@@ -39,20 +39,45 @@ public class DreamService {
         return dreamRepository.findAllByUserId(id);
     }
 
-    public void createDream(long userId, String title, String content, Privacy privacy) {
+//    public void createDream(long userId, String title, String content, Privacy privacy) {
+//        Dream dream = new Dream();
+//        User user = usersRepository.findById(userId).get();
+//        dream.setUser(user);
+//        dream.setTitle(title);
+//        dream.setContent(content);
+//        dream.setPrivacy(privacy);
+//        List<Reaction> reactions = new ArrayList<>();
+//        List<Comment> comments = new ArrayList<>();
+//        List<DreamImage> images = new ArrayList<>();
+//        dream.setReactions(reactions);
+//        dream.setComments(comments);
+//        dream.setCreated_at(LocalDateTime.now());
+//        dreamRepository.save(dream);
+//    }
+
+    public void createDream(Long userId, String title, String content, Privacy privacy, List<String> imageUrls) {
+        User user = usersRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
         Dream dream = new Dream();
-        User user = usersRepository.findById(userId).get();
         dream.setUser(user);
         dream.setTitle(title);
         dream.setContent(content);
         dream.setPrivacy(privacy);
-        List<Reaction> reactions = new ArrayList<>();
-        List<Comment> comments = new ArrayList<>();
-        List<DreamImage> images = new ArrayList<>();
-        dream.setReactions(reactions);
-        dream.setComments(comments);
+//        dream.setTags(tags);
         dream.setCreated_at(LocalDateTime.now());
-        dreamRepository.save(dream);
+        Dream savedDream = dreamRepository.save(dream);
+
+        // Save images
+        if (imageUrls != null && !imageUrls.isEmpty()) {
+            for (int i = 0; i < imageUrls.size(); i++) {
+                DreamImage dreamImage = new DreamImage();
+                dreamImage.setDreamId(savedDream.getId());
+                dreamImage.setImageUrl(imageUrls.get(i));
+                dreamImage.setImageOrder(i);
+                dreamImageRepository.save(dreamImage);
+            }
+        }
     }
 
     public void likePost(long postId, long userId) {

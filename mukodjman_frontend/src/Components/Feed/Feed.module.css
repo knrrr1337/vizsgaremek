@@ -215,3 +215,19 @@ textarea {
     background-color: rgb(49, 44, 85);
 }
 
+.images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+    justify-content: space-evenly;
+}
+
+.image {
+    max-width: 200px;  /* or your desired maximum width */
+    max-height: 200px; /* or your desired maximum height */
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    cursor: pointer;
+}

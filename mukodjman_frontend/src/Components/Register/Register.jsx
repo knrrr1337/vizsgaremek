@@ -69,8 +69,7 @@ function Register() {
             <div className={styles.registerCard}>
                 <h1>Register</h1>
                 <div className={styles.pfpwrapper}>
-                    <Tooltip title="Click to set a profile picture. Image should be 1:1 aspect ratio for best representation. Right click to remove." arrow> 
-                    
+                    <Tooltip title="Click to set a profile picture. Image should be 1:1 aspect ratio for best representation. Right click to remove." arrow>    
                     <input
                         type="file"
                         accept="image/*"
@@ -235,7 +234,6 @@ function Register() {
                 open={usernameError}
                 autoHideDuration={5000}
                 message="Username must not contain whitespace."
-                
             />
         </div>
         </>

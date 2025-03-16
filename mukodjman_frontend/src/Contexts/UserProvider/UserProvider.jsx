@@ -16,12 +16,10 @@ export function UserProvider({children}) {
     useEffect(() => {    
         if (user) {
             axios.get(`http://localhost:4400/user/get-followed-users/${user.id}`).then((response) => {
-                console.log(response)
                 setFollowedUsers(response.data)
             }).catch((error) => console.log(error))
     
             axios.get(`http://localhost:4400/user/get-blocked-users/${user.id}`).then((response) => {
-                console.log(response)
                 setBlockedUsers(response.data)
             }).catch((error) => console.log(error))
 
@@ -62,7 +60,6 @@ export function UserProvider({children}) {
         console.log(followedUsers.some((user) => user.id === userId))
         return followedUsers.some((user) => user.id === userId)
     }
-
     
     const unFollowUser = (userToUnfollow) => {
         console.log(authorId)
@@ -78,7 +75,6 @@ export function UserProvider({children}) {
             // setFollowedUsers(response.data)
         })
     }
-
 
     return <UserContext.Provider value={{blockUser, followUser, followedUsers, blockedUsers, isUserFollowed, unFollowUser, isUserFollowed2}}>
             {children}
