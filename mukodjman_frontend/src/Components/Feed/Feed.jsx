@@ -183,6 +183,7 @@ function Feed({feedType, setFeedType}) {
                                 posted_at={dream.createdAt}
                                 comments={dream.comments}
                                 reactions={dream.reactions}
+                                images={dream.images}
                             />
                         ))
                     )}

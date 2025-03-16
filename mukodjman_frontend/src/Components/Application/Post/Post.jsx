@@ -149,8 +149,8 @@ function Post(props) {
                             {NeedReadMore === true ? renderReadMore() : ""}
                             {props.content}
                         </div>
-                        <div className={style.images} style={{display: props.images.length === 0 ? "none" : "flex"}}>
-                            {props.images.map((image) => {
+                        <div className={style.images} style={{display: props.images && props.images.length === 0 ? "none" : "flex"}}>
+                            {props.images && props.images.map((image) => {
                                 return <div onClick={(e) => {
                                     e.stopPropagation()
                                     setPictureModal(true)
@@ -169,7 +169,9 @@ function Post(props) {
                     </div>
                     <div className={style.reactionsContainer}>
                         <div className={style.reactions}>
-                            <div className={style.d} title={`${comments} comments`} onClick={(e) => {
+                            {!pictureModal ? (
+                                <>
+                                         <div className={style.d} title={`${comments} comments`} onClick={(e) => {
                                 e.stopPropagation();
                                 setCommentModal(true);
                             }}>
@@ -188,6 +190,9 @@ function Post(props) {
                                 )}
                                 {likes}
                             </div>
+                                </>
+                            ) : ("")}
+                   
                         </div>
                     </div>
                     
@@ -195,9 +200,9 @@ function Post(props) {
             </div>
 
             <Modal className={`${style.modalContainer} ${style.kepModal}`} open={pictureModal} onClose={handlePictureModal}>
-                <div style={{position:"relative", zIndex: 99999999}}>
+                <div>
                     {pictureToDisplay && (
-                    <div className={style.modalImgContainer} style={{position:"relative", zIndex: 99999999}}>
+                    <div className={style.modalImgContainer}>
                         <img 
                             src={`http://localhost:4400/uploads/${pictureToDisplay}`}
                             alt="Post"
@@ -205,8 +210,6 @@ function Post(props) {
                                 maxWidth: '90vw',
                                 maxHeight: '90vh',
                                 objectFit: 'contain',
-                                position:"relative",
-                                zIndex:99999999
                             }}
                         />
                     </div>

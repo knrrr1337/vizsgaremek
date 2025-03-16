@@ -100,8 +100,10 @@ public class DreamService {
         for (Dream dream : asd) {
             List<Comment> comments = commentRepository.findByDreamId(dream.getId());
             List<Reaction> reactions = reactionRepository.findByDreamId(dream.getId());
+            List<DreamImage> images = dreamImageRepository.findAllByDreamId(dream.getId());
             dream.setComments(comments);
             dream.setReactions(reactions);
+            dream.setImages(images);
         }
         return asd.stream()
                 .filter(dream -> followedUserIds.contains(dream.getUser().getId()))
