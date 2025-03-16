@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import mukodjman_backend.enums.Privacy;
+import mukodjman_backend.model.DreamImage;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,5 +18,6 @@ public class CreateDreamRequest {
     private long userId;
     private String tags;
     private Privacy privacy;
+    private List<DreamImage> images;
 
 }

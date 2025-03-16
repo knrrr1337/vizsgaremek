@@ -60,5 +60,8 @@ public class Dream {
     @OneToMany(mappedBy = "dreamId")
     private List<Reaction> reactions;
 
+    @OneToMany(mappedBy = "dreamId", cascade = CascadeType.ALL)
+    List<DreamImage> images;
+
 
 }

@@ -48,7 +48,7 @@ function LeftSideBar() {
                 </div>
                 <div className={style.profileBar} onClick={gotoProfile}>
                     <div style={{marginRight:"10px"}}>
-                        <PFP size={{width:40, height:40}} profilePicture={user.profilePicture}/>
+                        <PFP size={{width:40, height:40}} profilePicture={user && user.profilePicture}/>
 
                     </div>
                     <div className={style.username}>

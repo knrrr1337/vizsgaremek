@@ -45,6 +45,7 @@ public class DreamController {
         List<customDream> anyad = new ArrayList<>();
         for (Dream dream : dreams) {
             anyad.add(convertToDTO(dream));
+
         }
         anyad.sort((d1, d2) -> d2.getCreatedAt().compareTo(d1.getCreatedAt()));
         return anyad;
@@ -131,6 +132,7 @@ public class DreamController {
         dto.setComments(dream.getComments());
         dto.setReactions(dream.getReactions());
         dto.setCreatedAt(dream.getCreated_at());
+        dto.setImages(dream.getImages());
         return dto;
     }
 

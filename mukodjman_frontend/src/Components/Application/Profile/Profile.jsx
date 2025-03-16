@@ -107,6 +107,7 @@ function Profile () {
                                 comments={dream.comments}
                                 reactions={dream.reactions}
                                 privacy={dream.privacy}
+                                images={dream.images}
                             ></Post>
                         })}
                     </div>

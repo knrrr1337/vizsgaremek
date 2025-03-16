@@ -91,7 +91,7 @@ function Feed({feedType, setFeedType}) {
     return (
         <>
         <div className={style.createPost}>
-                    <PFP size={{width: 40, height:40}} profilePicture={user.profilePicture}/>
+                    <PFP size={{width: 40, height:40}} profilePicture={user && user.profilePicture}/>
                     <div className={style.restbruh}>
                         <div className={style.textareawrapper}>
                             <input value={titleContent} onChange={(e) => {
@@ -132,6 +132,7 @@ function Feed({feedType, setFeedType}) {
                                 posted_at={dream.createdAt}
                                 comments={dream.comments}
                                 reactions={dream.reactions}
+                                images={dream.images}
                             />
 
                         ))

@@ -122,6 +122,8 @@ function Post(props) {
 
     return (
         <>
+
+        {console.log(props)}
             <div className={style.content} onClick={() => setPostModal(true)}>
                 <div style={{marginRight:"10px"}} onClick={() => gotoProfile(props.authorId)}>
                     <PFP size={{width:40, height:40}} profilePicture={props.pfp}/>
