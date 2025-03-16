@@ -118,6 +118,13 @@ function Post(props) {
         }
     }
 
+    const [pictureModal, setPictureModal] = useState(false)
+    const [pictureToDisplay, setPictureToDisplay] = useState("")
+
+    const handlePictureModal = () => {
+        setPictureModal(false)
+        setPictureToDisplay("")
+    }
 
 
     return (
@@ -139,45 +146,74 @@ function Post(props) {
                     <div className={style.postcontent}>
                         <h2>{props.title}</h2>
                         <div className={style.yappingtoncity} ref={contentRef}>
-                            {/* {NeedReadMore === true ? renderReadMore() : ""} */}
+                            {NeedReadMore === true ? renderReadMore() : ""}
                             {props.content}
                         </div>
-                        <div className={style.images}>
+                        <div className={style.images} style={{display: props.images.length === 0 ? "none" : "flex"}}>
                             {props.images.map((image) => {
-                                return <div style={{backgroundImage: `url(${`http://localhost:4400/uploads/${image.imageUrl}`})`,
+                                return <div onClick={(e) => {
+                                    e.stopPropagation()
+                                    setPictureModal(true)
+                                    setPictureToDisplay(image.imageUrl)
+                                }} style={{backgroundImage: `url(${`http://localhost:4400/uploads/${image.imageUrl}`})`,
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
                                 width: '200px',
                                 height: '200px',
+                                position:"relative",
+                                zIndex:1,
                                 borderRadius: '8px',
-                                zIndex:1000000,
                                 cursor: 'pointer'}}/>
                             })}
                         </div>
                     </div>
-                    <div className={style.reactions}>
-                        <div className={style.d} title={`${comments} comments`} onClick={(e) => {
-                            e.stopPropagation();
-                            setCommentModal(true);
-                        }}>
-                            <NotesIcon />
-                            {comments}
-                        </div>
+                    <div className={style.reactionsContainer}>
+                        <div className={style.reactions}>
+                            <div className={style.d} title={`${comments} comments`} onClick={(e) => {
+                                e.stopPropagation();
+                                setCommentModal(true);
+                            }}>
+                                <NotesIcon />
+                                {comments}
+                            </div>
 
-                        <div className={style.d} title={`${likes} likes`} onClick={(e) => {
-                            e.stopPropagation();
-                            handleLike(props.id);
-                        }}>
-                            {isLiked ? (
-                                <FavoriteIcon />
-                            ) : (
-                                <FavoriteBorderIcon />
-                            )}
-                            {likes}
+                            <div className={style.d} title={`${likes} likes`} onClick={(e) => {
+                                e.stopPropagation();
+                                handleLike(props.id);
+                            }}>
+                                {isLiked ? (
+                                    <FavoriteIcon />
+                                ) : (
+                                    <FavoriteBorderIcon />
+                                )}
+                                {likes}
+                            </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
+
+            <Modal className={`${style.modalContainer} ${style.kepModal}`} open={pictureModal} onClose={handlePictureModal}>
+                <div style={{position:"relative", zIndex: 99999999}}>
+                    {pictureToDisplay && (
+                    <div className={style.modalImgContainer} style={{position:"relative", zIndex: 99999999}}>
+                        <img 
+                            src={`http://localhost:4400/uploads/${pictureToDisplay}`}
+                            alt="Post"
+                            style={{
+                                maxWidth: '90vw',
+                                maxHeight: '90vh',
+                                objectFit: 'contain',
+                                position:"relative",
+                                zIndex:99999999
+                            }}
+                        />
+                    </div>
+                    )}
+                </div>
+                
+            </Modal>
 
             <Modal open={postModal} onClose={handlePostClose} style={{zIndex:10101011}} className={style.modalContainer}>
                 <PostModalContent username={props.username} pfp={props.pfp} title={props.title} timeposted={prettifyDate(props.posted_at)} content={props.content}/>
