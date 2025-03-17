@@ -3,6 +3,7 @@
     width: 500px;
     height: 600px;   
     padding: 20px;
+    border-radius: 10px;
 }
 
 .woah {
@@ -16,11 +17,11 @@
 
 .userRow {
     display: flex;
+    justify-content: center;
     flex-direction: column;
 }
 
 .timeposted {
-    margin-top: 5px;
     font-size:10px;
     color: rgb(148, 148, 148);
 }

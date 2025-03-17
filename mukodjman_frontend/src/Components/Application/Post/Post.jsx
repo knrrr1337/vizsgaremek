@@ -169,7 +169,7 @@ function Post(props) {
                     </div>
                     <div className={style.reactionsContainer}>
                         <div className={style.reactions}>
-                            {!pictureModal ? (
+                         
                                 <>
                                          <div className={style.d} title={`${comments} comments`} onClick={(e) => {
                                 e.stopPropagation();
@@ -191,7 +191,7 @@ function Post(props) {
                                 {likes}
                             </div>
                                 </>
-                            ) : ("")}
+                      
                    
                         </div>
                     </div>
@@ -219,7 +219,8 @@ function Post(props) {
             </Modal>
 
             <Modal open={postModal} onClose={handlePostClose} style={{zIndex:10101011}} className={style.modalContainer}>
-                <PostModalContent username={props.username} pfp={props.pfp} title={props.title} timeposted={prettifyDate(props.posted_at)} content={props.content}/>
+                {/* <PostModalContent username={props.username} pfp={props.pfp} title={props.title} timeposted={prettifyDate(props.posted_at)} content={props.content}/> */}
+                    <PostModalContent {...props}/>
             </Modal>
         
             <Modal open={commentModal} onClose={handleClose} style={{zIndex:1010111}} className={style.modalContainer}>
