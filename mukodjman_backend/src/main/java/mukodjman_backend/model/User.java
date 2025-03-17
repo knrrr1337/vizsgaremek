@@ -68,7 +68,7 @@ public class User {
     @OneToMany(mappedBy = "followed")
     private List<Followers> following;
 
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy = "user")
     private List<Comment> comments;
 
     @OneToMany(mappedBy = "userId")

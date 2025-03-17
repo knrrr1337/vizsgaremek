@@ -129,6 +129,9 @@ export function PostHandlerProvider({children}) {
         console.log(id + " " + content)
         axios.post(`http://localhost:4400/dream/comment-on-dream/${id}`, {comment:content, userId:user.id}).then((response) => {
             console.log(response)
+            axios.get(`http://localhost:4400/dream/list-dreams-all/${user.id}`).then((response) => {
+                setDreams(response.data);
+            }).catch((error) => console.log(error));
         }).catch((error) => console.log(error))
     }
 

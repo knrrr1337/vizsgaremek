@@ -88,6 +88,7 @@ function Post(props) {
     const handleComment = (id) => {
         // commentOnPost(id);
         setComments(comments + 1);
+        
     };
 
     const [commentValue, setCommentValue] = useState("")
@@ -171,7 +172,7 @@ function Post(props) {
                         <div className={style.reactions}>
                          
                                 <>
-                                         <div className={style.d} title={`${comments} comments`} onClick={(e) => {
+                            <div className={style.d} title={`${comments} comments`} onClick={(e) => {
                                 e.stopPropagation();
                                 setCommentModal(true);
                             }}>
@@ -191,14 +192,12 @@ function Post(props) {
                                 {likes}
                             </div>
                                 </>
-                      
-                   
                         </div>
                     </div>
                     
                 </div>
             </div>
-
+            
             <Modal className={`${style.modalContainer} ${style.kepModal}`} open={pictureModal} onClose={handlePictureModal}>
                 <div>
                     {pictureToDisplay && (
@@ -217,10 +216,9 @@ function Post(props) {
                 </div>
                 
             </Modal>
-
-            <Modal open={postModal} onClose={handlePostClose} style={{zIndex:10101011}} className={style.modalContainer}>
+            <Modal open={postModal} onClose={handlePostClose} style={{zIndex:101}} className={style.modalContainer}>
                 {/* <PostModalContent username={props.username} pfp={props.pfp} title={props.title} timeposted={prettifyDate(props.posted_at)} content={props.content}/> */}
-                    <PostModalContent {...props}/>
+                    <PostModalContent handleLike={handleLike} isLiked={isLiked} likes={likes} comments={comments} {...props}/>
             </Modal>
         
             <Modal open={commentModal} onClose={handleClose} style={{zIndex:1010111}} className={style.modalContainer}>
@@ -229,11 +227,7 @@ function Post(props) {
                         <div className={style.szaros}>
                             <div className={style.userRow}>
                                 <div className={style.pfpdiv}>
-                                    {props.pfp && props.pfp !== "default" ? (
-                                        <img src={`http://localhost:4400/uploads/${props.pfp}`} alt="Profile" />
-                                    ) : (
-                                        <Person2Icon />
-                                    )}
+                                    <PFP profilePicture={props.pfp} size={{width:40, height:40}} />
                                 </div>
                                 <span>Replying to {props.username}</span>
                             </div>
