@@ -187,7 +187,7 @@ function Feed({feedType, setFeedType}) {
                             />
                         ))
                     )}
-                    {feedType === "following" && followedDreams.length === 0 ? <div style={{paddingTop:"20px"}}>You currently don't follow anyone maganyos geci</div> : <div></div>}
+                    {feedType === "following" && followedDreams.length === 0 ? <div style={{paddingTop:"20px"}}>You currently don't follow anyone.</div> : <div></div>}
                 </div>
         </>
     )
