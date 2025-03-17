@@ -7,11 +7,13 @@ import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import { UserContext } from "../../Contexts/UserProvider/UserProvider";
 import EditIcon from '@mui/icons-material/Edit';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 
 function GoatedPostMenu({open, what}) {
 
     const {openPostMenu, mousePos, authorId, postId, deletePost} = useContext(PostHandlerContext)
     const {followUser, blockUser, followedUsers, blockedUsers, isUserFollowed, unFollowUser} = useContext(UserContext)
+    const {user} = useContext(AuthContext)
 
     useEffect(() => {
 
@@ -33,9 +35,10 @@ function GoatedPostMenu({open, what}) {
     }
 
 
+
     return (
         <>
-            {what === "profile" ?
+            {what === "profile" ||  (user && authorId === user.id) ?
             (<div className={style.container} style={{
                 display: openPostMenu ? "block" : "none",
                 top: `${mousePos.y}px`,
