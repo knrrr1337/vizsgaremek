@@ -15,7 +15,7 @@ function Comment(props) {
                     <PFP className={style.pfp} profilePicture={props.commentUser.profilePicture} size={{width:40, height:40}}/>
                     <div className={style.hehe}>
                         <span>{props.commentUser.username}</span>
-                        <span className={style.timeposted}>{prettifyDate(props.commentUser.created_at)}</span>
+                        <span className={style.timeposted}>{prettifyDate(props.created_at)}</span>
                     </div>
                 </div>
                 <div className={style.content}>

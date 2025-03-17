@@ -1,7 +1,7 @@
 .container {
     background-color: rgba(15, 8, 44, 1);
     width: 500px;
-    min-height: 600px;   
+    height: 600px;   
     padding: 20px;
     border-radius: 10px;
     overflow-y: scroll;
