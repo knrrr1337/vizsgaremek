@@ -52,6 +52,7 @@ public class UserController {
     }
 
 
+
     @GetMapping("get/list")
     public List<User> getUserList() {
         List<User> users = service.listUsers();
@@ -66,8 +67,13 @@ public class UserController {
         return service.getFollowedUsers2(id);
     }
 
+    @GetMapping("get-users-following-user/{id}")
+    public List<FollowedUser> getUsersFollowingUser(@PathVariable long id) {
+        return service.getUsersFollowingUser(id);
+    }
+
     @GetMapping("get-blocked-users/{id}")
-    public List<User> getBlockedUsers(@PathVariable long id) {
+    public List<BlockedUser> getBlockedUsers(@PathVariable long id) {
         return service.getBlockedUsers(id);
     }
 }

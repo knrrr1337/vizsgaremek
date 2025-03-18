@@ -114,7 +114,7 @@ function Profile () {
                 </main>
                 <RightSideBar/>
             </div> 
-            {profileUser.id && profileUser.id === user.id ? (<GoatedPostMenu what={"profile"}/>) : (<GoatedPostMenu/>)}
+            {profileUser.id && profileUser.id === user.id ? (<GoatedPostMenu/>) : (<GoatedPostMenu/>)}
             <footer>anyad</footer>
         </>
     )

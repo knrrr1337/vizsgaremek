@@ -201,12 +201,20 @@ export function PostHandlerProvider({children}) {
         setPostId(id)
     }
 
+    const apad2 = (id) => {
+        setOpenPostMenu(true)
+        setPostId(id)
+    }
+
+    const [isOpen, setIsOpen] = useState(false)
+
     const anyad = () => {
         setOpenPostMenu(false)
+        setIsOpen(false)
     }
 
     return (
-        <PostHandlerContext.Provider key={keyy} value={{dreams, setDreams, getPosts, openPostMenu, apad, anyad, mousePos, setMousePos, authorId, followedDreams, setFollowedDreams, blockedDreams, keyy, likePost, commentOnPost, likedPosts, setLikedPosts, unLikePost, createPost, editPost, deletePost, postId, mydreams, setMydreams, prettifyDate}}>
+        <PostHandlerContext.Provider key={keyy} value={{dreams, isOpen, setIsOpen, apad2, setDreams, getPosts, openPostMenu, apad, anyad, mousePos, setMousePos, authorId, followedDreams, setFollowedDreams, blockedDreams, keyy, likePost, commentOnPost, likedPosts, setLikedPosts, unLikePost, createPost, editPost, deletePost, postId, mydreams, setMydreams, prettifyDate}}>
             {children}
         </PostHandlerContext.Provider>
     )

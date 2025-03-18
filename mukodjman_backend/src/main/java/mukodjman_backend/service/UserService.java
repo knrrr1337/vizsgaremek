@@ -2,6 +2,7 @@ package mukodjman_backend.service;
 
 import mukodjman_backend.converter.UserConverter;
 import mukodjman_backend.dto.Login.LoginRequest;
+import mukodjman_backend.dto.user.BlockedUser;
 import mukodjman_backend.dto.user.FollowedUser;
 import mukodjman_backend.dto.user.UserRead;
 import mukodjman_backend.model.Block;
@@ -54,6 +55,28 @@ public class UserService {
         return "An account has already been created with this email address.";
     }
 
+    public List<FollowedUser> getUsersFollowingUser(long id) {
+        List<Followers> followers = followersRepository.findAllFollowersByUserId(id);
+        List<FollowedUser> followedUsers = new ArrayList<>();
+        for (Followers follower : followers) {
+            User xd = usersRepository.findById(follower.getFollower().getId()).get();
+            FollowedUser fu = new FollowedUser();
+            fu.setId(xd.getId());
+            fu.setUsername(xd.getUsername());
+            fu.setEmail(xd.getEmail());
+            fu.setBio(xd.getBio());
+            fu.setProfilePicture(xd.getProfilePicture());
+            fu.setCreated_at(xd.getCreated_at());
+            followedUsers.add(fu);
+        }
+        return followedUsers;
+
+        //        return followers.stream()
+//                .map(Followers::getFollowed)
+//                .map(user -> new FollowedUser(user.getId(), user.getUsername(), user.getEmail(), user.getProfilePicture(), user.getBio(), user.getCreated_at()))
+//                .collect(Collectors.toList());
+    }
+
     public void unfollowUser(long id, long id2) {
         System.out.println(id + " " + id2);
         followerRepository.unfollow(id, id2);
@@ -88,7 +111,7 @@ public class UserService {
         List<Followers> followers = followersRepository.findAllByFollowerId(id);
         return followers.stream()
                 .map(Followers::getFollowed)
-                .map(user -> new FollowedUser(user.getId(), user.getUsername(), user.getEmail(), user.getProfilePicture(), user.getBio()))
+                .map(user -> new FollowedUser(user.getId(), user.getUsername(), user.getEmail(), user.getProfilePicture(), user.getBio(), user.getCreated_at()))
                 .collect(Collectors.toList());
     }
 
@@ -102,9 +125,9 @@ public class UserService {
         return followers.stream().map(Followers::getFollowed).collect(Collectors.toList());
     }
 
-    public List<User> getBlockedUsers(Long userId) {
+    public List<BlockedUser> getBlockedUsers(Long userId) {
         List<Block> blocks = blockRepository.findAllByBlockerId(userId);
-        return blocks.stream().map(Block::getBlocked).collect(Collectors.toList());
+        return blocks.stream().map(Block::getBlocked).map(user -> new BlockedUser(user.getId(), user.getUsername(), user.getProfilePicture(), user.getBio(), user.getCreated_at())).collect(Collectors.toList());
     }
 
     public void followUser(Long userId, Long userToBeFollowedId) {

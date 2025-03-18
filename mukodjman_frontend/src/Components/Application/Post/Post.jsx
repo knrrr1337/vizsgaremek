@@ -218,7 +218,7 @@ function Post(props) {
             </Modal>
             <Modal open={postModal} onClose={handlePostClose} style={{zIndex:101}} className={style.modalContainer}>
                 {/* <PostModalContent username={props.username} pfp={props.pfp} title={props.title} timeposted={prettifyDate(props.posted_at)} content={props.content}/> */}
-                    <PostModalContent handleLike={handleLike} isLiked={isLiked} likes={likes} comments={comments} {...props}/>
+                    <PostModalContent setPictureToDisplay={setPictureToDisplay} setPictureModal={setPictureModal} handleLike={handleLike} isLiked={isLiked} likes={likes} comments={comments} {...props}/>
             </Modal>
         
             <Modal open={commentModal} onClose={handleClose} style={{zIndex:1010111}} className={style.modalContainer}>

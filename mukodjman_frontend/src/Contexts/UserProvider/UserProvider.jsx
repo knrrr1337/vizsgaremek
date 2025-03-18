@@ -2,7 +2,7 @@ import {createContext, useContext, useEffect, useState } from "react"
 import { AuthContext } from "../AuthProvider/AuthProvider"
 import {PostHandlerContext} from "../PostHandlerProvider/PostHandlerProvider"
 import axios from "axios"
-import { UNSAFE_getSingleFetchDataStrategy } from "react-router-dom"
+import { isRouteErrorResponse, UNSAFE_getSingleFetchDataStrategy } from "react-router-dom"
 
 export const UserContext = createContext()
 
@@ -11,6 +11,7 @@ export function UserProvider({children}) {
     const {user} = useContext(AuthContext)
     const {authorId, setFollowedDreams, dreams} = useContext(PostHandlerContext)
     const [followedUsers, setFollowedUsers] = useState([])
+    const [followers, setFollowers] = useState([])
     const [blockedUsers, setBlockedUsers] = useState([])
     
     useEffect(() => {    
@@ -26,6 +27,11 @@ export function UserProvider({children}) {
             axios.get(`http://localhost:4400/dream/user-liked-posts/${user.id}`).then((response) => {
                 
             }).catch((error) => console.log(error))
+            axios.get(`http://localhost:4400/user/get-users-following-user/${user.id}`).then((response) => {
+                console.log(response.data)
+                setFollowers(response.data)
+            }).catch((error) => console.log(error))
+
             // TODO: megcsinalni hogy ha followed a user, akkor unfollow jelenjen meg :)))))
         }
     },[user])
@@ -33,6 +39,14 @@ export function UserProvider({children}) {
     const blockUser = (userToBlock) => {
         axios.post("http://localhost:4400/user/block-user", {userId:user.id, authorId:authorId}).then((response) => {
             window.location.reload()
+        }).catch((error) => console.log(error))
+    }
+
+    const blockUser2 = (blockingId) => {
+        axios.post("http://localhost:4400/user/block-user", {userId:user.id, authorId:blockingId}).then((response) => {
+            axios.get(`http://localhost:4400/user/get-blocked-users/${user.id}`).then((response2) => {
+                setBlockedUsers(response2.data)
+            }).catch((error) => console.log(error))
         }).catch((error) => console.log(error))
     }
 
@@ -53,6 +67,12 @@ export function UserProvider({children}) {
     const isUserFollowed = () => {
         return user && followedUsers.some((user) => user.id === authorId)
         
+    }
+
+    const isUserBlocked = (diddyId) => {
+        console.log("HELOLOLOLOLOLOLOLOLOLOLOL")
+        console.log(blockedUsers.some((userr) => userr.id === diddyId))
+        return user && blockedUsers.some((userr) => userr.id === diddyId)
     }
 
     const isUserFollowed2 = (userId) => {
@@ -76,7 +96,7 @@ export function UserProvider({children}) {
         })
     }
 
-    return <UserContext.Provider value={{blockUser, followUser, followedUsers, blockedUsers, isUserFollowed, unFollowUser, isUserFollowed2}}>
+    return <UserContext.Provider value={{blockUser,blockUser2, isUserBlocked, followers, followUser, followedUsers, blockedUsers, isUserFollowed, unFollowUser, isUserFollowed2}}>
             {children}
         </UserContext.Provider>
 }

@@ -14,13 +14,13 @@ import { Modal } from "@mui/material";
 function PostModalContent(props) {
     
     const {prettifyDate} = useContext(PostHandlerContext)
-        const [pictureModal, setPictureModal] = useState(false)
-        const [pictureToDisplay, setPictureToDisplay] = useState("")
+        // const [pictureModal, setPictureModal] = useState(false)
+        // const [pictureToDisplay, setPictureToDisplay] = useState("")
     
-        const handlePictureModal = () => {
-            setPictureModal(false)
-            setPictureToDisplay("")
-        }
+        // const handlePictureModal = () => {
+        //     setPictureModal(false)
+        //     setPictureToDisplay("")
+        // }
 
     return (
         <>       
@@ -73,8 +73,8 @@ function PostModalContent(props) {
                         {props.images && props.images.map((image) => {
                             return <div onClick={(e) => {
                                 e.stopPropagation()
-                                setPictureModal(true)
-                                setPictureToDisplay(image.imageUrl)
+                                props.setPictureModal(true)
+                                props.setPictureToDisplay(image.imageUrl)
                             }} style={{backgroundImage: `url(${`http://localhost:4400/uploads/${image.imageUrl}`})`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
@@ -94,24 +94,6 @@ function PostModalContent(props) {
                 </div>
             </div>
         </div>
-        <Modal className={`${style.modalContainer} ${style.kepModal}`} open={pictureModal} onClose={handlePictureModal}>
-                <div>
-                    {pictureToDisplay && (
-                    <div className={style.modalImgContainer}>
-                        <img 
-                            src={`http://localhost:4400/uploads/${pictureToDisplay}`}
-                            alt="Post"
-                            style={{
-                                maxWidth: '90vw',
-                                maxHeight: '90vh',
-                                objectFit: 'contain',
-                            }}
-                        />
-                    </div>
-                    )}
-                </div>
-                
-            </Modal>
         </>
     )
 }

@@ -142,3 +142,94 @@ body {
     filter: invert(42%) sepia(94%) saturate(6919%) hue-rotate(352deg) brightness(89%) contrast(130%);
 
 }
+
+.modalContainer {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0px;
+    outline: none;
+}
+
+.h2 {
+    text-align: center;
+    width: fit-content;
+    height: fit-content;
+    margin: 0px;
+}
+
+.followMenu {
+    display: flex;
+    border: 2px solid rgb(46, 39, 76);
+    border-bottom: 0px;
+    min-width: 250px;
+    position: sticky;
+}
+
+.paddingBottom {
+    height: 20px;
+    width: 100%;
+}
+
+.blockh2 {
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border-bottom: 2px solid rgb(15, 8, 44);
+    display: flex;
+    flex-direction: column;
+    -webkit-user-drag: none;
+    user-select: none;
+    
+}
+
+.followMenuType {
+    cursor: pointer;
+    padding: 10px;
+    width: 50%;
+    border-bottom: 2px solid rgb(15, 8, 44);
+    display: flex;
+    flex-direction: column;
+    transition: 0.5s;
+    -webkit-user-drag: none;
+    user-select: none;
+}
+
+.followMenuType * {
+    -webkit-user-drag: none;
+    user-select: none;
+}
+
+.size {
+    font-size: 16px;
+    -webkit-user-drag: none;
+    user-select: none;
+}
+
+.hererak {
+    height: fit-content;
+    overflow-y: hidden;
+}
+
+.userList {
+    max-height: 300px; /* Adjust the height as needed */
+    overflow-y: scroll;
+    scrollbar-width: none; /* Hide scrollbar in Firefox */
+}
+
+.innerModal {
+    width: fit-content;
+    min-height: 371.200px;
+    height: fit-content;
+    background-color: rgba(15, 8, 44, 1);
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    padding: 20px;
+    border: 0px;
+    outline: none;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}

@@ -11,13 +11,11 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FollowedUser {
+public class BlockedUser {
 
     private Long id;
     private String username;
-    private String email;
     private String profilePicture;
     private String bio;
     private LocalDateTime created_at;
-
 }

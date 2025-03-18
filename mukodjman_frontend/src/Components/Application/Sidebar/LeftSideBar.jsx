@@ -1,7 +1,7 @@
 import style from "./LeftSideBar.module.css"
 
 import { useNavigate } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useRef, useEffect, useState } from 'react';
 import { AuthContext } from '../../..//Contexts/AuthProvider/AuthProvider';
 import Person2Icon from '@mui/icons-material/Person2';
 import axios from 'axios';
@@ -11,12 +11,18 @@ import NotesIcon from '@mui/icons-material/Notes';
 import RecentActorsIcon from '@mui/icons-material/RecentActors';
 import Modal from '@mui/material/Modal';
 import PFP from "../../PFP/PFP";
+import { UserContext } from "../../../Contexts/UserProvider/UserProvider";
+import ULI from "../../UserListItem/ULI";
+import { PostHandlerContext } from "../../../Contexts/PostHandlerProvider/PostHandlerProvider";
+import SoGoodHadToDoItTwice from "../../GoatedPostMenu/SoGoodHadToDoItTwice";
 
 
 function LeftSideBar() {
 
     const navigate = useNavigate()
     const {user, setUser} = useContext(AuthContext)
+    const {blockedUsers, followedUsers, followers} = useContext(UserContext)
+    const {isOpen, setIsOpen} = useContext(PostHandlerContext)
     const [modalOpen, setModalOpen] = useState(false)
     const [which, setWhich] = useState("")
 
@@ -39,8 +45,21 @@ function LeftSideBar() {
 
     const handleClose = () => setModalOpen(false)
 
+    const [followType, setFollowType] = useState("followed")
+    const [mousePos, setMousePos] = useState({})
+    const dropdownRef = useRef(null);
+
+
+
+    const baszos = (event) => {
+         setIsOpen(true)
+         console.log(isOpen)
+    }
+
+    const [baszosId, setBaszosId] = useState(0) 
+
     return (
-    
+
         <div className={style.sideBar}>
             <div className={style.headerContent}>
                 <div className={style.logo} onClick={gotoHome}>
@@ -66,7 +85,7 @@ function LeftSideBar() {
                             setWhich("followers")
                         }}>
                             <RecentActorsIcon className={style.asd}/>
-                            <span>Followers</span>
+                            <span>Follows</span>
                         </li>
                         <li className={style.option} onClick={() => {
                             setModalOpen(true)
@@ -85,8 +104,48 @@ function LeftSideBar() {
                 </div>
 
             </div>
-            <Modal open={modalOpen} onClose={handleClose}>
-                {which === "followers" ? <div>follows</div> : <div>blocks</div>}
+            <Modal open={modalOpen} className={style.modalContainer} onClose={handleClose}>
+                <>
+                <div className={style.innerModal}>
+                    <div className={style.hererak}>
+                    {which === "followers" ? (
+                        <div>
+                            <div className={style.followMenu}>
+                                <h2 style={{borderBottom: followType === "followed" ? "2px solid rgb(255,255,255)" : ""}} className={`${style.h2} ${style.followMenuType}`} onClick={() => setFollowType("followed")}>Followed <span className={style.size}>({followedUsers.length})</span></h2>
+                                <h2 style={{borderBottom: followType === "follower" ? "2px solid rgb(255,255,255)" : ""}} className={`${style.h2} ${style.followMenuType}`} onClick={() => setFollowType("follower")}>Followers <span className={style.size}>({followers.length})</span></h2>
+                            </div>
+                            <div className={style.userList}>
+                                {followType === "follower" ? (
+                                    <>
+                                    {followers.map((user, index) => {
+                                        return <ULI baszodId={user.id} setBaszosId={setBaszosId} baszos={baszos} setMousePos={setMousePos} isLast={index + 1 === followers.length} pfp={user.profilePicture} username={user.username} joined_at={user.created_at}/>
+                                    })}
+                                    </>
+                                ) : (
+                                    <>
+                                    {followedUsers.map((user, index) => {
+                                        return <ULI baszodId={user.id} setBaszosId={setBaszosId} baszos={baszos} setMousePos={setMousePos} isLast={index + 1 === followedUsers.length} pfp={user.profilePicture} username={user.username} joined_at={user.created_at}/>
+                                    })}
+                                    </>)}
+                            </div>
+                            
+                                
+                        </div>
+                        ):(
+                        <div>
+                            <div className={style.followMenu}>
+                                <h2  className={`${style.h2} ${style.blockh2}`}>Blocked users</h2>
+                            </div>
+                            {blockedUsers.map((user, index) => {
+                                
+                                return <ULI baszodId={user.id} setBaszosId={setBaszosId} isLast={index + 1 === blockedUsers.length} setMousePos={setMousePos} baszos={baszos} pfp={user.profilePicture} username={user.username} joined_at={user.created_at}/>
+                            })}
+                        </div>
+                    )}
+                    </div>
+                </div>
+                <SoGoodHadToDoItTwice isOpen={isOpen} baszosId={baszosId} baszos={baszos} dropdownRef={dropdownRef} mousePos={mousePos}/>
+                </>
             </Modal>
 
         </div>
