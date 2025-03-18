@@ -13,6 +13,10 @@ import PostModalContent from "./PostModalContent/PostModalContent";
 import { UserContext } from "../../../Contexts/UserProvider/UserProvider";
 import PFP from "../../PFP/PFP";
 
+import Creative from "../../../Contexts/TagsProvider/Tags/Creative";
+import Inspired from "../../../Contexts/TagsProvider/Tags/Inspired";
+import Blessed from "../../../Contexts/TagsProvider/Tags/Blessed";
+
 function Post(props) {
     const navigate = useNavigate();
     const contentRef = useRef(null);
@@ -167,8 +171,13 @@ function Post(props) {
         handleEditClose()
     }
 
+
+
+    
+
     return (
         <>
+            
             <div className={style.content} onClick={() => setPostModal(true)}>
                 <div style={{marginRight:"10px"}} onClick={() => gotoProfile(props.authorId)}>
                     <PFP size={{width:40, height:40}} profilePicture={props.pfp}/>

@@ -11,12 +11,13 @@ import { PostHandlerProvider } from './Contexts/PostHandlerProvider/PostHandlerP
 import { UserProvider } from './Contexts/UserProvider/UserProvider.jsx';
 import Profile from './Components/Application/Profile/Profile.jsx';
 
+
 function App() {
 
   return (
 
     <AuthProvider>
-      
+
         <PostHandlerProvider>
           <UserProvider>
           <BrowserRouter>

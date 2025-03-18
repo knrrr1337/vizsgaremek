@@ -14,13 +14,15 @@ import Button from "../Button/Button";
 import PFP from "../PFP/PFP";
 import IUB from "../ImageUploadButton/IUB";
 import TagsButton from "../TagsButton/TagsButton";
+import TAG from "../../Contexts/TagsProvider/Tags/TAG";
+
 
 
 function Feed({feedType, setFeedType}) {
 
     const navigate = useNavigate()
     const {user, setUser, rememberMe} = useContext(AuthContext)
-    const {dreams, setDreams, getPosts, openPostMenu, anyad, followedDreams, blockedDreams, keyy, createPost} = useContext(PostHandlerContext)
+    const {dreams, setDreams, getPosts, openPostMenu, anyad, followedDreams, blockedDreams, keyy, createPost, tags} = useContext(PostHandlerContext)
 
     const logout = () => {
         localStorage.clear()
@@ -109,7 +111,7 @@ function Feed({feedType, setFeedType}) {
         setTagsSelector(false)
     }
 
-    const {editOpen, handleEditClose, postContentt, setPostContentt, prettifyDate} = useContext(PostHandlerContext)
+
 
 
     
@@ -202,7 +204,11 @@ function Feed({feedType, setFeedType}) {
                 </div>
                 <Modal className={style.modalContainer} open={tagsSelector} onClose={handleTagsClose}>
                     <>
-                    <div className={style.innerModal}></div>
+                    <div className={style.innerModal}>
+                        {tags.map((tag) => {
+                            return <TAG icon={tag.icon} color={tag.color} name={tag.name}/>
+                        })}
+                    </div>
                     </>
                 </Modal>
 

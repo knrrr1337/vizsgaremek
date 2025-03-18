@@ -249,13 +249,17 @@ textarea {
 
 .innerModal {
     width: 600px;
-    height: 400px;
+    height: 800px;
+    overflow-y: scroll;
+    scrollbar-width: none;
     background-color: rgba(15, 8, 44, 1);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     padding: 20px;
     border: 0px;
     outline: none;
+    gap: 10px;
 }
 
 

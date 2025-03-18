@@ -2,6 +2,20 @@ import { createContext, useState, useContext, useEffect } from "react";
 import {AuthContext} from "../AuthProvider/AuthProvider"
 import axios from "axios"
 
+import Blessed from "../../Contexts/TagsProvider/Tags/Blessed";
+import Calm from "../../Contexts/TagsProvider/Tags/Calm";
+import Confident from "../../Contexts/TagsProvider/Tags/Confident";
+import Creative from "../../Contexts/TagsProvider/Tags/Creative";
+import Energetic from "../../Contexts/TagsProvider/Tags/Energetic";
+import Focused from "../../Contexts/TagsProvider/Tags/Focused";
+import Grateful from "../../Contexts/TagsProvider/Tags/Grateful";
+import Happy from "../../Contexts/TagsProvider/Tags/Happy";
+import Inspired from "../../Contexts/TagsProvider/Tags/Inspired";
+import Lovely from "../../Contexts/TagsProvider/Tags/Lovely";
+import Motivated from "../../Contexts/TagsProvider/Tags/Motivated";
+import Peaceful from "../../Contexts/TagsProvider/Tags/Peaceful";
+import Relaxed from "../../Contexts/TagsProvider/Tags/Relaxed";
+import Sad from "../../Contexts/TagsProvider/Tags/Sad";
 
 export const PostHandlerContext = createContext();
 
@@ -202,7 +216,8 @@ export function PostHandlerProvider({children}) {
                     'Content-Type': 'multipart/form-data'
                 }
             })
-            window.location.reload()
+            setTimeout(() => getPosts(user.id), 1500)
+            // window.location.reload()
         } catch(error) {
             console.log(error)
         }
@@ -241,8 +256,76 @@ export function PostHandlerProvider({children}) {
         setIsOpen(false)
     }
 
+    const [tags] = useState([
+        {
+            name:"Blessed",
+            color:"rgb(252, 253, 193)",
+            icon:<Blessed size={25} color="rgb(252, 253, 193)"/>
+        },
+        {
+            name:"Confident",
+            color:"rgb(61, 227, 196)",
+            icon:<Confident size={25} color="rgb(61, 227, 196)"/>
+        },
+        {
+            name:"Creative",
+            color:"rgb(24, 5, 192)",
+            icon:<Creative size={25} color="rgb(24, 5, 192)"/>
+        },
+        {
+            name:"Energetic",
+            color:"rgb(255, 238, 0)",
+            icon:<Energetic size={25} color="rgb(255, 238, 0)"/>
+        },
+        {
+            name:"Focused",
+            color:"rgb(255, 0, 72)",
+            icon:<Focused size={25} color="rgb(255, 0, 72)"/>
+        },
+        {
+            name:"Grateful",
+            color:"rgb(80, 204, 229)",
+            icon:<Grateful size={25} color="rgb(80, 204, 229)"/>
+        },
+        {
+            name:"Happy",
+            color:"rgb(255, 255, 0)",
+            icon:<Happy size={25} color="rgb(255, 255, 0)"/>
+        },
+        {
+            name:"Inspierd",
+            color:"rgb(111, 0, 255)",
+            icon:<Inspired size={25} color="rgb(111, 0, 255)"/>
+        },
+        {
+            name:"Lovely",
+            color:"rgb(255, 0, 17)",
+            icon:<Lovely size={25} color="rgb(255, 0, 17)"/>
+        },
+        {
+            name:"Motivated",
+            color:"rgb(0,255,0)",
+            icon:<Motivated size={25} color="rgb(0,255,0)"/>
+        },
+        {
+            name:"Peaceful",
+            color:"rgb(255, 158, 201)",
+            icon:<Peaceful size={25} color="rgb(255, 158, 201)"/>
+        },
+        {
+            name:"Relaxed",
+            color:"rgb(126, 168, 186)",
+            icon:<Relaxed size={25} color="rgb(126, 168, 186)"/>
+        },
+        {
+            name:"Sad",
+            color:"rgb(177, 8, 70)",
+            icon:<Sad size={25} color="rgb(177, 8, 70)"/>
+        }
+    ])
+
     return (
-        <PostHandlerContext.Provider key={keyy} value={{postContentt, setPostContentt, editOpen, setEditOpen, handleEditClose,getPosts,dreams, isOpen, setIsOpen, apad2, setDreams, getPosts, openPostMenu, apad, anyad, mousePos, setMousePos, authorId, followedDreams, setFollowedDreams, blockedDreams, keyy, likePost, commentOnPost, likedPosts, setLikedPosts, unLikePost, createPost, editPost, deletePost, postId, mydreams, setMydreams, prettifyDate, handleEditOpenFunc}}>
+        <PostHandlerContext.Provider key={keyy} value={{tags, postContentt, setPostContentt, editOpen, setEditOpen, handleEditClose,getPosts,dreams, isOpen, setIsOpen, apad2, setDreams, getPosts, openPostMenu, apad, anyad, mousePos, setMousePos, authorId, followedDreams, setFollowedDreams, blockedDreams, keyy, likePost, commentOnPost, likedPosts, setLikedPosts, unLikePost, createPost, editPost, deletePost, postId, mydreams, setMydreams, prettifyDate, handleEditOpenFunc}}>
             {children}
         </PostHandlerContext.Provider>
     )
