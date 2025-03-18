@@ -80,6 +80,18 @@ public class DreamService {
         }
     }
 
+    public void editDream(Long id, String title, String content, List<String> images) {
+        if (images != null) {
+            for (String image : images) {
+                System.out.println(image);
+                dreamImageRepository.deleteByImageUrl(image);
+            }
+        }
+
+
+        dreamRepository.editDream(id, title, content);
+    }
+
     public void likePost(long postId, long userId) {
         Reaction reaction = new Reaction();
         reaction.setUserId(userId);
@@ -95,6 +107,9 @@ public class DreamService {
     public List<Dream> getAllFollowedUsersDreams(Long userId) {
         List<Followers> followers = followersRepository.findAllByFollowerId(userId);
         List<Long> followedUserIds = followers.stream().map(follower -> follower.getFollowed().getId()).collect(Collectors.toList());
+        List<Block> blocks = blockRepository.findAllByBlockerId(userId);
+        List<Long> blockedUserIds = blocks.stream().map(block -> block.getBlocked().getId()).collect(Collectors.toList());
+
         List<Dream> asd = dreamRepository.findAll();
 
         for (Dream dream : asd) {
@@ -106,7 +121,7 @@ public class DreamService {
             dream.setImages(images);
         }
         return asd.stream()
-                .filter(dream -> followedUserIds.contains(dream.getUser().getId()))
+                .filter(dream -> followedUserIds.contains(dream.getUser().getId()) && !blockedUserIds.contains(dream.getUser().getId()))
                 .collect(Collectors.toList());
     }
 

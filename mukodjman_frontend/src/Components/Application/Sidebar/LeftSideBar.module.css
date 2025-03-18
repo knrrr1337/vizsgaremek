@@ -126,6 +126,7 @@ body {
     justify-content: center;
     align-items: center;
     margin-right: 10px;
+    transition: 0.5s;
 }
 
 .asd img {
@@ -133,14 +134,15 @@ body {
     height: 24px;
 }
 
+.logout span {
+    transition: 0.5s
+}
 
-
-.logout:hover .asd,
+.logout:hover .asd {
+    fill:red;
+}
 .logout:hover span {
-    color: red; /* Change this to the desired hover color */
-    /* Add any other hover styles you want */
-    filter: invert(42%) sepia(94%) saturate(6919%) hue-rotate(352deg) brightness(89%) contrast(130%);
-
+    color:red;
 }
 
 .modalContainer {

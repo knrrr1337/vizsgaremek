@@ -5,7 +5,7 @@ import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 import Person2Icon from '@mui/icons-material/Person2';
 import axios from 'axios';
 import Post from '../Application/Post/Post';
-import { TextField } from '@mui/material';
+import { Modal, TextField } from '@mui/material';
 import LeftSideBar from '../Application/Sidebar/LeftSideBar';
 import { PostHandlerContext } from '../../Contexts/PostHandlerProvider/PostHandlerProvider';
 import GoatedPostMenu from '../GoatedPostMenu/GoatedPostMenu';
@@ -13,6 +13,7 @@ import RightSideBar from '../Application/Sidebar/RightSideBar';
 import Button from "../Button/Button";
 import PFP from "../PFP/PFP";
 import IUB from "../ImageUploadButton/IUB";
+import TagsButton from "../TagsButton/TagsButton";
 
 
 function Feed({feedType, setFeedType}) {
@@ -103,7 +104,16 @@ function Feed({feedType, setFeedType}) {
         };
     }, [images]);
 
+    const [tagsSelector, setTagsSelector] = useState(false)
+    const handleTagsClose = () => {
+        setTagsSelector(false)
+    }
 
+    const {editOpen, handleEditClose, postContentt, setPostContentt, prettifyDate} = useContext(PostHandlerContext)
+
+
+    
+    
     return (
         <>
         <div className={style.createPost}>
@@ -135,6 +145,7 @@ function Feed({feedType, setFeedType}) {
                             </div>
                         </div>
                         <div className={style.postrow}>
+                            <TagsButton onClick={() => setTagsSelector(true)}/>
                             <IUB setImages={setImages} images={images} onClick={() => {console.log("image")}}/>
                             <select className={style.publicitySelector} value={publicity} onChange={(e) => setPublicity(e.target.value)}>
                                 <option value="PUBLIC" onClick={(e) => setPublicity(e.target.value)}>Public</option>
@@ -189,6 +200,13 @@ function Feed({feedType, setFeedType}) {
                     )}
                     {feedType === "following" && followedDreams.length === 0 ? <div style={{paddingTop:"20px"}}>You currently don't follow anyone.</div> : <div></div>}
                 </div>
+                <Modal className={style.modalContainer} open={tagsSelector} onClose={handleTagsClose}>
+                    <>
+                    <div className={style.innerModal}></div>
+                    </>
+                </Modal>
+
+
         </>
     )
 }

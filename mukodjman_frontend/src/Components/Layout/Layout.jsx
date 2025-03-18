@@ -15,7 +15,7 @@ const Layout = () => {
 
   const {anyad, setIsOpen} = useContext(PostHandlerContext)
 
-  window.addEventListener("click", ()=> {
+  window.addEventListener("click", (event)=> {
     anyad()
     setIsOpen(false)
   })

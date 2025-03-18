@@ -3,17 +3,17 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    border: 2px solid rgb(17, 0, 255);
+    border: 2px solid rgb(0,255,0);
     padding: 5px;
     border-radius: 10px;
-    background-color: rgba(17, 0, 255, 0.1);
+    background-color: rgba(0,255,0, 0.125);
     cursor: pointer;
 }
 
 .icon {
     width: inherit;
     height: inherit;
-    fill: rgb(17, 0, 255);
+    fill: #0349fc;
 }
 
 .iconContainer {
@@ -23,5 +23,5 @@
 
 .container span {
     margin: 0px;
-    color: rgb(17, 0, 255);
+    color: rgb(0,255,0);
 }

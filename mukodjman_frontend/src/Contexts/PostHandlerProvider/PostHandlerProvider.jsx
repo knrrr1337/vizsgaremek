@@ -77,6 +77,7 @@ export function PostHandlerProvider({children}) {
     const [keyy, setkeyy] = useState(0)
     const [likedPosts, setLikedPosts] = useState([])
     const [mydreams, setMydreams] = useState([])
+    const [handleEditOpenFunc, setHandleEditOpenFunc] = useState(() => () => {})
 
     let followeddreams
     let blockeddreams
@@ -87,13 +88,14 @@ export function PostHandlerProvider({children}) {
         }
     }, [user]);
 
-    const getPosts = (id) => {
+    const getPosts = async (id) => {
 
 
         console.log("GETTTTTIIIIIIIIIING") 
 
         axios.get(`http://localhost:4400/dream/list-dreams-all/${id}`).then((response) => {
             setDreams(response.data);
+            console.log(response.data)
         }).catch((error) => console.log(error));
 
         axios.get(`http://localhost:4400/dream/get-followed/${id}`).then((response2) => {
@@ -178,12 +180,34 @@ export function PostHandlerProvider({children}) {
             
             axios.get(`http://localhost:4400/dream/get-user-dreams/${user.id}`).then((response) => {
                 setMydreams(response.data);
-            });
+            }).catch((error) => console.log(error));
         }).catch((error) => console.log(error));
     };
 
-    const editPost = () => {
-        // todo
+    const [postContentt, setPostContentt] = useState({})
+
+    const [editOpen, setEditOpen] = useState(false)
+    const handleEditClose = () => {
+        setEditOpen(false)
+    }
+
+    const editPost = async (id, body) => {
+        const formData = new FormData();
+        formData.append("title", body.title);
+        formData.append("content", body.content);
+        formData.append("images", body.images)
+        try {
+            const response = await axios.put(`http://localhost:4400/dream/edit-dream/${id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            window.location.reload()
+        } catch(error) {
+            console.log(error)
+        }
+
+
     }
 
     const deletePost = (dreamId) => {
@@ -198,10 +222,11 @@ export function PostHandlerProvider({children}) {
         }).catch((error) => console.log(error))
     }
 
-    const apad = (authorId, id) => {
+    const apad = (authorId, id, handleEditOpen) => {
         setOpenPostMenu(true)
         setAuthorId(authorId)
         setPostId(id)
+        setHandleEditOpenFunc(() => handleEditOpen)
     }
 
     const apad2 = (id) => {
@@ -217,7 +242,7 @@ export function PostHandlerProvider({children}) {
     }
 
     return (
-        <PostHandlerContext.Provider key={keyy} value={{getPosts,dreams, isOpen, setIsOpen, apad2, setDreams, getPosts, openPostMenu, apad, anyad, mousePos, setMousePos, authorId, followedDreams, setFollowedDreams, blockedDreams, keyy, likePost, commentOnPost, likedPosts, setLikedPosts, unLikePost, createPost, editPost, deletePost, postId, mydreams, setMydreams, prettifyDate}}>
+        <PostHandlerContext.Provider key={keyy} value={{postContentt, setPostContentt, editOpen, setEditOpen, handleEditClose,getPosts,dreams, isOpen, setIsOpen, apad2, setDreams, getPosts, openPostMenu, apad, anyad, mousePos, setMousePos, authorId, followedDreams, setFollowedDreams, blockedDreams, keyy, likePost, commentOnPost, likedPosts, setLikedPosts, unLikePost, createPost, editPost, deletePost, postId, mydreams, setMydreams, prettifyDate, handleEditOpenFunc}}>
             {children}
         </PostHandlerContext.Provider>
     )

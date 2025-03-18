@@ -134,7 +134,7 @@ function LeftSideBar() {
                         ):(
                         <div>
                             <div className={style.followMenu}>
-                                <h2  className={`${style.h2} ${style.blockh2}`}>Blocked users</h2>
+                                <h2  className={`${style.h2} ${style.blockh2}`}>Blocked users<span className={style.size}>({blockedUsers.length})</span></h2>
                             </div>
                             {blockedUsers.map((user, index) => {
                                 

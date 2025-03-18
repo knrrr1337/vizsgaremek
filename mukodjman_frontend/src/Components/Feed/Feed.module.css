@@ -176,6 +176,10 @@ footer {
     
 }
 
+.titlerow {
+    height: fit-content;
+}
+
 .title {
     resize:none;
     width: 100%;
@@ -231,3 +235,29 @@ textarea {
     object-fit: contain;
     cursor: pointer;
 }
+
+
+.modalContainer {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0px;
+    outline: none;
+}
+
+.innerModal {
+    width: 600px;
+    height: 400px;
+    background-color: rgba(15, 8, 44, 1);
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    border: 0px;
+    outline: none;
+}
+
+
+
+

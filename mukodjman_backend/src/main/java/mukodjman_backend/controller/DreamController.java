@@ -5,6 +5,7 @@ import mukodjman_backend.dto.Login.LoginRequest;
 import mukodjman_backend.dto.customDream;
 import mukodjman_backend.dto.dream.CommentRequest;
 import mukodjman_backend.dto.dream.CreateDreamRequest;
+import mukodjman_backend.dto.dream.DreamEditRequest;
 import mukodjman_backend.dto.dream.LikeRequest;
 import mukodjman_backend.dto.user.PostUser;
 import mukodjman_backend.enums.Privacy;
@@ -116,6 +117,11 @@ public class DreamController {
         return anyad;
     }
 
+    @PutMapping("edit-dream/{id}")
+    public void editDream(@PathVariable long id, @RequestParam("title") String title, @RequestParam("content") String content, @RequestParam("images") List<String> images) {
+        dreamService.editDream(id, title, content, images);
+    }
+
     @GetMapping("get-blocked/{userId}")
     public List<customDream> getBlockedDreams(@PathVariable Long userId) {
         List<Dream> dreams = dreamService.getAllBlockedUsersDreams(userId);
@@ -160,6 +166,7 @@ public class DreamController {
         dto.setReactions(dream.getReactions());
         dto.setCreatedAt(dream.getCreated_at());
         dto.setImages(dream.getImages());
+        dto.setTags(dream.getTags());
         return dto;
     }
 

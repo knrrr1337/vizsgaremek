@@ -3,6 +3,7 @@ package mukodjman_backend.service;
 import mukodjman_backend.converter.UserConverter;
 import mukodjman_backend.dto.Login.LoginRequest;
 import mukodjman_backend.dto.user.BlockedUser;
+import mukodjman_backend.dto.user.DrogosUser;
 import mukodjman_backend.dto.user.FollowedUser;
 import mukodjman_backend.dto.user.UserRead;
 import mukodjman_backend.model.Block;
@@ -43,8 +44,16 @@ public class UserService {
         return null;
     }
 
-    public User getUserr(long id) {
-        return repository.getReferenceById(id);
+    public DrogosUser getUserr(long id) {
+        User mybeloved = repository.getReferenceById(id);
+        DrogosUser du = new DrogosUser();
+        du.setId(mybeloved.getId());
+        du.setUsername(mybeloved.getUsername());
+        du.setBio(mybeloved.getBio());
+        du.setProfilePicture(mybeloved.getProfilePicture());
+        du.setCreated_at(mybeloved.getCreated_at());
+
+        return du;
     }
 
     public String createUser(User user) {

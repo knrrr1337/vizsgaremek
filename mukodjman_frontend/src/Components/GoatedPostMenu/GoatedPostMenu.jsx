@@ -11,7 +11,7 @@ import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 
 function GoatedPostMenu({open, what}) {
 
-    const {openPostMenu, mousePos, authorId, postId, deletePost} = useContext(PostHandlerContext)
+    const {openPostMenu, mousePos, authorId, postId, deletePost, handleEditOpenFunc} = useContext(PostHandlerContext)
     const {followUser, blockUser, followedUsers, blockedUsers, isUserFollowed, unFollowUser} = useContext(UserContext)
     const {user} = useContext(AuthContext)
 
@@ -45,7 +45,7 @@ function GoatedPostMenu({open, what}) {
                 left: `${mousePos.x - 43.62}px`,
                 position:"absolute"}}>
                 <ul className={style.ul}>
-                    <li><EditIcon className={style.icon}/>Edit</li>
+                    <li onClick={() => handleEditOpenFunc()}><EditIcon className={style.icon}/>Edit</li>
                     <li onClick={() => deletePost(postId)}><RemoveCircleIcon className={style.icon}/>Delete</li>
                 </ul>
             </div>)

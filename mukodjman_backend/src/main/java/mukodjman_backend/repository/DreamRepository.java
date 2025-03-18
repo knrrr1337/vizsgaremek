@@ -19,4 +19,9 @@ public interface DreamRepository extends JpaRepository<Dream, Long> {
     @Query("DELETE FROM Dream d WHERE d.id = :id")
     void delete(@Param("id") long id);
 
+    @Modifying
+    @Transactional
+    @Query("UPDATE Dream d SET d.title = :title, d.content = :content WHERE d.id = :dreamId")
+    void editDream(@Param("dreamId") long id, @Param("title") String title, @Param("content") String content);
+
 }

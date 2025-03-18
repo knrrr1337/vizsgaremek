@@ -21,7 +21,7 @@ function Post(props) {
     const [comments, setComments] = useState(props.comments.length);
     const [isLiked, setIsLiked] = useState(false);
 
-    const { apad, setMousePos, likePost, commentOnPost, likedPosts, unLikePost, prettifyDate} = useContext(PostHandlerContext);
+    const { apad, setMousePos, likePost, commentOnPost, likedPosts, unLikePost, prettifyDate, editPost} = useContext(PostHandlerContext);
     const {isUserFollowed} = useContext(UserContext)
 
     const goToPost = (postId) => {
@@ -59,13 +59,14 @@ function Post(props) {
         );
     };
 
-    const openDropdown = (event, authorId) => {
+    const openDropdown = (event, authorId, props) => {
         event.stopPropagation();
-        apad(authorId, props.id);
+        apad(authorId, props.id, handleEditOpen);
         const rect = dropdownRef.current.getBoundingClientRect();
         let middleX = rect.x + rect.width / 2;
         let middleY = rect.y + (rect.height / 2 + 5);
 
+        
         setMousePos({ x: middleX, y: middleY });
         console.log(isUserFollowed())
     };
@@ -127,6 +128,44 @@ function Post(props) {
         setPictureToDisplay("")
     }
 
+    const [editOpen, setEditOpen] = useState(false);
+
+    const handleEditOpen = () => {
+        setEditOpen(true);
+    };
+
+    const handleEditClose = () => {
+        setEditOpen(false);
+        setTitleValue(() => props.title)
+        setContentValue(() => props.content)
+        setTagsValue(() => props.tags)
+        setImagesValue(() => [...props.images])
+    };
+
+
+        const [titleValue, setTitleValue] = useState(() => props.title)
+        const [contentValue, setContentValue] = useState(() => props.content)
+        const [tagsValue, setTagsValue] = useState(() => props.tags)
+        let [imagesValue, setImagesValue] = useState(() => [...props.images])
+
+    const checkIfValidd = () => {
+        return titleValue !== "" && contentValue !== ""
+    }
+
+    const proceedEdit = () => {
+        const uwu = new Set(imagesValue.map(img => img))
+        const remaining = props.images.filter(img => !uwu.has(img))
+        let apad = {
+            title:titleValue,
+            content:contentValue,
+            images:remaining.map((r) => {
+                return r.imageUrl
+            })
+        }
+    
+        editPost(props.id, apad)
+        handleEditClose()
+    }
 
     return (
         <>
@@ -140,7 +179,7 @@ function Post(props) {
                             <span className={`${style.username} ${style.userinfospan}`}>{props.username} {props.privacy ? <span style={{margin:"0px", fontSize:"12px"}}> - {prettifyPrivacy(props.privacy)}</span> : ""}</span>
                             <span className={`${style.timeposted} ${style.userinfospan}`}>{prettifyDate(props.posted_at)}</span>
                         </div>
-                        <div className={style.hererakk} ref={dropdownRef} onClick={(event) => openDropdown(event, props.authorId)}>
+                        <div className={style.hererakk} ref={dropdownRef} onClick={(event) => openDropdown(event, props.authorId, props)}>
                             <MoreHorizIcon />
                         </div>
                     </div>
@@ -248,6 +287,53 @@ function Post(props) {
                     </div>
                 
             </Modal>
+
+
+            <Modal open={editOpen} onClose={handleEditClose} className={style.modalContainer}>
+                    <div className={style.containerr}>
+                                <div className={style.woah}>
+                                    <div className={style.pfpdiv}>
+                                        <PFP size={{width:40, height:40}} profilePicture={props.pfp}/>
+                                    </div>
+                                    <div className={style.userRoww}>
+                                        <span>{props.username}</span>
+                                        <span className={style.timeposted}>{props.posted_at && prettifyDate(props.posted_at)}</span>
+                                    </div>
+                                </div>
+                                <div className={style.contentt}>
+                                    <div className={style.titlerow}>
+                                        <input type="text" placeholder="Might have spotted a typo?" className={style.editTitle} value={titleValue} onChange={(e) => setTitleValue(e.target.value)} />
+                                    </div>
+                                    <div className={style.text}>
+                                        <textarea placeholder="Perhaps a minor spelling mistake?" value={contentValue} onChange={(e) => setContentValue(e.target.value)}></textarea>
+                                    </div>
+                                    
+
+                                    <div className={style.images} >
+                                            {imagesValue.length !== 0 ? (imagesValue && imagesValue.map((image, index) => {
+                                                return <div onClick={(e) => {
+                                                    e.stopPropagation()
+                                                    setImagesValue(imagesValue.filter((img, i) => i !== index))
+                                                }} style={{backgroundImage: `url(${`http://localhost:4400/uploads/${image.imageUrl}`})`,
+                                                backgroundSize: 'cover',
+                                                backgroundPosition: 'center',
+                                                width: '200px',
+                                                height: '200px',
+                                                position:"relative",
+                                                zIndex:1,
+                                                borderRadius: '8px',
+                                                cursor: 'pointer'}}/>
+                                            })) : ("Who needs images anyways")}
+                                    </div>
+                                    <div className={style.buttoncont}>
+                                        <Button onClick={handleEditClose} text="CANCEL" color="white" bgcolor="rgb(0, 81, 255)" valid={true}/>                                    
+                                        <Button onClick={proceedEdit} text="EDIT" bgcolor="rgb(126, 49, 204)"  valid={checkIfValidd}/>                                    
+                                    </div>
+                                </div>
+                            </div>
+                </Modal>
+
+
         </>
     );
 }
