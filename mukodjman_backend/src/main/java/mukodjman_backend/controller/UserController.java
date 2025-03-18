@@ -38,6 +38,12 @@ public class UserController {
         return "user blocked";
     }
 
+    @PostMapping("/unblock-user")
+    public void unblockUser(@RequestBody BlockUserRequest blockUserRequest) {
+//        System.out.println(blockUserRequest.getUserId() + " " + blockUserRequest.getAuthorId());
+        service.unblockUser(blockUserRequest.getUserId(), blockUserRequest.getAuthorId());
+    }
+
     @PostMapping("/follow-user")
     public void followUser(@RequestBody FollowRequest followRequest) {
         service.followUser(followRequest.getUserId(), followRequest.getUserToBeFollowedId());

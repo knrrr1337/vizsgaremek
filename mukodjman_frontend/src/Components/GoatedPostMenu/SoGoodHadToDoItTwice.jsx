@@ -37,7 +37,7 @@ function SoGoodHadToDoItTwice(props) {
                 <ul className={style.ul}>
                     {apad()}
                     {isUserBlocked(props.baszosId) ? (
-                        <li onClick={() => unblockUser()}><BlockIcon className={style.icon}/><p className={style.text}>Unblock</p></li>
+                        <li onClick={() => unblockUser(props.baszosId)}><BlockIcon className={style.icon}/><p className={style.text}>Unblock</p></li>
                     ) : (
                     <li onClick={() => blockUser2(props.baszosId)}><BlockIcon className={style.icon}/> <p className={style.text}>Block</p></li>
                     )}

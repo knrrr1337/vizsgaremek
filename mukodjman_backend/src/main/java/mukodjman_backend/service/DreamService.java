@@ -141,6 +141,8 @@ public class DreamService {
 
     public List<Dream> getAllDreams(long id) {
         List<Followers> followers = followersRepository.findAllByFollowerId(id);
+        List<Block> blocks = blockRepository.findAllByBlockerId(id);
+        List<Long> blockedUserIds = blocks.stream().map(block -> block.getBlocked().getId()).collect(Collectors.toList());
         List<Long> followedUserIds = followers.stream()
                 .map(f -> f.getFollowed().getId())
                 .collect(Collectors.toList());
@@ -148,9 +150,9 @@ public class DreamService {
         // Retrieve all dreams and filter them according to privacy rules.
         List<Dream> dreams = dreamRepository.findAll().stream()
                 .filter(dream ->
-                        dream.getUser().getId() == id ||
+                        (dream.getUser().getId() == id ||
                                 dream.getPrivacy() == Privacy.PUBLIC ||
-                                (dream.getPrivacy() == Privacy.FOLLOWERS_ONLY && followedUserIds.contains(dream.getUser().getId()))
+                                (dream.getPrivacy() == Privacy.FOLLOWERS_ONLY && followedUserIds.contains(dream.getUser().getId()))) && !blockedUserIds.contains(dream.getUser().getId())
                 )
                 .collect(Collectors.toList());
 

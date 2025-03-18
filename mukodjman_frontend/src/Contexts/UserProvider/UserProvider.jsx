@@ -9,12 +9,12 @@ export const UserContext = createContext()
 export function UserProvider({children}) {
 
     const {user} = useContext(AuthContext)
-    const {authorId, setFollowedDreams, dreams} = useContext(PostHandlerContext)
+    const {authorId, setFollowedDreams, dreams, getPosts} = useContext(PostHandlerContext)
     const [followedUsers, setFollowedUsers] = useState([])
     const [followers, setFollowers] = useState([])
     const [blockedUsers, setBlockedUsers] = useState([])
     
-    useEffect(() => {    
+    useEffect(() => {   
         if (user) {
             axios.get(`http://localhost:4400/user/get-followed-users/${user.id}`).then((response) => {
                 setFollowedUsers(response.data)
@@ -38,7 +38,10 @@ export function UserProvider({children}) {
 
     const blockUser = (userToBlock) => {
         axios.post("http://localhost:4400/user/block-user", {userId:user.id, authorId:authorId}).then((response) => {
-            window.location.reload()
+            axios.get(`http://localhost:4400/user/get-blocked-users/${user.id}`).then((response2) => {
+                setBlockedUsers(response2.data)
+                getPosts(user.id)
+            }).catch((error) => console.log(error))
         }).catch((error) => console.log(error))
     }
 
@@ -46,6 +49,7 @@ export function UserProvider({children}) {
         axios.post("http://localhost:4400/user/block-user", {userId:user.id, authorId:blockingId}).then((response) => {
             axios.get(`http://localhost:4400/user/get-blocked-users/${user.id}`).then((response2) => {
                 setBlockedUsers(response2.data)
+                getPosts(user.id)
             }).catch((error) => console.log(error))
         }).catch((error) => console.log(error))
     }
@@ -55,11 +59,12 @@ export function UserProvider({children}) {
         axios.post("http://localhost:4400/user/follow-user", {userId:user.id, userToBeFollowedId:authorId}).then((response) => {
             axios.get(`http://localhost:4400/dream/get-followed/${user.id}`).then((response2) => {
                 setFollowedDreams(response2.data);
-                
+                // getPosts(user.id)
             }).catch((error) => console.log(error));
             axios.get(`http://localhost:4400/user/get-followed-users/${user.id}`).then((response) => {
                 console.log(response.data)
                 setFollowedUsers(response.data)
+                // getPosts(user.id)
             }).catch((error) => console.log(error))
         }).catch((error) => console.log(error))
     }
@@ -96,7 +101,17 @@ export function UserProvider({children}) {
         })
     }
 
-    return <UserContext.Provider value={{blockUser,blockUser2, isUserBlocked, followers, followUser, followedUsers, blockedUsers, isUserFollowed, unFollowUser, isUserFollowed2}}>
+    const unblockUser = (diddyId) => {
+        axios.post(`http://localhost:4400/user/unblock-user`, {userId:user.id, authorId:diddyId}).then((response) => {
+            console.log(response)
+            axios.get(`http://localhost:4400/user/get-blocked-users/${user.id}`).then((response2) => {
+                setBlockedUsers(response2.data)
+                getPosts(user.id)
+            }).catch((error) => console.log(error))
+        }).catch((error) => console.log(error))
+    }
+
+    return <UserContext.Provider value={{blockUser,blockUser2, isUserBlocked, followers, followUser, followedUsers, blockedUsers, unblockUser, isUserFollowed, unFollowUser, isUserFollowed2}}>
             {children}
         </UserContext.Provider>
 }

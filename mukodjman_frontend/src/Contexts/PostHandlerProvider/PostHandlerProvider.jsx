@@ -7,6 +7,8 @@ export const PostHandlerContext = createContext();
 
 export function PostHandlerProvider({children}) {
     
+    const [csin, setCsin] = useState(0)
+
     const prettifyDate = (date) => {
         const splitted = date.split("T");
         const datePart = splitted[0].split("-");
@@ -88,6 +90,7 @@ export function PostHandlerProvider({children}) {
     const getPosts = (id) => {
 
 
+        console.log("GETTTTTIIIIIIIIIING") 
 
         axios.get(`http://localhost:4400/dream/list-dreams-all/${id}`).then((response) => {
             setDreams(response.data);
@@ -214,7 +217,7 @@ export function PostHandlerProvider({children}) {
     }
 
     return (
-        <PostHandlerContext.Provider key={keyy} value={{dreams, isOpen, setIsOpen, apad2, setDreams, getPosts, openPostMenu, apad, anyad, mousePos, setMousePos, authorId, followedDreams, setFollowedDreams, blockedDreams, keyy, likePost, commentOnPost, likedPosts, setLikedPosts, unLikePost, createPost, editPost, deletePost, postId, mydreams, setMydreams, prettifyDate}}>
+        <PostHandlerContext.Provider key={keyy} value={{getPosts,dreams, isOpen, setIsOpen, apad2, setDreams, getPosts, openPostMenu, apad, anyad, mousePos, setMousePos, authorId, followedDreams, setFollowedDreams, blockedDreams, keyy, likePost, commentOnPost, likedPosts, setLikedPosts, unLikePost, createPost, editPost, deletePost, postId, mydreams, setMydreams, prettifyDate}}>
             {children}
         </PostHandlerContext.Provider>
     )

@@ -143,6 +143,10 @@ public class UserService {
         followersRepository.save(followers);
     }
 
+    public void unblockUser (long userId, long userToBeUnblockedId) {
+        blockRepository.delete(userId, userToBeUnblockedId);
+    }
+
     public void blockUser(Long userId, Long authorId) {
         User user = repository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         User author = repository.findById(authorId).orElseThrow(() -> new RuntimeException("Author not found"));
