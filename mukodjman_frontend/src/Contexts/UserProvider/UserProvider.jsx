@@ -28,7 +28,6 @@ export function UserProvider({children}) {
                 
             }).catch((error) => console.log(error))
             axios.get(`http://localhost:4400/user/get-users-following-user/${user.id}`).then((response) => {
-                console.log(response.data)
                 setFollowers(response.data)
             }).catch((error) => console.log(error))
 
@@ -55,7 +54,6 @@ export function UserProvider({children}) {
     }
 
     const followUser = (userToFollow) => {
-        console.log(authorId)
         axios.post("http://localhost:4400/user/follow-user", {userId:user.id, userToBeFollowedId:authorId}).then((response) => {
             axios.get(`http://localhost:4400/dream/get-followed/${user.id}`).then((response2) => {
                 setFollowedDreams(response2.data);
@@ -75,7 +73,7 @@ export function UserProvider({children}) {
     }
 
     const isUserBlocked = (diddyId) => {
-        console.log(blockedUsers)
+
         return blockedUsers.some((userr) => userr.id === diddyId)
     }
 
@@ -84,7 +82,6 @@ export function UserProvider({children}) {
     }
     
     const unFollowUser = (userToUnfollow) => {
-        console.log(authorId)
         axios.post(`http://localhost:4400/user/unfollow-user/${user.id}`, {userId: user.id, userToBeFollowedId:authorId}).then((response) => {
             console.log("response.data");
             axios.get(`http://localhost:4400/dream/get-followed/${user.id}`).then((response2) => {

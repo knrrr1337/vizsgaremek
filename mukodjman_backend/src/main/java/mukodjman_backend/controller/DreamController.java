@@ -28,6 +28,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -56,6 +57,17 @@ public class DreamController {
         }
         anyad.sort((d1, d2) -> d2.getCreatedAt().compareTo(d1.getCreatedAt()));
         return anyad;
+    }
+
+    //GET top 3 most used tags within the last 7 days of posts
+    @GetMapping("get-trending-tags")
+    public List<String> getTrendingTags() {
+        return dreamService.getTrendingTags();
+    }
+
+    @GetMapping("get-popular-tags")
+    public List<String> getPopularTags() {
+        return dreamService.getAllTimeTags();
     }
 
     @DeleteMapping("delete-dream/{id}")

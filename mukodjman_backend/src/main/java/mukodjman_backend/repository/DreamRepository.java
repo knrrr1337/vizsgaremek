@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface DreamRepository extends JpaRepository<Dream, Long> {
@@ -24,4 +25,9 @@ public interface DreamRepository extends JpaRepository<Dream, Long> {
     @Query("UPDATE Dream d SET d.title = :title, d.content = :content, d.tags = :tags WHERE d.id = :dreamId")
     void editDream(@Param("dreamId") long id, @Param("title") String title, @Param("content") String content, @Param("tags") String tags);
 
+    @Query("SELECT d.tags FROM Dream d WHERE d.created_at BETWEEN :lastweek AND :now")
+    List<String> findLastWeek(@Param("lastweek") LocalDateTime lastweek, @Param("now") LocalDateTime now );
+
+    @Query("SELECT d.tags FROM Dream d")
+    List<String> findAllTags();
 }

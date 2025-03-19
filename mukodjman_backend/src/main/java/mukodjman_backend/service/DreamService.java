@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,6 +32,75 @@ public class DreamService {
 
     @Autowired
     private DreamImageRepository dreamImageRepository;
+
+    public List<String> getTrendingTags() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime week = now.minusDays(7);
+        List<String> lastweek = dreamRepository.findLastWeek(week, now);
+
+        HashSet<String> tags = new HashSet<>();
+        ArrayList<String> tagsArray = new ArrayList<>();
+        for (String s : lastweek) {
+            tagsArray.add(s);
+            if (s != null && !s.isEmpty()) {
+                String[] tagsSplit = s.split("#");
+                tags.addAll(Arrays.asList(tagsSplit));
+            }
+        }
+
+        Map<String, Integer> tagsDictionary = new HashMap<>();
+
+        for (String tag : tags) {
+            tagsDictionary.put(tag, Collections.frequency(tagsArray, tag));
+        }
+
+        // Sort the dictionary by values in descending order and limit to top 3
+        List<Map.Entry<String, Integer>> sortedTags = new ArrayList<>(tagsDictionary.entrySet());
+        sortedTags.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));
+
+        List<String> topTags = new ArrayList<>();
+        for (int i = 0; i < Math.min(3, sortedTags.size()); i++) {
+            Map.Entry<String, Integer> entry = sortedTags.get(i);
+            topTags.add(entry.getKey());
+            System.out.println("Tag: " + entry.getKey() + ", Frequency: " + entry.getValue());
+        }
+
+        return topTags;
+
+    }
+
+    public List<String> getAllTimeTags() {
+        List<String> lastweek = dreamRepository.findAllTags();
+
+        HashSet<String> tags = new HashSet<>();
+        ArrayList<String> tagsArray = new ArrayList<>();
+        for (String s : lastweek) {
+            tagsArray.add(s);
+            if (s != null && !s.isEmpty()) {
+                String[] tagsSplit = s.split("#");
+                tags.addAll(Arrays.asList(tagsSplit));
+            }
+        }
+
+        Map<String, Integer> tagsDictionary = new HashMap<>();
+
+        for (String tag : tags) {
+            tagsDictionary.put(tag, Collections.frequency(tagsArray, tag));
+        }
+
+        // Sort the dictionary by values in descending order and limit to top 3
+        List<Map.Entry<String, Integer>> sortedTags = new ArrayList<>(tagsDictionary.entrySet());
+        sortedTags.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));
+
+        List<String> topTags = new ArrayList<>();
+        for (int i = 0; i < Math.min(3, sortedTags.size()); i++) {
+            Map.Entry<String, Integer> entry = sortedTags.get(i);
+            topTags.add(entry.getKey());
+            System.out.println("Tag: " + entry.getKey() + ", Frequency: " + entry.getValue());
+        }
+
+        return topTags;
+    }
 
     public List<Dream> getUserDreams(long id) {
         return dreamRepository.findAllByUserId(id);

@@ -92,9 +92,8 @@ export function PostHandlerProvider({children}) {
     const [likedPosts, setLikedPosts] = useState([])
     const [mydreams, setMydreams] = useState([])
     const [handleEditOpenFunc, setHandleEditOpenFunc] = useState(() => () => {})
-
-    let followeddreams
-    let blockeddreams
+    const [lastWeekTags, setLastWeekTags] = useState([])
+    const [popularTags, setPopularTags] = useState([])
 
     useEffect(() => {
         if (user) {
@@ -124,6 +123,14 @@ export function PostHandlerProvider({children}) {
         axios.get(`http://localhost:4400/dream/get-user-dreams/${id}`).then((response) => {
             setMydreams(response.data)
         })
+        axios.get(`http://localhost:4400/dream/get-trending-tags`).then((response) => {
+            setLastWeekTags(response.data)
+        }).catch((error) => console.log(error))
+
+        axios.get(`http://localhost:4400/dream/get-popular-tags`).then((response) => {
+            console.log(response)
+            setPopularTags(response.data)
+        }).catch((error) => console.log(error))
 
     };
 
@@ -328,7 +335,7 @@ export function PostHandlerProvider({children}) {
 
 
     return (
-        <PostHandlerContext.Provider key={keyy} value={{tags, postContentt, setPostContentt, editOpen, setEditOpen, handleEditClose,getPosts,dreams, isOpen, setIsOpen, apad2, setDreams, getPosts, openPostMenu, apad, anyad, mousePos, setMousePos, authorId, followedDreams, setFollowedDreams, blockedDreams, keyy, likePost, commentOnPost, likedPosts, setLikedPosts, unLikePost, createPost, editPost, deletePost, postId, mydreams, setMydreams, prettifyDate, handleEditOpenFunc}}>
+        <PostHandlerContext.Provider key={keyy} value={{popularTags, lastWeekTags, tags, postContentt, setPostContentt, editOpen, setEditOpen, handleEditClose,getPosts,dreams, isOpen, setIsOpen, apad2, setDreams, getPosts, openPostMenu, apad, anyad, mousePos, setMousePos, authorId, followedDreams, setFollowedDreams, blockedDreams, keyy, likePost, commentOnPost, likedPosts, setLikedPosts, unLikePost, createPost, editPost, deletePost, postId, mydreams, setMydreams, prettifyDate, handleEditOpenFunc}}>
             {children}
         </PostHandlerContext.Provider>
     )
