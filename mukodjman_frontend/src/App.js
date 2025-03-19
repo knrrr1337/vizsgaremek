@@ -21,7 +21,6 @@ function App() {
 
         <PostHandlerProvider>
           <UserProvider>
-            <WebSocketComponent/>
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Layout/>}>

@@ -2,6 +2,7 @@ package mukodjman_backend.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import mukodjman_backend.Handler.MyWebSocketHandler;
 import mukodjman_backend.dto.user.*;
 import mukodjman_backend.model.User;
 import mukodjman_backend.service.FollowersService;
@@ -15,6 +16,8 @@ import java.util.List;
 @RequestMapping("user/")
 @Tag(name="felhasznalok", description="felhasznalok kontrollere")
 public class UserController {
+
+
 
     @Autowired
     private UserService service;

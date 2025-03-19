@@ -36,6 +36,7 @@
 package mukodjman_backend.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import mukodjman_backend.Handler.MyWebSocketHandler;
 import mukodjman_backend.dto.Login.LoginRequest;
 import mukodjman_backend.dto.Register.RegisterRequest;
 import mukodjman_backend.model.Block;
@@ -61,9 +62,6 @@ import java.nio.file.Paths;
 @Tag(name="account", description="csin account")
 public class AccountController {
 
-//
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
 
     private final String uploadDir = "uploads/";
     @Autowired

@@ -33,9 +33,13 @@ function WebSocketComponent() {
 
     }, [user]); // Empty dependency ensures this runs once on mount.
 
-    const sendMessage = () => {
+    window.addEventListener("beforeunload", () => {
+        sendMessage("invalidateSession")
+    })
+
+    const sendMessage = (msg) => {
         if (socket && socket.readyState === WebSocket.OPEN) {
-            socket.send("HELLOOOOOOO");
+            socket.send(msg);
             console.log("Message sent");
         } else {
             console.log("WebSocket is not open yet");
