@@ -1,6 +1,7 @@
 package mukodjman_backend.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import mukodjman_backend.Handler.MyWebSocketHandler;
 import mukodjman_backend.dto.Login.LoginRequest;
 import mukodjman_backend.dto.customDream;
 import mukodjman_backend.dto.dream.CommentRequest;
@@ -35,6 +36,9 @@ import java.util.stream.Collectors;
 @RequestMapping("dream/")
 @Tag(name="dreams", description="komoly dreams")
 public class DreamController {
+
+    @Autowired
+    private MyWebSocketHandler webSocketHandler;
 
     @Autowired
     private DreamService dreamService;
@@ -88,6 +92,7 @@ public class DreamController {
         }
         System.out.println(tags);
         dreamService.createDream(userId, title, content, privacy, imageUrls, tags);
+        webSocketHandler.sendMessageToAll("getposts");
     }
 
     @GetMapping("get-user-dreams/{id}")
@@ -144,6 +149,7 @@ public class DreamController {
     public void likeDream(@RequestBody LikeRequest likeRequest) {
         System.out.println(likeRequest.getPostId() + " " + likeRequest.getUserId());
         dreamService.likePost(likeRequest.getPostId(), likeRequest.getUserId());
+        webSocketHandler.sendMessageToAll("getposts");
     }
 
     @PostMapping("comment-on-dream/{id}")

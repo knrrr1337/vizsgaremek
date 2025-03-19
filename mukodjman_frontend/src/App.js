@@ -10,6 +10,7 @@ import Register from './Components/Register/Register.jsx';
 import { PostHandlerProvider } from './Contexts/PostHandlerProvider/PostHandlerProvider.jsx';
 import { UserProvider } from './Contexts/UserProvider/UserProvider.jsx';
 import Profile from './Components/Application/Profile/Profile.jsx';
+import WebSocketComponent from './Components/WebSocket/WebSocketComponent.jsx';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
 
         <PostHandlerProvider>
           <UserProvider>
+            <WebSocketComponent/>
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Layout/>}>

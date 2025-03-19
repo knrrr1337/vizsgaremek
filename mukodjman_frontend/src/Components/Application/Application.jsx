@@ -11,6 +11,7 @@ import { PostHandlerContext } from '../../Contexts/PostHandlerProvider/PostHandl
 import GoatedPostMenu from '../GoatedPostMenu/GoatedPostMenu';
 import RightSideBar from './Sidebar/RightSideBar';
 import Feed from "../Feed/Feed"
+import WebSocketComponent from '../WebSocket/WebSocketComponent';
 
 function App() {
 
@@ -83,6 +84,7 @@ function App() {
 
     return (
     <>
+    <WebSocketComponent/>
     <div className={style.content}>
         <LeftSideBar/>
 
