@@ -196,7 +196,7 @@ textarea {
     resize:none;
     width: 100%;
     height: fit-content;
-    min-height: 75px;
+    min-height: 20px;
     outline: none;
     border: none;
     background-color: rgb(15, 8, 44);
@@ -262,6 +262,10 @@ textarea {
     gap: 10px;
 }
 
-
+.tags {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
 
 

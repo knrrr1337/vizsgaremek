@@ -109,7 +109,6 @@ export function PostHandlerProvider({children}) {
 
         axios.get(`http://localhost:4400/dream/list-dreams-all/${id}`).then((response) => {
             setDreams(response.data);
-            console.log(response.data)
         }).catch((error) => console.log(error));
 
         axios.get(`http://localhost:4400/dream/get-followed/${id}`).then((response2) => {
@@ -147,7 +146,6 @@ export function PostHandlerProvider({children}) {
     const commentOnPost = (id, content) => {
         console.log(id + " " + content)
         axios.post(`http://localhost:4400/dream/comment-on-dream/${id}`, {comment:content, userId:user.id}).then((response) => {
-            console.log(response)
             axios.get(`http://localhost:4400/dream/list-dreams-all/${user.id}`).then((response) => {
                 setDreams(response.data);
             }).catch((error) => console.log(error));
@@ -169,13 +167,15 @@ export function PostHandlerProvider({children}) {
             
     //     // }).catch((error) => console.log(error))
     // }
-    const createPost = (title, content, publicity, images) => {
+    const createPost = (title, content, publicity, images, tags) => {
         const formData = new FormData();
         formData.append("title", title);
         formData.append("content", content);
         formData.append("userId", user.id);
-        formData.append("privacy", publicity);
-        formData.append("tags", "");
+        formData.append("privacy", publicity);  
+ 
+        console.log(tags)
+        formData.append("tags", tags);
         
         // Append each image with a unique key
         images.forEach((image, index) => {
@@ -293,7 +293,7 @@ export function PostHandlerProvider({children}) {
             icon:<Happy size={25} color="rgb(255, 255, 0)"/>
         },
         {
-            name:"Inspierd",
+            name:"Inspired",
             color:"rgb(111, 0, 255)",
             icon:<Inspired size={25} color="rgb(111, 0, 255)"/>
         },
@@ -323,6 +323,8 @@ export function PostHandlerProvider({children}) {
             icon:<Sad size={25} color="rgb(177, 8, 70)"/>
         }
     ])
+
+
 
     return (
         <PostHandlerContext.Provider key={keyy} value={{tags, postContentt, setPostContentt, editOpen, setEditOpen, handleEditClose,getPosts,dreams, isOpen, setIsOpen, apad2, setDreams, getPosts, openPostMenu, apad, anyad, mousePos, setMousePos, authorId, followedDreams, setFollowedDreams, blockedDreams, keyy, likePost, commentOnPost, likedPosts, setLikedPosts, unLikePost, createPost, editPost, deletePost, postId, mydreams, setMydreams, prettifyDate, handleEditOpenFunc}}>

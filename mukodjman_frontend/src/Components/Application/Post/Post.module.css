@@ -345,6 +345,12 @@ h2 {
     font-family: 'CustomFont';
 }
 
+.tags {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0px;
+}
+
 .buttoncont {
     width: 100%;
     display: flex;

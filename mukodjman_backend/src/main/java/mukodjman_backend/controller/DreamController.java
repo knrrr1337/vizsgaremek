@@ -71,7 +71,7 @@ public class DreamController {
             @RequestParam("content") String content,
             @RequestParam("userId") Long userId,
             @RequestParam("privacy") Privacy privacy,
-//            @RequestParam("tags") String tags,
+            @RequestParam("tags") List<String> tags,
             @RequestParam(value = "images", required = false) List<MultipartFile> images
     ) throws IOException {
         String uploadDir = "uploads/";
@@ -86,8 +86,8 @@ public class DreamController {
                 imageUrls.add(fileName);
             }
         }
-
-        dreamService.createDream(userId, title, content, privacy, imageUrls);
+        System.out.println(tags);
+        dreamService.createDream(userId, title, content, privacy, imageUrls, tags);
     }
 
     @GetMapping("get-user-dreams/{id}")

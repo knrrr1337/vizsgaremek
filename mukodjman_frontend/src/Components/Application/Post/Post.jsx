@@ -16,6 +16,7 @@ import PFP from "../../PFP/PFP";
 import Creative from "../../../Contexts/TagsProvider/Tags/Creative";
 import Inspired from "../../../Contexts/TagsProvider/Tags/Inspired";
 import Blessed from "../../../Contexts/TagsProvider/Tags/Blessed";
+import TAG from "../../../Contexts/TagsProvider/Tags/TAG";
 
 function Post(props) {
     const navigate = useNavigate();
@@ -25,7 +26,7 @@ function Post(props) {
     const [comments, setComments] = useState(props.comments.length);
     const [isLiked, setIsLiked] = useState(false);
 
-    const { apad, setMousePos, likePost, commentOnPost, likedPosts, unLikePost, prettifyDate, editPost} = useContext(PostHandlerContext);
+    const { apad, setMousePos, likePost, commentOnPost, likedPosts, unLikePost, prettifyDate, editPost, tags} = useContext(PostHandlerContext);
     const {isUserFollowed} = useContext(UserContext)
 
     const goToPost = (postId) => {
@@ -69,10 +70,7 @@ function Post(props) {
         const rect = dropdownRef.current.getBoundingClientRect();
         let middleX = rect.x + rect.width / 2;
         let middleY = rect.y + (rect.height / 2 + 5);
-
-        
         setMousePos({ x: middleX, y: middleY });
-        console.log(isUserFollowed())
     };
 
     const isPostLiked = () => {
@@ -138,19 +136,26 @@ function Post(props) {
         setEditOpen(true);
     };
 
+    const [tagonpost, setTagponpost] = useState([])
+
     const handleEditClose = () => {
         setEditOpen(false);
         setTitleValue(() => props.title)
         setContentValue(() => props.content)
-        setTagsValue(() => props.tags)
+        setTagsValue(() => [...tagonpost])
         setImagesValue(() => [...props.images])
     };
 
+    const [titleValue, setTitleValue] = useState(() => props.title)
+    const [contentValue, setContentValue] = useState(() => props.content)
+    const [tagsValue, setTagsValue] = useState(() => [...tagonpost])
+    let [imagesValue, setImagesValue] = useState(() => [...props.images])
 
-        const [titleValue, setTitleValue] = useState(() => props.title)
-        const [contentValue, setContentValue] = useState(() => props.content)
-        const [tagsValue, setTagsValue] = useState(() => props.tags)
-        let [imagesValue, setImagesValue] = useState(() => [...props.images])
+    useEffect(() => {
+
+    })
+
+
 
     const checkIfValidd = () => {
         return titleValue !== "" && contentValue !== ""
@@ -171,6 +176,26 @@ function Post(props) {
         handleEditClose()
     }
 
+    
+
+    const handleTags = () => {
+        let buh = props.tags && props.tags.split("#")
+        let cigany = []
+        buh && buh.forEach((b) => {
+            cigany.push(tags.filter((t) => t.name === b)[0])
+        })
+    
+        setTagponpost(cigany)
+
+        setTagsValue(cigany)
+
+
+    }
+
+    useEffect(() => {
+        handleTags()
+        setTagsValue(() => [...tagonpost])
+    }, [props.tags, tags])
 
 
     
@@ -215,6 +240,11 @@ function Post(props) {
                                 cursor: 'pointer'}}/>
                             })}
                         </div>
+                    </div>
+                    <div className={style.tags}>
+                        {tagonpost.map((tag) => {
+                            return <TAG color={tag.color} name={tag.name} icon={tag.icon}/>
+                        })}
                     </div>
                     <div className={style.reactionsContainer}>
                         <div className={style.reactions}>
@@ -333,6 +363,12 @@ function Post(props) {
                                                 borderRadius: '8px',
                                                 cursor: 'pointer'}}/>
                                             })) : ("Who needs images anyways")}
+                                    </div>
+                                    <div className={style.tags}>
+                                        {tagsValue && tagsValue.map((tag) => {
+                                            console.log(tagsValue)
+                                            return <TAG name={tag.name} icon={tag.icon} color={tag.color}/>
+                                        })}
                                     </div>
                                     <div className={style.buttoncont}>
                                         <Button onClick={handleEditClose} text="CANCEL" color="white" bgcolor="rgb(0, 81, 255)" valid={true}/>                                    

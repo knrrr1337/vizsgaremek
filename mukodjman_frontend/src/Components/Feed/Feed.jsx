@@ -92,7 +92,7 @@ function Feed({feedType, setFeedType}) {
 
     const [publicity, setPublicity] = useState("PUBLIC")
     const [images, setImages] = useState([])
-
+    const [postTags, setPostTags] = useState([])
     const [imageUrls, setImageUrls] = useState([]);
 
     useEffect(() => {
@@ -112,7 +112,10 @@ function Feed({feedType, setFeedType}) {
     }
 
 
-
+    const addTag = (e) => {
+        setPostTags(prev => [...prev, tags[e]])
+        handleTagsClose()
+    }
 
     
     
@@ -145,6 +148,11 @@ function Feed({feedType, setFeedType}) {
                                     // return <img key={index} onClick={() => setImages(images.filter((_,i) => i !== index))} className={style.image} src={URL.createObjectURL(image)}/>
                                 })}
                             </div>
+                            <div className={style.tags}>
+                                {postTags.map((tag, index) => {
+                                    return <TAG onClick={() => setPostTags(postTags.filter((pt, i) => index !== i))} name={tag.name} color={tag.color} icon={tag.icon}/>
+                                })}
+                            </div>
                         </div>
                         <div className={style.postrow}>
                             <TagsButton onClick={() => setTagsSelector(true)}/>
@@ -155,7 +163,8 @@ function Feed({feedType, setFeedType}) {
                                 <option value="PRIVATE" onClick={(e) => setPublicity(e.target.value)}>Private</option>
                             </select>
                             <Button valid={valid} text="POST" onClick={() => {
-                                createPost(titleContent, postContent, publicity, images)
+                                let taga = postTags.map((t) => t.name)
+                                createPost(titleContent, postContent, publicity, images, taga)
                                 setPostContent("")
                                 setTitleContent("")
                                 setImages([])
@@ -168,6 +177,7 @@ function Feed({feedType, setFeedType}) {
                 <div className={style.dreams}>
                     {feedType === "foryou" ? (
                         dreams && dreams.map((dream) => (
+                            
                             <Post
                                 key={dream.id}
                                 id={dream.id}
@@ -180,6 +190,7 @@ function Feed({feedType, setFeedType}) {
                                 comments={dream.comments}
                                 reactions={dream.reactions}
                                 images={dream.images}
+                                tags={dream.tags}
                             />
 
                         ))
@@ -205,8 +216,8 @@ function Feed({feedType, setFeedType}) {
                 <Modal className={style.modalContainer} open={tagsSelector} onClose={handleTagsClose}>
                     <>
                     <div className={style.innerModal}>
-                        {tags.map((tag) => {
-                            return <TAG icon={tag.icon} color={tag.color} name={tag.name}/>
+                        {tags.map((tag, index) => {
+                            return <TAG onClick={() => addTag(index)} icon={tag.icon} color={tag.color} name={tag.name}/>
                         })}
                     </div>
                     </>

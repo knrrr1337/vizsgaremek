@@ -8,16 +8,16 @@ function TAG(props) {
         
     });
 
-    let rgba = props.color.replace(")", ", 0.3)").replace("rgb", "rgba")
-    console.log(rgba)
+    let rgba = props.color.replace(")", ", 0.175)").replace("rgb", "rgba")
+
 
     return (
         <>
-        <div className={style.container} style={{border:`2px solid ${props.color}`, borderRadius:"10px", backgroundColor:`${rgba}`}}>
+        <div className={style.container} onClick={props.onClick} style={{border:`2px solid ${props.color}`, borderRadius:"10px", backgroundColor:`${rgba}`}}>
             <div className={style.iconContainer}>
                 {props.icon}
             </div>
-            <span style={{color:`rgb(${props.color})`}}>{props.name}</span>
+            <span style={{color:`${props.color}`}}>{props.name}</span>
         </div>
         </>
     )

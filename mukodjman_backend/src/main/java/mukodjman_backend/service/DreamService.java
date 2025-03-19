@@ -55,7 +55,7 @@ public class DreamService {
 //        dreamRepository.save(dream);
 //    }
 
-    public void createDream(Long userId, String title, String content, Privacy privacy, List<String> imageUrls) {
+    public void createDream(Long userId, String title, String content, Privacy privacy, List<String> imageUrls, List<String> tags) {
         User user = usersRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -64,7 +64,15 @@ public class DreamService {
         dream.setTitle(title);
         dream.setContent(content);
         dream.setPrivacy(privacy);
-//        dream.setTags(tags);
+        String taga = "";
+        for (int i = 0; i < tags.size(); i++) {
+            if (i != tags.size() - 1) {
+                taga += tags.get(i) + "#";
+            } else {
+                taga += tags.get(i);
+            }
+        }
+        dream.setTags(taga);
         dream.setCreated_at(LocalDateTime.now());
         Dream savedDream = dreamRepository.save(dream);
 
