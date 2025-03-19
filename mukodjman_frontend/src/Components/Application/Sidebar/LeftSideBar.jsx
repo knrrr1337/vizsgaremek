@@ -26,9 +26,9 @@ function LeftSideBar() {
     const [modalOpen, setModalOpen] = useState(false)
     const [which, setWhich] = useState("")
 
-    const gotoProfile = () => {
+    const gotoProfile = (id) => {
         if (user) {
-            navigate(`/profile/${user.id}`)
+            navigate(`/profile/${id}`)
         }
     }
 
@@ -42,6 +42,7 @@ function LeftSideBar() {
     const gotoHome = () => {
         navigate("/app")
     }
+
 
     const handleClose = () => setModalOpen(false)
 
@@ -65,7 +66,7 @@ function LeftSideBar() {
                 <div className={style.logo} onClick={gotoHome}>
                     <img src="/icon_white.png"></img>
                 </div>
-                <div className={style.profileBar} onClick={gotoProfile}>
+                <div className={style.profileBar} onClick={() => gotoProfile(user.id)}>
                     <div style={{marginRight:"10px"}}>
                         <PFP size={{width:40, height:40}} profilePicture={user && user.profilePicture}/>
 
@@ -118,13 +119,13 @@ function LeftSideBar() {
                                 {followType === "follower" ? (
                                     <>
                                     {followers.map((user, index) => {
-                                        return <ULI baszodId={user.id} setBaszosId={setBaszosId} baszos={baszos} setMousePos={setMousePos} isLast={index + 1 === followers.length} pfp={user.profilePicture} username={user.username} joined_at={user.created_at}/>
+                                        return <ULI gotoProfile baszodId={user.id} setBaszosId={setBaszosId} baszos={baszos} setMousePos={setMousePos} isLast={index + 1 === followers.length} pfp={user.profilePicture} username={user.username} joined_at={user.created_at}/>
                                     })}
                                     </>
                                 ) : (
                                     <>
                                     {followedUsers.map((user, index) => {
-                                        return <ULI baszodId={user.id} setBaszosId={setBaszosId} baszos={baszos} setMousePos={setMousePos} isLast={index + 1 === followedUsers.length} pfp={user.profilePicture} username={user.username} joined_at={user.created_at}/>
+                                        return <ULI gotoProfile={gotoProfile} baszodId={user.id} setBaszosId={setBaszosId} baszos={baszos} setMousePos={setMousePos} isLast={index + 1 === followedUsers.length} pfp={user.profilePicture} username={user.username} joined_at={user.created_at}/>
                                     })}
                                     </>)}
                             </div>
@@ -138,7 +139,7 @@ function LeftSideBar() {
                             </div>
                             {blockedUsers.map((user, index) => {
                                 
-                                return <ULI baszodId={user.id} setBaszosId={setBaszosId} isLast={index + 1 === blockedUsers.length} setMousePos={setMousePos} baszos={baszos} pfp={user.profilePicture} username={user.username} joined_at={user.created_at}/>
+                                return <ULI gotoProfile={gotoProfile} baszodId={user.id} setBaszosId={setBaszosId} isLast={index + 1 === blockedUsers.length} setMousePos={setMousePos} baszos={baszos} pfp={user.profilePicture} username={user.username} joined_at={user.created_at}/>
                             })}
                         </div>
                     )}

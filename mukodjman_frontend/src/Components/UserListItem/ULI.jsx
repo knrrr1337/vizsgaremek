@@ -12,6 +12,7 @@ function ULI(props) {
     const reff = useRef(null)
 
 
+
     
     const openDropdown = (event, authorId) => {
         event.stopPropagation();
@@ -30,7 +31,7 @@ function ULI(props) {
         
         <div className={style.container} style={{borderBottom: props.isLast ? "2px solid rgb(49, 44, 85)" : ""}}>
             <div className={style.pfprow}>
-                <div className={style.bruh}>
+                <div className={style.bruh} onClick={() => {props.gotoProfile(props.baszodId)}}>
                     <PFP profilePicture={props.pfp} size={{width:40, height:40}}/>
                     <div className={style.gyalazdmeg}>
                         <span className={style.username}>{props.username}</span>

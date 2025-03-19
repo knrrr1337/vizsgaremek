@@ -210,6 +210,7 @@ export function PostHandlerProvider({children}) {
         formData.append("title", body.title);
         formData.append("content", body.content);
         formData.append("images", body.images)
+        formData.append("tags", body.tags)
         try {
             const response = await axios.put(`http://localhost:4400/dream/edit-dream/${id}`, formData, {
                 headers: {

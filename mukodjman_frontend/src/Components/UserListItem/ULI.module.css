@@ -7,6 +7,7 @@
 
 .bruh {
     display: flex;
+    cursor: pointer;
 }
 
 .pfprow {

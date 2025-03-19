@@ -8,10 +8,7 @@ function WebSocketComponent() {
     const {user} = useContext(AuthContext)
     const {getPosts} = useContext(PostHandlerContext)
 
-    console.log(user)
     useEffect(() => {
-
-                    // Open the WebSocket connection when the component mounts.
         const ws = new WebSocket("ws://localhost:4400/ws");
 
         ws.addEventListener("open", (event) => {
@@ -19,8 +16,6 @@ function WebSocketComponent() {
             ws.send("Hello Server!");
         });
 
-
-        // Listen for messages
         ws.addEventListener("message", (event) => {
             if (event.data === "getposts") {
                 console.log("getting posts")
@@ -31,7 +26,6 @@ function WebSocketComponent() {
 
         setSocket(ws);
 
-        // Clean up: close the socket on unmount
         return () => {
             ws.close();
         };
@@ -49,9 +43,9 @@ function WebSocketComponent() {
     };
 
     return (
-        <div>
-            <button onClick={sendMessage}>Send</button>
-        </div>
+        <>
+        
+        </>
     );
 }
 

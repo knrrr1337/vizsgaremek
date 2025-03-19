@@ -113,6 +113,16 @@ function Feed({feedType, setFeedType}) {
 
 
     const addTag = (e) => {
+        if (postTags.length === 3) {
+            setTagsSelector(false)
+            alert("Can not add more than 3 tags.")
+            return;
+        }
+
+        if (postTags.includes(tags[e])) {
+            setTagsSelector(false)
+            return;
+        }
         setPostTags(prev => [...prev, tags[e]])
         handleTagsClose()
     }
@@ -125,11 +135,15 @@ function Feed({feedType, setFeedType}) {
                     <PFP size={{width: 40, height:40}} profilePicture={user && user.profilePicture}/>
                     <div className={style.restbruh}>
                         <div className={style.textareawrapper}>
+                            <div className={style.lengthCounter}>
+                                <span style={{color: titleContent.length > 50 ? "red" : "white"}}>{titleContent.length}/50</span>
+                            </div>
+                            
                             <input value={titleContent} onChange={(e) => {
                                 setTitleContent(e.target.value)
                                 checkIfValid(e.target.value, postContent)
                             }} className={style.title} type="text" placeholder="Catchy title"/>
-                            <textarea value={postContent} onChange={(e) => {
+                            <textarea className={style.textarea} value={postContent} onChange={(e) => {
                                 setPostContent(e.target.value)
                                 checkIfValid(titleContent, e.target.value)
                             }} placeholder='What did you dream about?'/>
@@ -150,7 +164,7 @@ function Feed({feedType, setFeedType}) {
                             </div>
                             <div className={style.tags}>
                                 {postTags.map((tag, index) => {
-                                    return <TAG onClick={() => setPostTags(postTags.filter((pt, i) => index !== i))} name={tag.name} color={tag.color} icon={tag.icon}/>
+                                    return <TAG onClick={() => {setPostTags(postTags.filter((pt, i) => index !== i))}} name={tag.name} color={tag.color} icon={tag.icon}/>
                                 })}
                             </div>
                         </div>
@@ -163,12 +177,19 @@ function Feed({feedType, setFeedType}) {
                                 <option value="PRIVATE" onClick={(e) => setPublicity(e.target.value)}>Private</option>
                             </select>
                             <Button valid={valid} text="POST" onClick={() => {
+                                
+                                if (titleContent.length  > 100) {
+                                    alert("Title cant be more than 100 characters long")
+                                    return;
+                                }
                                 let taga = postTags.map((t) => t.name)
                                 createPost(titleContent, postContent, publicity, images, taga)
                                 setPostContent("")
                                 setTitleContent("")
                                 setImages([])
                                 setImageUrls([])
+                                setPostTags([])
+                                
                                 
                             }}/>
                         </div>
@@ -217,7 +238,7 @@ function Feed({feedType, setFeedType}) {
                     <>
                     <div className={style.innerModal}>
                         {tags.map((tag, index) => {
-                            return <TAG onClick={() => addTag(index)} icon={tag.icon} color={tag.color} name={tag.name}/>
+                            return <TAG onClick={() => {addTag(index)}} icon={tag.icon} color={tag.color} name={tag.name}/>
                         })}
                     </div>
                     </>

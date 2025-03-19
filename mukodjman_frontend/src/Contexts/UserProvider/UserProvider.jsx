@@ -75,14 +75,11 @@ export function UserProvider({children}) {
     }
 
     const isUserBlocked = (diddyId) => {
-        console.log("HELOLOLOLOLOLOLOLOLOLOLOL")
-        console.log(blockedUsers.some((userr) => userr.id === diddyId))
-        return user && blockedUsers.some((userr) => userr.id === diddyId)
+        console.log(blockedUsers)
+        return blockedUsers.some((userr) => userr.id === diddyId)
     }
 
     const isUserFollowed2 = (userId) => {
-        console.log("HE")
-        console.log(followedUsers.some((user) => user.id === userId))
         return followedUsers.some((user) => user.id === userId)
     }
     

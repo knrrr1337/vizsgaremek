@@ -21,7 +21,7 @@ public interface DreamRepository extends JpaRepository<Dream, Long> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE Dream d SET d.title = :title, d.content = :content WHERE d.id = :dreamId")
-    void editDream(@Param("dreamId") long id, @Param("title") String title, @Param("content") String content);
+    @Query("UPDATE Dream d SET d.title = :title, d.content = :content, d.tags = :tags WHERE d.id = :dreamId")
+    void editDream(@Param("dreamId") long id, @Param("title") String title, @Param("content") String content, @Param("tags") String tags);
 
 }

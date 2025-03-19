@@ -14,19 +14,29 @@ import PFP from "../../PFP/PFP"
 import { Navigate, useNavigate, useParams } from "react-router-dom"
 import { useRadioGroup } from "@mui/material"
 import { UserContext } from "../../../Contexts/UserProvider/UserProvider"
+import Button from "../../Button/Button"
 
 
 function Profile () {
 
 
+    const {id} = useParams()
+
+
     const navigate = useNavigate();
     const {user, setUser} = useContext(AuthContext)
-    const {isUserFollowed2} = useContext(UserContext)
+    const {isUserFollowed2, isUserBlocked, blockedUsers} = useContext(UserContext)
     const {prettifyDate} = useContext(PostHandlerContext)
     const [userdreams, setUserdreams] = useState([])
     const [profileUser, setProfileUser] = useState({})
-    
-    const {id} = useParams()
+    const [warnUser, setWarnUser] = useState(false)
+
+
+
+
+    useEffect(() => {
+        setWarnUser(isUserBlocked(Number(id)))
+    }, [blockedUsers, id])
 
     useEffect(() => {
         
@@ -37,6 +47,7 @@ function Profile () {
             // setUser(JSON.parse(storedUser));
 
         }
+
 
         let userrr
 
@@ -59,14 +70,11 @@ function Profile () {
     
             })
         })
-        
 
-
-        
-
-        
-        
     }, [id, user])
+
+
+
 
 
 
@@ -80,19 +88,26 @@ function Profile () {
                     <div className={style.profile_container}>
                         <div className={style.pfp_name}>
                             <div className={style.pfp_container}>
-                                {user && user.id === id ? (<PFP size={{width:100, height:100}} isUser={true}/>) : (<PFP size={{width:100, height:100}} isUser={false} profilePicture={profileUser.profilePicture}/>)}
+                                <PFP size={{width:100, height:100}} profilePicture={profileUser.profilePicture}/>
                                 
                                 
                             </div>
                             <div className={style.desc}>
-                                <span className={style.username}>{profileUser && profileUser.username}</span>
+                                <span className={style.username}>{profileUser && profileUser.username}{isUserBlocked(Number(id)) ? <span style={{color:"RED"}}> - BLOCKED</span> : ""}</span>
                                 <span className={style.joined}>{`joined on ${profileUser.created_at && prettifyDate(profileUser.created_at)}`}</span>
                                 <span className={style.bio}>{profileUser && profileUser.bio}</span>    
                             </div>
                         </div>
                     </div>
                     <div className={style.post_container}>
-                        {userdreams.length === 0 ? <div>You have not posted anything</div> : ""}
+                        {(warnUser) ? (
+                            <div className={style.warnUser}>
+                                <span className={style.warnUserText}>You have blocked {profileUser.username}. Do you wish to view their posts?</span>
+                                <Button text="Proceed" bgcolor={"rgb(255,0,0)"} onClick={() => setWarnUser(false)} valid={true}/>
+                            </div>
+                        ) : (
+                        <>
+                        {userdreams.length === 0 ? <div>{profileUser.username} not posted anything</div> : ""}
                         {userdreams.map((dream) => {
                             // {console.log(dream)}
                             return <Post
@@ -111,6 +126,8 @@ function Profile () {
                                 tags={dream.tags}
                             ></Post>
                         })}
+                        </>)}
+                        
                     </div>
                 </main>
                 <RightSideBar/>

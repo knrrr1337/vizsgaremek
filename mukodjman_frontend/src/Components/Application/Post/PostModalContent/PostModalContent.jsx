@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import PFP from "../../../PFP/PFP";
 import style from "./PostModalContent.module.css"
 import { PostHandlerContext } from "../../../../Contexts/PostHandlerProvider/PostHandlerProvider";
@@ -8,12 +8,13 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import NotesIcon from '@mui/icons-material/Notes';
 import Comment from "../../../Comment/Comment";
 import { Modal } from "@mui/material";
+import TAG from "../../../../Contexts/TagsProvider/Tags/TAG";
 
 
 
 function PostModalContent(props) {
     
-    const {prettifyDate} = useContext(PostHandlerContext)
+    const {prettifyDate, tags} = useContext(PostHandlerContext)
         // const [pictureModal, setPictureModal] = useState(false)
         // const [pictureToDisplay, setPictureToDisplay] = useState("")
     
@@ -21,6 +22,24 @@ function PostModalContent(props) {
         //     setPictureModal(false)
         //     setPictureToDisplay("")
         // }
+
+        const [tagonpost, setTagponpost] = useState([])
+
+        const handleTags = () => {
+            let buh = props.tags && props.tags.split("#")
+            let cigany = []
+            buh && buh.forEach((b) => {
+                cigany.push(tags.filter((t) => t.name === b)[0])
+            })
+        
+            setTagponpost(cigany)
+    
+        }
+        
+    
+        useEffect(() => {
+            handleTags()
+        }, [props.tags, tags])
 
     return (
         <>       
@@ -42,6 +61,11 @@ function PostModalContent(props) {
                 </div>
                 <div className={style.text}>
                     <span>{props.content}</span>
+                </div>
+                <div className={style.tagsrow}>
+                    {tagonpost.map((tag) => {
+                        return <TAG name={tag.name} icon={tag.icon} color={tag.color}/>
+                    })}
                 </div>
                 <div className={style.reactionsContainer}>
                     <div className={style.reactions}>
@@ -85,7 +109,8 @@ function PostModalContent(props) {
                             borderRadius: '8px',
                             cursor: 'pointer'}}/>
                         })}
-                    </div>
+                </div>
+
                 <div className={style.commentsContainer}>
                     {props.comments.length === 0 ? (<div className={style.nocomments}>No comments</div>) : (props.comments.map((comment, index) => {
                         return <Comment last={index + 1 === props.comments.length} commentUser={comment.commentUser} content={comment.content} created_at={comment.created_at}/>

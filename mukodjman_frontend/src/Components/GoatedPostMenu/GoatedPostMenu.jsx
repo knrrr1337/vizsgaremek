@@ -12,29 +12,12 @@ import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 function GoatedPostMenu({open, what}) {
 
     const {openPostMenu, mousePos, authorId, postId, deletePost, handleEditOpenFunc} = useContext(PostHandlerContext)
-    const {followUser, blockUser, followedUsers, blockedUsers, isUserFollowed, unFollowUser} = useContext(UserContext)
+    const {followUser, blockUser, followedUsers, blockedUsers, isUserFollowed, unblockUser, unFollowUser, isUserBlocked} = useContext(UserContext)
     const {user} = useContext(AuthContext)
 
     useEffect(() => {
 
     }, [mousePos])
-
-
-
-    const apad = () => {
-        if (isUserFollowed()) {
-            return <li onClick={() => {
-                unFollowUser()
-                isUserFollowed()
-            }}><PersonRemoveIcon className={style.icon}/><p className={style.text}>Unfollow</p></li>
-        }
-        return <li onClick={() => {
-            followUser()
-            isUserFollowed()
-        }}><PersonAddAlt1Icon className={style.icon}/><p className={style.text}>Follow</p></li>
-    }
-
-
 
     return (
         <>
@@ -56,8 +39,22 @@ function GoatedPostMenu({open, what}) {
                     position:"absolute"
                 }}>
                 <ul className={style.ul}>
-                    {apad()}
-                    <li onClick={() => blockUser()}><BlockIcon className={style.icon}/> <p className={style.text}>Block</p></li>
+                    {isUserFollowed() ? (
+                        <li onClick={() => {
+                            unFollowUser()
+                            isUserFollowed()
+                        }}><PersonRemoveIcon className={style.icon}/><p className={style.text}>Unfollow</p></li>
+                    ) : (
+                        <li onClick={() => {
+                            followUser()
+                            isUserFollowed()
+                        }}><PersonAddAlt1Icon className={style.icon}/><p className={style.text}>Follow</p></li>
+                    )}
+                    {isUserBlocked(authorId) ? (
+                        <li onClick={() => unblockUser(authorId)}><BlockIcon className={style.icon}/> <p className={style.text}>Unblock</p></li>
+                    ) : (
+                        <li onClick={() => blockUser(authorId)}><BlockIcon className={style.icon}/> <p className={style.text}>Block</p></li>
+                    )}
                 </ul>
             </div>)}
         </>

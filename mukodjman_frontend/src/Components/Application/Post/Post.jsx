@@ -22,8 +22,8 @@ function Post(props) {
     const navigate = useNavigate();
     const contentRef = useRef(null);
     const dropdownRef = useRef(null);
-    const [likes, setLikes] = useState(props.reactions.length);
-    const [comments, setComments] = useState(props.comments.length);
+    // const [likes, setLikes] = useState(props.reactions.length);
+    // const [comments, setComments] = useState(props.comments.length);
     const [isLiked, setIsLiked] = useState(false);
 
     const { apad, setMousePos, likePost, commentOnPost, likedPosts, unLikePost, prettifyDate, editPost, tags} = useContext(PostHandlerContext);
@@ -80,17 +80,17 @@ function Post(props) {
     const handleLike = (id) => {
         if (isLiked) {
             unLikePost(id);
-            setLikes(likes - 1);
+            // setLikes(likes - 1);
         } else {
             likePost(id);
-            setLikes(likes + 1);
+            // setLikes(likes + 1);
         }
         setIsLiked(!isLiked);
     };
 
     const handleComment = (id) => {
         // commentOnPost(id);
-        setComments(comments + 1);
+        // setComments(comments + 1);
         
     };
 
@@ -169,8 +169,12 @@ function Post(props) {
             content:contentValue,
             images:remaining.map((r) => {
                 return r.imageUrl
+            }),
+            tags:tagsValue.map((t) => {
+                return t.name
             })
         }
+ 
     
         editPost(props.id, apad)
         handleEditClose()
@@ -188,13 +192,11 @@ function Post(props) {
         setTagponpost(cigany)
 
         setTagsValue(cigany)
-
-
     }
+    
 
     useEffect(() => {
         handleTags()
-        setTagsValue(() => [...tagonpost])
     }, [props.tags, tags])
 
 
@@ -218,7 +220,7 @@ function Post(props) {
                         </div>
                     </div>
                     <div className={style.postcontent}>
-                        <h2>{props.title}</h2>
+                        <h2 className={style.title}>{props.title}</h2>
                         <div className={style.yappingtoncity} ref={contentRef}>
                             {NeedReadMore === true ? renderReadMore() : ""}
                             {props.content}
@@ -250,15 +252,15 @@ function Post(props) {
                         <div className={style.reactions}>
                          
                                 <>
-                            <div className={style.d} title={`${comments} comments`} onClick={(e) => {
+                            <div className={style.d} title={`${props.comments && props.comments.length} comments`} onClick={(e) => {
                                 e.stopPropagation();
                                 setCommentModal(true);
                             }}>
                                 <NotesIcon />
-                                {comments}
+                                {props.comments && props.comments.length}
                             </div>
 
-                            <div className={style.d} title={`${likes} likes`} onClick={(e) => {
+                            <div className={style.d} title={`${props.reactions && props.reactions.length} likes`} onClick={(e) => {
                                 e.stopPropagation();
                                 handleLike(props.id);
                             }}>
@@ -267,7 +269,7 @@ function Post(props) {
                                 ) : (
                                     <FavoriteBorderIcon />
                                 )}
-                                {likes}
+                                {props.reactions && props.reactions.length}
                             </div>
                                 </>
                         </div>
@@ -296,7 +298,7 @@ function Post(props) {
             </Modal>
             <Modal open={postModal} onClose={handlePostClose} style={{zIndex:101}} className={style.modalContainer}>
                 {/* <PostModalContent username={props.username} pfp={props.pfp} title={props.title} timeposted={prettifyDate(props.posted_at)} content={props.content}/> */}
-                    <PostModalContent setPictureToDisplay={setPictureToDisplay} setPictureModal={setPictureModal} handleLike={handleLike} isLiked={isLiked} likes={likes} comments={comments} {...props}/>
+                    <PostModalContent setPictureToDisplay={setPictureToDisplay} setPictureModal={setPictureModal} handleLike={handleLike} isLiked={isLiked} likes={props.reactions && props.reactions.length}  comments={props.comments && props.comments.length} {...props}/>
             </Modal>
         
             <Modal open={commentModal} onClose={handleClose} style={{zIndex:1010111}} className={style.modalContainer}>
@@ -365,9 +367,8 @@ function Post(props) {
                                             })) : ("Who needs images anyways")}
                                     </div>
                                     <div className={style.tags}>
-                                        {tagsValue && tagsValue.map((tag) => {
-                                            console.log(tagsValue)
-                                            return <TAG name={tag.name} icon={tag.icon} color={tag.color}/>
+                                        {tagsValue && tagsValue.map((tag, index) => {
+                                            return <TAG onClick={() => setTagsValue(tagsValue.filter((tg, i) => index !== i))} name={tag.name} icon={tag.icon} color={tag.color}/>
                                         })}
                                     </div>
                                     <div className={style.buttoncont}>

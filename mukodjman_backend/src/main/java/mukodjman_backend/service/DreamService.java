@@ -88,7 +88,7 @@ public class DreamService {
         }
     }
 
-    public void editDream(Long id, String title, String content, List<String> images) {
+    public void editDream(Long id, String title, String content, List<String> images, List<String> tags) {
         if (images != null) {
             for (String image : images) {
                 System.out.println(image);
@@ -96,8 +96,16 @@ public class DreamService {
             }
         }
 
+        String taggs = "";
+        for (int i = 0; i < tags.size(); i++) {
+            if (i == tags.size() - 1) {
+                taggs += tags.get(i);
+            } else {
+                taggs += tags.get(i) + "#";
+            }
+        }
 
-        dreamRepository.editDream(id, title, content);
+        dreamRepository.editDream(id, title, content, taggs);
     }
 
     public void likePost(long postId, long userId) {

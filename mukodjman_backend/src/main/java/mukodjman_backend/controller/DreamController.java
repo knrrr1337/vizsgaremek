@@ -61,6 +61,7 @@ public class DreamController {
     @DeleteMapping("delete-dream/{id}")
     public void deleteDream(@PathVariable long id) {
         dreamService.deleteDream(id);
+        webSocketHandler.sendMessageToAll("getposts");
     }
 
 //    @PostMapping("create-dream")
@@ -109,6 +110,7 @@ public class DreamController {
     @PostMapping("remove-like-post/{id}")
     public void removeLikePost(@PathVariable Long id, @RequestBody LikeRequest likeRequest) {
         dreamService.removeLikePost(id, likeRequest.getUserId());
+        webSocketHandler.sendMessageToAll("getposts");
     }
 
     @GetMapping("get-followed/{userId}")
@@ -123,8 +125,9 @@ public class DreamController {
     }
 
     @PutMapping("edit-dream/{id}")
-    public void editDream(@PathVariable long id, @RequestParam("title") String title, @RequestParam("content") String content, @RequestParam("images") List<String> images) {
-        dreamService.editDream(id, title, content, images);
+    public void editDream(@PathVariable long id, @RequestParam("title") String title, @RequestParam("content") String content, @RequestParam("images") List<String> images, @RequestParam("tags") List<String> tags) {
+        dreamService.editDream(id, title, content, images,tags);
+        webSocketHandler.sendMessageToAll("getposts");
     }
 
     @GetMapping("get-blocked/{userId}")
@@ -155,6 +158,7 @@ public class DreamController {
     @PostMapping("comment-on-dream/{id}")
     public void commentOnDream(@PathVariable long id, @RequestBody CommentRequest commentRequest) {
         commentService.saveComment(commentRequest.getUserId(), id, commentRequest.getComment());
+        webSocketHandler.sendMessageToAll("getposts");
     }
 
 
