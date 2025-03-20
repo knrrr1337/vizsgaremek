@@ -11,6 +11,7 @@ import { PostHandlerProvider } from './Contexts/PostHandlerProvider/PostHandlerP
 import { UserProvider } from './Contexts/UserProvider/UserProvider.jsx';
 import Profile from './Components/Application/Profile/Profile.jsx';
 import WebSocketComponent from './Components/WebSocket/WebSocketComponent.jsx';
+import FilteredPosts from './Components/FilteredPosts/FilteredPosts.jsx';
 
 
 function App() {
@@ -27,7 +28,8 @@ function App() {
                 <Route path="app" element={<Application />} />
                 <Route path="login" element={<LoginPage />} />
                 <Route path="register" element={<Register/>} />
-                <Route path="profile/:id" element={<Profile/>}></Route>
+                <Route path="profile/:id" element={<Profile/>}/>
+                <Route path="filter/:param" element={<FilteredPosts/>}/>
               </Route>
             </Routes>
           </BrowserRouter>

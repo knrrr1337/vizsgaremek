@@ -67,6 +67,34 @@ export function UserProvider({children}) {
         }).catch((error) => console.log(error))
     }
 
+    const unfollowUser2 = (id) => {
+        axios.post(`http://localhost:4400/user/unfollow-user/${user.id}`, {userId: user.id, userToBeFollowedId:id}).then((response) => {
+            console.log("response.data");
+            axios.get(`http://localhost:4400/dream/get-followed/${user.id}`).then((response2) => {
+                setFollowedDreams(response2.data);
+                
+            }).catch((error) => console.log(error));
+            axios.get(`http://localhost:4400/user/get-followed-users/${user.id}`).then((response) => {
+                setFollowedUsers(response.data)
+            })
+            // setFollowedUsers(response.data)
+        })
+    }
+
+    const followUser2 = (id) => {
+        axios.post("http://localhost:4400/user/follow-user", {userId:user.id, userToBeFollowedId:id}).then((response) => {
+            axios.get(`http://localhost:4400/dream/get-followed/${user.id}`).then((response2) => {
+                setFollowedDreams(response2.data);
+                // getPosts(user.id)
+            }).catch((error) => console.log(error));
+            axios.get(`http://localhost:4400/user/get-followed-users/${user.id}`).then((response) => {
+                console.log(response.data)
+                setFollowedUsers(response.data)
+                // getPosts(user.id)
+            }).catch((error) => console.log(error))
+        }).catch((error) => console.log(error))
+    }
+
     const isUserFollowed = () => {
         return user && followedUsers.some((user) => user.id === authorId)
         
@@ -105,7 +133,7 @@ export function UserProvider({children}) {
         }).catch((error) => console.log(error))
     }
 
-    return <UserContext.Provider value={{blockUser,blockUser2, isUserBlocked, followers, followUser, followedUsers, blockedUsers, unblockUser, isUserFollowed, unFollowUser, isUserFollowed2}}>
+    return <UserContext.Provider value={{unfollowUser2, followUser2, blockUser,blockUser2, isUserBlocked, followers, followUser, followedUsers, blockedUsers, unblockUser, isUserFollowed, unFollowUser, isUserFollowed2}}>
             {children}
         </UserContext.Provider>
 }

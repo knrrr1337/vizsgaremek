@@ -102,6 +102,16 @@ public class DreamService {
         return topTags;
     }
 
+    public List<Dream> getTrendingPostsByTag(String tag) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime week = now.minusDays(7);
+        return dreamRepository.findTrendingPostsByTag(week, now, tag);
+    }
+
+    public List<Dream> getAllPostsByTag(String tag) {
+        return dreamRepository.findAllPostsByTag(tag);
+    }
+
     public List<Dream> getUserDreams(long id) {
         return dreamRepository.findAllByUserId(id);
     }

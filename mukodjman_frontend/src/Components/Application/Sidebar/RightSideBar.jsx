@@ -2,10 +2,14 @@ import { useContext, useEffect, useState } from "react";
 import style from "./RightSideBar.module.css"
 import { PostHandlerContext } from "../../../Contexts/PostHandlerProvider/PostHandlerProvider";
 import TAG from "../../../Contexts/TagsProvider/Tags/TAG";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../../Contexts/UserProvider/UserProvider";
 
 function RightSideBar() {
-    
-    const {lastWeekTags, popularTags, tags} = useContext(PostHandlerContext)
+
+    const navigate = useNavigate()
+    const {lastWeekTags, popularTags, tags, allPostByTag, trendingPostByTag} = useContext(PostHandlerContext)
+
 
     const [lwtList, setLwtList] = useState([])
     const [ptList, setPtList] = useState([])
@@ -17,10 +21,8 @@ function RightSideBar() {
         //     temp.push(matchingTags[0]);
         // });
         l.map((lwt) => {
-            console.log(lwt)
             temp.push(tags.filter((tag) => tag.name === lwt)[0])
         })
-        console.log(temp)
         setL(temp)
     }
 
@@ -29,9 +31,10 @@ function RightSideBar() {
     }, [lastWeekTags])
 
     useEffect(() => {
-        console.log(popularTags)
         convertTags(popularTags, setPtList)
     }, [popularTags])
+
+
 
 
     return (
@@ -40,16 +43,22 @@ function RightSideBar() {
                 <div className={style.tagsContainer}>
                     <h4 className={style.h}>Trending tags</h4>
                     <div className={style.tags}>
-                        {lwtList.map((tag) => {
-                            return <TAG name={tag.name} color={tag.color} icon={tag.icon}/>
-                        })}
+                        {lwtList.length === 0 ? (<div>No posts with tags in the last 7 days.</div>) : (lwtList.map((tag) => {
+                            return <TAG onClick={() => {
+                                trendingPostByTag(tag.name)
+                                navigate(`/filter/${tag.name}-trending`)
+                            }} name={tag.name} color={tag.color} icon={tag.icon}/>
+                        }))}
                     </div>
                 </div>
                 <div className={style.tagsContainer}>
                     <h4 className={style.h}>All-time tags</h4>
                         <div className={style.tags}>
                             {ptList.map((tag) => {
-                                return <TAG name={tag.name} color={tag.color} icon={tag.icon}/>
+                                return <TAG onClick={() => {
+                                    allPostByTag(tag.name)
+                                    navigate(`/filter/${tag.name}-all`)
+                                }} name={tag.name} color={tag.color} icon={tag.icon}/>
                             })}
                         </div>
   

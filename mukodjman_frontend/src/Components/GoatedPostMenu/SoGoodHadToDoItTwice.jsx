@@ -9,17 +9,17 @@ import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 function SoGoodHadToDoItTwice(props) {
 
     const {isOpen} = useContext(PostHandlerContext)
-    const {followUser, blockUser2, isUserFollowed2, isUserBlocked, unFollowUser, unblockUser} = useContext(UserContext)
+    const {followUser, blockUser2, isUserFollowed2, isUserBlocked, unFollowUser, unblockUser, followUser2, unfollowUser2} = useContext(UserContext)
 
    const apad = () => {
         if (isUserFollowed2(props.baszosId)) {
             return <li onClick={() => {
-                unFollowUser()
+                unfollowUser2(props.baszosId)
                 isUserFollowed2(props.baszosId)
             }}><PersonRemoveIcon className={style.icon}/><p className={style.text}>Unfollow</p></li>
         }
         return <li onClick={() => {
-            followUser()
+            followUser2(props.baszosId)
             isUserFollowed2(props.baszosId)
         }}><PersonAddAlt1Icon className={style.icon}/><p className={style.text}>Follow</p></li>
    }

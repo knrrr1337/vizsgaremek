@@ -90,7 +90,7 @@ function App() {
     <div className={style.content}>
         <LeftSideBar/>
 
-        <main style={{}}>
+        <main style={{margin: 0}}>
             <div className={style.feedType}>
                 <div className={style.feedItem} style={feedType === "foryou" ? {borderBottom:"2px solid rgba(255,255,255, 1)", borderRadius:"3px"} : {borderBottom:"2px solid rgba(255,255,255, 0)", borderRadius:"3px"}} onClick={() => changeFeed("foryou")}>
                     For You
@@ -107,7 +107,7 @@ function App() {
         
         
     </div>
-    <footer>anyad</footer>
+    <footer className={style.footer}></footer>
     <GoatedPostMenu open={openPostMenu}/>
     </>
     )

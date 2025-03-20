@@ -8,10 +8,11 @@ body {
     width: fit-content;
     margin: auto;
     padding: 0px;
-    height: 100vh;
+    height: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
+    overflow-y: hidden;
     background-color: rgb(15, 8, 44);
     box-shadow: 0px 0px 1000px rgb(15, 8, 44);
     min-width: fit-content;
@@ -89,7 +90,6 @@ body {
 main {
     height: 100%;
     width: 550px;
-    margin-left: 300px;
     position: relative;
     border-left: 2px solid rgb(49, 44, 85);
     border-right: 2px solid rgb(49, 44, 85);
@@ -101,11 +101,10 @@ main {
     scrollbar-width: none;
 }
 
-footer {
+.footer {
     height: 50px;
     width: 100vw;
     position: fixed;
-    z-index: 100000;
     background-color: rgb(15, 8, 44) !important;
     border-top: 2px solid rgb(49, 44, 85);
     bottom: 0;

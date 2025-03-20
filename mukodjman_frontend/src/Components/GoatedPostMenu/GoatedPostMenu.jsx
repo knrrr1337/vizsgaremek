@@ -12,7 +12,7 @@ import { AuthContext } from "../../Contexts/AuthProvider/AuthProvider";
 function GoatedPostMenu({open, what}) {
 
     const {openPostMenu, mousePos, authorId, postId, deletePost, handleEditOpenFunc} = useContext(PostHandlerContext)
-    const {followUser, blockUser, followedUsers, blockedUsers, isUserFollowed, unblockUser, unFollowUser, isUserBlocked} = useContext(UserContext)
+    const {followUser, blockUser, followedUsers, blockedUsers, isUserFollowed, unblockUser, unFollowUser, isUserBlocked, followUser2, unfollowUser2} = useContext(UserContext)
     const {user} = useContext(AuthContext)
 
     useEffect(() => {
@@ -41,12 +41,12 @@ function GoatedPostMenu({open, what}) {
                 <ul className={style.ul}>
                     {isUserFollowed() ? (
                         <li onClick={() => {
-                            unFollowUser()
+                            unfollowUser2(authorId)
                             isUserFollowed()
                         }}><PersonRemoveIcon className={style.icon}/><p className={style.text}>Unfollow</p></li>
                     ) : (
                         <li onClick={() => {
-                            followUser()
+                            followUser2(authorId)
                             isUserFollowed()
                         }}><PersonAddAlt1Icon className={style.icon}/><p className={style.text}>Follow</p></li>
                     )}

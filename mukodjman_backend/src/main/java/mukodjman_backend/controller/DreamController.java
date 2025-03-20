@@ -50,13 +50,13 @@ public class DreamController {
     @GetMapping("list-dreams-all/{id}")
     public List<customDream> listDreams(@PathVariable long id) {
         List<Dream> dreams = dreamService.getAllDreams(id);
-        List<customDream> anyad = new ArrayList<>();
+        List<customDream> temp = new ArrayList<>();
         for (Dream dream : dreams) {
-            anyad.add(convertToDTO(dream));
+            temp.add(convertToDTO(dream));
 
         }
-        anyad.sort((d1, d2) -> d2.getCreatedAt().compareTo(d1.getCreatedAt()));
-        return anyad;
+        temp.sort((d1, d2) -> d2.getCreatedAt().compareTo(d1.getCreatedAt()));
+        return temp;
     }
 
     //GET top 3 most used tags within the last 7 days of posts
@@ -75,6 +75,32 @@ public class DreamController {
         dreamService.deleteDream(id);
         webSocketHandler.sendMessageToAll("getposts");
     }
+
+    @GetMapping("get-trending-post-by-tag/{tag}")
+    public List<customDream> getTrendingPostsByTag(@PathVariable String tag) {
+        List<Dream> dreams = dreamService.getTrendingPostsByTag(tag);
+        ArrayList<customDream> temp =  new ArrayList<>();
+
+        for (Dream dream : dreams) {
+            temp.add(convertToDTO(dream));
+        }
+        temp.sort((d1, d2) -> d2.getCreatedAt().compareTo(d1.getCreatedAt()));
+        return temp;
+    }
+
+
+    @GetMapping("get-all-post-by-tag/{tag}")
+    public List<customDream> getAllPostsByTag(@PathVariable String tag) {
+        List<Dream> dreams =  dreamService.getAllPostsByTag(tag);
+        ArrayList<customDream> temp =  new ArrayList<>();
+
+        for (Dream dream : dreams) {
+            temp.add(convertToDTO(dream));
+        }
+        temp.sort((d1, d2) -> d2.getCreatedAt().compareTo(d1.getCreatedAt()));
+        return temp;
+    }
+
 
 //    @PostMapping("create-dream")
 //    public void createDream(@RequestBody CreateDreamRequest cdr) {

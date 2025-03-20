@@ -24,8 +24,8 @@ body {
 .sideBar {
     height: 100vh;
     width: 300px;
-    position: fixed;
-    padding-top: 50px;
+    
+ 
 
 }
 
@@ -35,6 +35,7 @@ body {
     display:flex;
     align-items: center;
     flex-direction: column;
+    margin-top: 100px;
 }
 
 .logo {
@@ -153,6 +154,9 @@ body {
     align-items: center;
     border: 0px;
     outline: none;
+    position: relative;
+    z-index: 1000;
+    
 }
 
 .h2 {
@@ -168,6 +172,7 @@ body {
     border-bottom: 0px;
     min-width: 250px;
     position: sticky;
+    
 }
 
 .paddingBottom {
@@ -234,4 +239,5 @@ body {
     outline: none;
     overflow-y: scroll;
     scrollbar-width: none;
+
 }

@@ -332,10 +332,27 @@ export function PostHandlerProvider({children}) {
         }
     ])
 
+    const [apbt, setApbt] = useState([])
+    const [tpbt, setTpbt] = useState([])
+
+    const allPostByTag = (tag) => {
+        console.log("tag " + tag)
+        axios.get(`http://localhost:4400/dream/get-all-post-by-tag/${tag}`).then((response) => {
+            setApbt(response.data)
+        }).catch((error) => console.log(error))
+    }
+
+    const trendingPostByTag = (tag) => {
+        console.log("tag " + tag)
+        axios.get(`http://localhost:4400/dream/get-trending-post-by-tag/${tag}`).then((response) => {
+            setTpbt(response.data)
+        }).catch((error) => console.log(error))
+    }  
+
 
 
     return (
-        <PostHandlerContext.Provider key={keyy} value={{popularTags, lastWeekTags, tags, postContentt, setPostContentt, editOpen, setEditOpen, handleEditClose,getPosts,dreams, isOpen, setIsOpen, apad2, setDreams, getPosts, openPostMenu, apad, anyad, mousePos, setMousePos, authorId, followedDreams, setFollowedDreams, blockedDreams, keyy, likePost, commentOnPost, likedPosts, setLikedPosts, unLikePost, createPost, editPost, deletePost, postId, mydreams, setMydreams, prettifyDate, handleEditOpenFunc}}>
+        <PostHandlerContext.Provider key={keyy} value={{apbt, tpbt, allPostByTag, trendingPostByTag, popularTags, lastWeekTags, tags, postContentt, setPostContentt, editOpen, setEditOpen, handleEditClose,getPosts,dreams, isOpen, setIsOpen, apad2, setDreams, getPosts, openPostMenu, apad, anyad, mousePos, setMousePos, authorId, followedDreams, setFollowedDreams, blockedDreams, keyy, likePost, commentOnPost, likedPosts, setLikedPosts, unLikePost, createPost, editPost, deletePost, postId, mydreams, setMydreams, prettifyDate, handleEditOpenFunc}}>
             {children}
         </PostHandlerContext.Provider>
     )

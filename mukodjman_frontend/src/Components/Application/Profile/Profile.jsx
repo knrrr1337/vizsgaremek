@@ -133,7 +133,7 @@ function Profile () {
                 <RightSideBar/>
             </div> 
             {profileUser.id && profileUser.id === user.id ? (<GoatedPostMenu/>) : (<GoatedPostMenu/>)}
-            <footer>anyad</footer>
+            <footer className={style.footer}></footer>
         </>
     )
 

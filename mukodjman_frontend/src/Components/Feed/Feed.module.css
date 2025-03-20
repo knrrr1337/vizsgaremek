@@ -90,7 +90,6 @@
 main {
     height: calc(100vh - 50px);
     width: 550px;
-    margin-left: 300px;
     position: relative;
     border-left: 2px solid rgb(49, 44, 85);
     border-right: 2px solid rgb(49, 44, 85);
@@ -102,14 +101,6 @@ main {
     scrollbar-width: none;
 }
 
-footer {
-    height: 50px;
-    width: 100%;
-    position: fixed;
-    z-index: 100;
-    background-color: red;
-    bottom: 0;
-}
 
 .feedType {
     width: 100%;
@@ -286,6 +277,7 @@ footer {
     outline: none;
     gap: 10px;
 }
+
 
 .tags {
     display: flex;
