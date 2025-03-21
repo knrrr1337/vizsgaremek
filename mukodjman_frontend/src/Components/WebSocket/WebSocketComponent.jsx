@@ -9,7 +9,7 @@ function WebSocketComponent() {
     const {getPosts} = useContext(PostHandlerContext)
 
     useEffect(() => {
-        const ws = new WebSocket("ws://localhost:4400/ws");
+        const ws = new WebSocket("ws://192.168.1.133:4400/ws");
 
         ws.addEventListener("open", (event) => {
             console.log("Connected to WebSocket server");

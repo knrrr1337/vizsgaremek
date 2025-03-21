@@ -16,18 +16,18 @@ export function UserProvider({children}) {
     
     useEffect(() => {   
         if (user) {
-            axios.get(`http://localhost:4400/user/get-followed-users/${user.id}`).then((response) => {
+            axios.get(`http://192.168.1.133:4400/user/get-followed-users/${user.id}`).then((response) => {
                 setFollowedUsers(response.data)
             }).catch((error) => console.log(error))
     
-            axios.get(`http://localhost:4400/user/get-blocked-users/${user.id}`).then((response) => {
+            axios.get(`http://192.168.1.133:4400/user/get-blocked-users/${user.id}`).then((response) => {
                 setBlockedUsers(response.data)
             }).catch((error) => console.log(error))
 
-            axios.get(`http://localhost:4400/dream/user-liked-posts/${user.id}`).then((response) => {
+            axios.get(`http://192.168.1.133:4400/dream/user-liked-posts/${user.id}`).then((response) => {
                 
             }).catch((error) => console.log(error))
-            axios.get(`http://localhost:4400/user/get-users-following-user/${user.id}`).then((response) => {
+            axios.get(`http://192.168.1.133:4400/user/get-users-following-user/${user.id}`).then((response) => {
                 setFollowers(response.data)
             }).catch((error) => console.log(error))
 
@@ -36,8 +36,8 @@ export function UserProvider({children}) {
     },[user])
 
     const blockUser = (userToBlock) => {
-        axios.post("http://localhost:4400/user/block-user", {userId:user.id, authorId:authorId}).then((response) => {
-            axios.get(`http://localhost:4400/user/get-blocked-users/${user.id}`).then((response2) => {
+        axios.post("http://192.168.1.133:4400/user/block-user", {userId:user.id, authorId:authorId}).then((response) => {
+            axios.get(`http://192.168.1.133:4400/user/get-blocked-users/${user.id}`).then((response2) => {
                 setBlockedUsers(response2.data)
                 getPosts(user.id)
             }).catch((error) => console.log(error))
@@ -45,8 +45,8 @@ export function UserProvider({children}) {
     }
 
     const blockUser2 = (blockingId) => {
-        axios.post("http://localhost:4400/user/block-user", {userId:user.id, authorId:blockingId}).then((response) => {
-            axios.get(`http://localhost:4400/user/get-blocked-users/${user.id}`).then((response2) => {
+        axios.post("http://192.168.1.133:4400/user/block-user", {userId:user.id, authorId:blockingId}).then((response) => {
+            axios.get(`http://192.168.1.133:4400/user/get-blocked-users/${user.id}`).then((response2) => {
                 setBlockedUsers(response2.data)
                 getPosts(user.id)
             }).catch((error) => console.log(error))
@@ -54,12 +54,12 @@ export function UserProvider({children}) {
     }
 
     const followUser = (userToFollow) => {
-        axios.post("http://localhost:4400/user/follow-user", {userId:user.id, userToBeFollowedId:authorId}).then((response) => {
-            axios.get(`http://localhost:4400/dream/get-followed/${user.id}`).then((response2) => {
+        axios.post("http://192.168.1.133:4400/user/follow-user", {userId:user.id, userToBeFollowedId:authorId}).then((response) => {
+            axios.get(`http://192.168.1.133:4400/dream/get-followed/${user.id}`).then((response2) => {
                 setFollowedDreams(response2.data);
                 // getPosts(user.id)
             }).catch((error) => console.log(error));
-            axios.get(`http://localhost:4400/user/get-followed-users/${user.id}`).then((response) => {
+            axios.get(`http://192.168.1.133:4400/user/get-followed-users/${user.id}`).then((response) => {
                 console.log(response.data)
                 setFollowedUsers(response.data)
                 // getPosts(user.id)
@@ -68,26 +68,26 @@ export function UserProvider({children}) {
     }
 
     const unfollowUser2 = (id) => {
-        axios.post(`http://localhost:4400/user/unfollow-user/${user.id}`, {userId: user.id, userToBeFollowedId:id}).then((response) => {
+        axios.post(`http://192.168.1.133:4400/user/unfollow-user/${user.id}`, {userId: user.id, userToBeFollowedId:id}).then((response) => {
             console.log("response.data");
-            axios.get(`http://localhost:4400/dream/get-followed/${user.id}`).then((response2) => {
+            axios.get(`http://192.168.1.133:4400/dream/get-followed/${user.id}`).then((response2) => {
                 setFollowedDreams(response2.data);
                 
             }).catch((error) => console.log(error));
-            axios.get(`http://localhost:4400/user/get-followed-users/${user.id}`).then((response) => {
+            axios.get(`http://192.168.1.133:4400/user/get-followed-users/${user.id}`).then((response) => {
                 setFollowedUsers(response.data)
-            })
+            }).catch((error) => console.log(error))
             // setFollowedUsers(response.data)
         })
     }
 
     const followUser2 = (id) => {
-        axios.post("http://localhost:4400/user/follow-user", {userId:user.id, userToBeFollowedId:id}).then((response) => {
-            axios.get(`http://localhost:4400/dream/get-followed/${user.id}`).then((response2) => {
+        axios.post("http://192.168.1.133:4400/user/follow-user", {userId:user.id, userToBeFollowedId:id}).then((response) => {
+            axios.get(`http://192.168.1.133:4400/dream/get-followed/${user.id}`).then((response2) => {
                 setFollowedDreams(response2.data);
                 // getPosts(user.id)
             }).catch((error) => console.log(error));
-            axios.get(`http://localhost:4400/user/get-followed-users/${user.id}`).then((response) => {
+            axios.get(`http://192.168.1.133:4400/user/get-followed-users/${user.id}`).then((response) => {
                 console.log(response.data)
                 setFollowedUsers(response.data)
                 // getPosts(user.id)
@@ -110,13 +110,13 @@ export function UserProvider({children}) {
     }
     
     const unFollowUser = (userToUnfollow) => {
-        axios.post(`http://localhost:4400/user/unfollow-user/${user.id}`, {userId: user.id, userToBeFollowedId:authorId}).then((response) => {
+        axios.post(`http://192.168.1.133:4400/user/unfollow-user/${user.id}`, {userId: user.id, userToBeFollowedId:authorId}).then((response) => {
             console.log("response.data");
-            axios.get(`http://localhost:4400/dream/get-followed/${user.id}`).then((response2) => {
+            axios.get(`http://192.168.1.133:4400/dream/get-followed/${user.id}`).then((response2) => {
                 setFollowedDreams(response2.data);
                 
             }).catch((error) => console.log(error));
-            axios.get(`http://localhost:4400/user/get-followed-users/${user.id}`).then((response) => {
+            axios.get(`http://192.168.1.133:4400/user/get-followed-users/${user.id}`).then((response) => {
                 setFollowedUsers(response.data)
             })
             // setFollowedUsers(response.data)
@@ -124,9 +124,9 @@ export function UserProvider({children}) {
     }
 
     const unblockUser = (diddyId) => {
-        axios.post(`http://localhost:4400/user/unblock-user`, {userId:user.id, authorId:diddyId}).then((response) => {
+        axios.post(`http://192.168.1.133:4400/user/unblock-user`, {userId:user.id, authorId:diddyId}).then((response) => {
             console.log(response)
-            axios.get(`http://localhost:4400/user/get-blocked-users/${user.id}`).then((response2) => {
+            axios.get(`http://192.168.1.133:4400/user/get-blocked-users/${user.id}`).then((response2) => {
                 setBlockedUsers(response2.data)
                 getPosts(user.id)
             }).catch((error) => console.log(error))

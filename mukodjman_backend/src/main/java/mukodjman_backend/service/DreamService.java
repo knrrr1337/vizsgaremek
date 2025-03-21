@@ -112,6 +112,10 @@ public class DreamService {
         return dreamRepository.findAllPostsByTag(tag);
     }
 
+    public Dream getDreamById(long id) {
+        return dreamRepository.findById(id).get();
+    }
+
     public List<Dream> getUserDreams(long id) {
         return dreamRepository.findAllByUserId(id);
     }

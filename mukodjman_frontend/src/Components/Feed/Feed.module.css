@@ -87,7 +87,7 @@
     border-radius: 50%;
 }
 
-main {
+.main {
     height: calc(100vh - 50px);
     width: 550px;
     position: relative;
@@ -106,13 +106,12 @@ main {
     width: 100%;
     height: 50px;
     display: flex;
-    z-index: 1000;
     justify-content: space-around;
     align-items: center;
     backdrop-filter: blur(10px);
     position: sticky;
     top: 0px;
-
+    z-index: 53;
     border-bottom: 2px solid rgb(49, 44, 85);
 
 }
@@ -132,21 +131,41 @@ main {
 
 .createPost {
     padding: 10px;
-    width: calc(100% - 20px);
+    box-sizing: border-box;
+    width: 100%;
     min-height: 115px;
     height: fit-content;
     border-bottom: 2px solid rgb(49, 44, 85);
     display: flex;
+
+    overflow:hidden;
     flex-direction: row;
+    flex-shrink: 0;
     
 }
 
 .postrow {
-    display: flex;
-    flex-direction: row;
+
     width: 100%;
+    display: flex;
     justify-content: right;
+}
+
+.postrowhelper {
+
+    display: flex;
+    justify-content: center;
+    flex: row;
     gap: 10px;
+    flex-wrap: wrap;
+
+}
+
+.postpfpcont {
+    display: block;
+    height: 100%;
+    width: 40px;
+
 }
 
 .pfpdiv {
@@ -167,11 +186,18 @@ main {
 
 .restbruh {
     padding: 5px;
-    width: calc(100% - 10px);
-    
+    display: flex;
+    justify-content: right;
+    flex-direction: column;
+    width: fit-content;
+    width: calc(100% - 50px); /* Account for profile picture width + padding */
+    flex-shrink: 1; /* Allow shrinking */
+    min-width: 0; /* Allow content to shrink below its minimum content size */
 }
 
 .titlerow {
+    display: flex;
+    flex-shrink: 2;
     height: fit-content;
 }
 
@@ -201,6 +227,10 @@ main {
     display: flex;
     font-size: 12px;
     
+}
+
+.textareawrapper {
+
 }
 
 .textarea {
@@ -250,6 +280,8 @@ main {
     height: auto;
     object-fit: contain;
     cursor: pointer;
+    position: relative;
+    z-index: 2;
 }
 
 
@@ -283,6 +315,13 @@ main {
     display: flex;
     gap: 10px;
     margin-bottom: 15px;
+
 }
 
 
+@media (max-width: 700px) {
+    .createPost {
+        box-sizing: border-box;
+        width: 100vw;
+    }
+}

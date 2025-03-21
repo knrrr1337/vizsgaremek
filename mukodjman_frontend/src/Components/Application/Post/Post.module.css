@@ -52,6 +52,8 @@
     flex-direction: column;
     position: relative;
     width: 100%;
+    min-width: 0;
+    flex-shrink: 1;
 }
 
 .valamiwrapper {
@@ -357,6 +359,7 @@ h2 {
 
 .tags {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     margin: 10px 0px;
 }
@@ -366,3 +369,11 @@ h2 {
     display: flex;
     justify-content: space-evenly;
 }
+
+@media (max-width: 700px) {
+    .content {
+        box-sizing: border-box;
+        width: 100vw;
+    }
+}
+

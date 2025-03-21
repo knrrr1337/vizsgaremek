@@ -15,6 +15,7 @@ import { Navigate, useNavigate, useParams } from "react-router-dom"
 import { useRadioGroup } from "@mui/material"
 import { UserContext } from "../../../Contexts/UserProvider/UserProvider"
 import Button from "../../Button/Button"
+import Footer from "../../Footer/Footer"
 
 
 function Profile () {
@@ -51,10 +52,10 @@ function Profile () {
 
         let userrr
 
-        axios.get(`http://localhost:4400/user/get-user/${id}`).then((response) => {
+        axios.get(`http://192.168.1.133:4400/user/get-user/${id}`).then((response) => {
             setProfileUser(response.data)
             userrr = response.data
-            axios.get(`http://localhost:4400/dream/get-user-dreams/${id}`).then((response2) => {
+            axios.get(`http://192.168.1.133:4400/dream/get-user-dreams/${id}`).then((response2) => {
                 let a = []
                 console.log('rrr')
                 console.log(isUserFollowed2(userrr.id))
@@ -84,7 +85,7 @@ function Profile () {
         
            <div className={style.content}>
                 <LeftSideBar/>
-                <main>
+                <main className={style.main}>
                     <div className={style.profile_container}>
                         <div className={style.pfp_name}>
                             <div className={style.pfp_container}>
@@ -133,7 +134,7 @@ function Profile () {
                 <RightSideBar/>
             </div> 
             {profileUser.id && profileUser.id === user.id ? (<GoatedPostMenu/>) : (<GoatedPostMenu/>)}
-            <footer className={style.footer}></footer>
+            <Footer/>
         </>
     )
 

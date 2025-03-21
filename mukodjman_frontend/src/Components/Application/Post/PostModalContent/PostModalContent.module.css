@@ -1,7 +1,9 @@
 .container {
     background-color: rgba(15, 8, 44, 1);
-    width: 500px;
-    height: 600px;   
+    width: 50vw;
+    height: 60vh;
+    max-width: 500px;
+    max-height: 600px;   
     padding: 20px;
     border-radius: 10px;
     overflow-y: scroll;
@@ -113,4 +115,5 @@
     display: flex;
     gap: 10px;
     margin: 10px 0px;
+    flex-wrap: wrap;
 }

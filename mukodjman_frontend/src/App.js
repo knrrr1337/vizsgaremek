@@ -17,25 +17,29 @@ import FilteredPosts from './Components/FilteredPosts/FilteredPosts.jsx';
 function App() {
 
   return (
+    <>
+        <AuthProvider>
 
-    <AuthProvider>
+      <PostHandlerProvider>
+        <UserProvider>
+        <BrowserRouter>
+        <WebSocketComponent/>
 
-        <PostHandlerProvider>
-          <UserProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Layout/>}>
-                <Route path="app" element={<Application />} />
-                <Route path="login" element={<LoginPage />} />
-                <Route path="register" element={<Register/>} />
-                <Route path="profile/:id" element={<Profile/>}/>
-                <Route path="filter/:param" element={<FilteredPosts/>}/>
-              </Route>
-            </Routes>
-          </BrowserRouter>
-          </UserProvider>
-        </PostHandlerProvider>
-    </AuthProvider>
+          <Routes>
+            <Route path="/" element={<Layout/>}>
+              <Route path="app" element={<Application />} />
+              <Route path="login" element={<LoginPage />} />
+              <Route path="register" element={<Register/>} />
+              <Route path="profile/:id" element={<Profile/>}/>
+              <Route path="filter/:param" element={<FilteredPosts/>}/>
+            </Route>
+          </Routes>
+        </BrowserRouter>
+        </UserProvider>
+      </PostHandlerProvider>
+      </AuthProvider>
+    </>
+
   );
 }
 

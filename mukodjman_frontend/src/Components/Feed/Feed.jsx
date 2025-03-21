@@ -132,7 +132,9 @@ function Feed({feedType, setFeedType}) {
     return (
         <>
         <div className={style.createPost}>
-                    <PFP size={{width: 40, height:40}} profilePicture={user && user.profilePicture}/>
+                    <div className={style.postpfpcont}>
+                        <PFP size={{width: 40, height:40}} profilePicture={user && user.profilePicture}/>
+                    </div>
                     <div className={style.restbruh}>
                         <div className={style.textareawrapper}>
                             <div className={style.lengthCounter}>
@@ -169,29 +171,32 @@ function Feed({feedType, setFeedType}) {
                             </div>
                         </div>
                         <div className={style.postrow}>
-                            <TagsButton onClick={() => setTagsSelector(true)}/>
-                            <IUB setImages={setImages} images={images} onClick={() => {console.log("image")}}/>
-                            <select className={style.publicitySelector} value={publicity} onChange={(e) => setPublicity(e.target.value)}>
-                                <option value="PUBLIC" onClick={(e) => setPublicity(e.target.value)}>Public</option>
-                                <option value="FOLLOWERS_ONLY" onClick={(e) => setPublicity(e.target.value)}>Follower-only</option>
-                                <option value="PRIVATE" onClick={(e) => setPublicity(e.target.value)}>Private</option>
-                            </select>
-                            <Button valid={valid} text="POST" onClick={() => {
-                                
-                                if (titleContent.length  > 100) {
-                                    alert("Title cant be more than 100 characters long")
-                                    return;
-                                }
-                                let taga = postTags.map((t) => t.name)
-                                createPost(titleContent, postContent, publicity, images, taga)
-                                setPostContent("")
-                                setTitleContent("")
-                                setImages([])
-                                setImageUrls([])
-                                setPostTags([])
-                                
-                                
-                            }}/>
+                            <div className={style.postrowhelper}>
+                                <TagsButton onClick={() => setTagsSelector(true)}/>
+                                <IUB setImages={setImages} images={images} onClick={() => {console.log("image")}}/>
+                                <select className={style.publicitySelector} value={publicity} onChange={(e) => setPublicity(e.target.value)}>
+                                    <option value="PUBLIC" onClick={(e) => setPublicity(e.target.value)}>Public</option>
+                                    <option value="FOLLOWERS_ONLY" onClick={(e) => setPublicity(e.target.value)}>Follower-only</option>
+                                    <option value="PRIVATE" onClick={(e) => setPublicity(e.target.value)}>Private</option>
+                                </select>
+                                <Button valid={valid} text="POST" onClick={() => {
+                                    
+                                    if (titleContent.length  > 100) {
+                                        alert("Title cant be more than 100 characters long")
+                                        return;
+                                    }
+                                    let taga = postTags.map((t) => t.name)
+                                    createPost(titleContent, postContent, publicity, images, taga)
+                                    setPostContent("")
+                                    setTitleContent("")
+                                    setImages([])
+                                    setImageUrls([])
+                                    setPostTags([])
+                                    
+                                    
+                                }}/>
+                            </div>
+         
                         </div>
                     </div>
                 </div>

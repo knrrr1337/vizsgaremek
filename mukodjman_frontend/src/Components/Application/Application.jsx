@@ -12,6 +12,7 @@ import GoatedPostMenu from '../GoatedPostMenu/GoatedPostMenu';
 import RightSideBar from './Sidebar/RightSideBar';
 import Feed from "../Feed/Feed"
 import WebSocketComponent from '../WebSocket/WebSocketComponent';
+import Footer from '../Footer/Footer';
 
 function App() {
 
@@ -41,7 +42,7 @@ function App() {
         }
         sortByDate()
 
-        // axios.get("http://localhost:4400/dream/list-dreams-all").then((response) => {
+        // axios.get("http://192.168.1.133:4400/dream/list-dreams-all").then((response) => {
         //     setDreams(response.data)
         //     console.log(response.data)
         // })
@@ -86,11 +87,10 @@ function App() {
 
     return (
     <>
-    <WebSocketComponent/>
     <div className={style.content}>
         <LeftSideBar/>
 
-        <main style={{margin: 0}}>
+        <main className={style.main}>
             <div className={style.feedType}>
                 <div className={style.feedItem} style={feedType === "foryou" ? {borderBottom:"2px solid rgba(255,255,255, 1)", borderRadius:"3px"} : {borderBottom:"2px solid rgba(255,255,255, 0)", borderRadius:"3px"}} onClick={() => changeFeed("foryou")}>
                     For You
@@ -107,7 +107,7 @@ function App() {
         
         
     </div>
-    <footer className={style.footer}></footer>
+    <Footer/>
     <GoatedPostMenu open={openPostMenu}/>
     </>
     )

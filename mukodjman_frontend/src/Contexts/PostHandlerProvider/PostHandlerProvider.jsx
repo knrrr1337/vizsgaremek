@@ -101,37 +101,32 @@ export function PostHandlerProvider({children}) {
         }
     }, [user]);
 
-    const getPosts = async (id) => {
-
-
-        console.log("GETTTTTIIIIIIIIIING") 
-
-        axios.get(`http://localhost:4400/dream/list-dreams-all/${id}`).then((response) => {
+    const getPosts = (id) => {
+        axios.get(`http://192.168.1.133:4400/dream/list-dreams-all/${id}`).then((response) => {
             setDreams(response.data);
         }).catch((error) => console.log(error));
 
-        axios.get(`http://localhost:4400/dream/get-followed/${id}`).then((response2) => {
+        axios.get(`http://192.168.1.133:4400/dream/get-followed/${id}`).then((response2) => {
             setFollowedDreams(response2.data);
         }).catch((error) => console.log(error));
 
-        axios.get(`http://localhost:4400/dream/get-blocked/${id}`).then((response2) => {
+        axios.get(`http://192.168.1.133:4400/dream/get-blocked/${id}`).then((response2) => {
             setBlockedDreams(response2.data);
         }).catch((error) => console.log(error));
-        axios.get(`http://localhost:4400/dream/user-liked-posts/${id}`).then((response) => {
+        axios.get(`http://192.168.1.133:4400/dream/user-liked-posts/${id}`).then((response) => {
             setLikedPosts(response.data)
         }).catch((error) => console.log(error))
-        axios.get(`http://localhost:4400/dream/get-user-dreams/${id}`).then((response) => {
+        axios.get(`http://192.168.1.133:4400/dream/get-user-dreams/${id}`).then((response) => {
             setMydreams(response.data)
-        })
-        axios.get(`http://localhost:4400/dream/get-trending-tags`).then((response) => {
+        }).catch((error) => console.log(error))
+        axios.get(`http://192.168.1.133:4400/dream/get-trending-tags`).then((response) => {
             setLastWeekTags(response.data)
         }).catch((error) => console.log(error))
 
-        axios.get(`http://localhost:4400/dream/get-popular-tags`).then((response) => {
+        axios.get(`http://192.168.1.133:4400/dream/get-popular-tags`).then((response) => {
             console.log(response)
             setPopularTags(response.data)
         }).catch((error) => console.log(error))
-
     };
 
 
@@ -139,21 +134,30 @@ export function PostHandlerProvider({children}) {
         let likedDream = dreams.filter((dream) => dream.id === id)[0]
         
         setLikedPosts((prevDream) => [...prevDream, likedDream])
-        axios.post(`http://localhost:4400/dream/like-post/${id}`, {userId:user.id, postId:id})
+        axios.post(`http://192.168.1.133:4400/dream/like-post/${id}`, {userId:user.id, postId:id}).then((response) => {
+        }).catch((error) => console.log(error))
+    }
+
+    const getPostById = (id) => {
+        
+        axios.get(`http://192.168.1.133:4400/dream/get-post-by-id/${id}`).then((response) => {
+            return response.data
+        }).catch((error) => console.log(error))
+
     }
 
     const unLikePost = (id) => {
         let newDreams = dreams.filter((dream) => dream.id !== id)
         setLikedPosts((prevLikedPosts) => prevLikedPosts.filter((post) => post.id !== id))
-        axios.post(`http://localhost:4400/dream/remove-like-post/${id}`, {userId:user.id, postId:id}).then((response) => {
+        axios.post(`http://192.168.1.133:4400/dream/remove-like-post/${id}`, {userId:user.id, postId:id}).then((response) => {
 
         }).catch((error) => console.log(error))
     }
 
     const commentOnPost = (id, content) => {
         console.log(id + " " + content)
-        axios.post(`http://localhost:4400/dream/comment-on-dream/${id}`, {comment:content, userId:user.id}).then((response) => {
-            axios.get(`http://localhost:4400/dream/list-dreams-all/${user.id}`).then((response) => {
+        axios.post(`http://192.168.1.133:4400/dream/comment-on-dream/${id}`, {comment:content, userId:user.id}).then((response) => {
+            axios.get(`http://192.168.1.133:4400/dream/list-dreams-all/${user.id}`).then((response) => {
                 setDreams(response.data);
             }).catch((error) => console.log(error));
         }).catch((error) => console.log(error))
@@ -163,12 +167,12 @@ export function PostHandlerProvider({children}) {
     //     console.log(images)
     //     // TODO: megbaszni a kepeket 
     //     console.log(title + " " + content + " " + publicity + " " + user.id)
-    //     // axios.post("http://localhost:4400/dream/create-dream", {title:title, content:content, userId:user.id, tags:"", privacy:publicity}).then((response) => {
+    //     // axios.post("http://192.168.1.133:4400/dream/create-dream", {title:title, content:content, userId:user.id, tags:"", privacy:publicity}).then((response) => {
     //     //     console.log(response)
-    //     //     axios.get(`http://localhost:4400/dream/list-dreams-all/${user.id}`).then((response) => {
+    //     //     axios.get(`http://192.168.1.133:4400/dream/list-dreams-all/${user.id}`).then((response) => {
     //     //         setDreams(response.data)
     //     //     }).catch((error) => console.log(error))
-    //     //     axios.get(`http://localhost:4400/dream/get-user-dreams/${user.id}`).then((response) => {
+    //     //     axios.get(`http://192.168.1.133:4400/dream/get-user-dreams/${user.id}`).then((response) => {
     //     //         setMydreams(response.data)
     //     //     })
             
@@ -189,17 +193,17 @@ export function PostHandlerProvider({children}) {
             formData.append(`images`, image);
         });
     
-        axios.post("http://localhost:4400/dream/create-dream", formData, {
+        axios.post("http://192.168.1.133:4400/dream/create-dream", formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         }).then((response) => {
             console.log(response);
-            axios.get(`http://localhost:4400/dream/list-dreams-all/${user.id}`).then((response) => {
+            axios.get(`http://192.168.1.133:4400/dream/list-dreams-all/${user.id}`).then((response) => {
                 setDreams(response.data);
             }).catch((error) => console.log(error));
             
-            axios.get(`http://localhost:4400/dream/get-user-dreams/${user.id}`).then((response) => {
+            axios.get(`http://192.168.1.133:4400/dream/get-user-dreams/${user.id}`).then((response) => {
                 setMydreams(response.data);
             }).catch((error) => console.log(error));
         }).catch((error) => console.log(error));
@@ -219,7 +223,7 @@ export function PostHandlerProvider({children}) {
         formData.append("images", body.images)
         formData.append("tags", body.tags)
         try {
-            const response = await axios.put(`http://localhost:4400/dream/edit-dream/${id}`, formData, {
+            const response = await axios.put(`http://192.168.1.133:4400/dream/edit-dream/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -235,11 +239,11 @@ export function PostHandlerProvider({children}) {
 
     const deletePost = (dreamId) => {
         console.log("DELETING")
-        axios.delete(`http://localhost:4400/dream/delete-dream/${dreamId}`).then((response) => {
-            axios.get(`http://localhost:4400/dream/list-dreams-all/${user.id}`).then((response1 => {
+        axios.delete(`http://192.168.1.133:4400/dream/delete-dream/${dreamId}`).then((response) => {
+            axios.get(`http://192.168.1.133:4400/dream/list-dreams-all/${user.id}`).then((response1 => {
                 setDreams(response1.data)
-            }))
-            axios.get(`http://localhost:4400/dream/get-user-dreams/${user.id}`).then((response1) => {
+            })).catch((error) => console.log(error))
+            axios.get(`http://192.168.1.133:4400/dream/get-user-dreams/${user.id}`).then((response1) => {
                 setMydreams(response1.data)
             }).catch((error) => console.log(error))
         }).catch((error) => console.log(error))
@@ -337,14 +341,14 @@ export function PostHandlerProvider({children}) {
 
     const allPostByTag = (tag) => {
         console.log("tag " + tag)
-        axios.get(`http://localhost:4400/dream/get-all-post-by-tag/${tag}`).then((response) => {
+        axios.get(`http://192.168.1.133:4400/dream/get-all-post-by-tag/${tag}`).then((response) => {
             setApbt(response.data)
         }).catch((error) => console.log(error))
     }
 
     const trendingPostByTag = (tag) => {
         console.log("tag " + tag)
-        axios.get(`http://localhost:4400/dream/get-trending-post-by-tag/${tag}`).then((response) => {
+        axios.get(`http://192.168.1.133:4400/dream/get-trending-post-by-tag/${tag}`).then((response) => {
             setTpbt(response.data)
         }).catch((error) => console.log(error))
     }  
@@ -352,7 +356,7 @@ export function PostHandlerProvider({children}) {
 
 
     return (
-        <PostHandlerContext.Provider key={keyy} value={{apbt, tpbt, allPostByTag, trendingPostByTag, popularTags, lastWeekTags, tags, postContentt, setPostContentt, editOpen, setEditOpen, handleEditClose,getPosts,dreams, isOpen, setIsOpen, apad2, setDreams, getPosts, openPostMenu, apad, anyad, mousePos, setMousePos, authorId, followedDreams, setFollowedDreams, blockedDreams, keyy, likePost, commentOnPost, likedPosts, setLikedPosts, unLikePost, createPost, editPost, deletePost, postId, mydreams, setMydreams, prettifyDate, handleEditOpenFunc}}>
+        <PostHandlerContext.Provider key={keyy} value={{getPostById, apbt, tpbt, allPostByTag, trendingPostByTag, popularTags, lastWeekTags, tags, postContentt, setPostContentt, editOpen, setEditOpen, handleEditClose,getPosts,dreams, isOpen, setIsOpen, apad2, setDreams, getPosts, openPostMenu, apad, anyad, mousePos, setMousePos, authorId, followedDreams, setFollowedDreams, blockedDreams, keyy, likePost, commentOnPost, likedPosts, setLikedPosts, unLikePost, createPost, editPost, deletePost, postId, mydreams, setMydreams, prettifyDate, handleEditOpenFunc}}>
             {children}
         </PostHandlerContext.Provider>
     )

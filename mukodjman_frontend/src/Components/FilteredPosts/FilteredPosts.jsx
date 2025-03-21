@@ -7,6 +7,7 @@ import { PostHandlerContext } from "../../Contexts/PostHandlerProvider/PostHandl
 import Post from "../Application/Post/Post";
 import GoatedPostMenu from "../GoatedPostMenu/GoatedPostMenu";
 import { UserContext } from "../../Contexts/UserProvider/UserProvider";
+import Footer from "../Footer/Footer";
 
 function FilteredPosts(props) {
 
@@ -78,7 +79,7 @@ function FilteredPosts(props) {
             <RightSideBar/>
         </div>
         <GoatedPostMenu/>
-        <footer className={style.footer}></footer>
+        <Footer/>
 
         </>
     )
