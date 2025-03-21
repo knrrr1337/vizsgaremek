@@ -99,7 +99,7 @@ function PostModalContent(props) {
                                 e.stopPropagation()
                                 props.setPictureModal(true)
                                 props.setPictureToDisplay(image.imageUrl)
-                            }} style={{backgroundImage: `url(${`http://192.168.1.133:4400/uploads/${image.imageUrl}`})`,
+                            }} style={{backgroundImage: `url(${`http://localhost:4400/uploads/${image.imageUrl}`})`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             width: '200px',

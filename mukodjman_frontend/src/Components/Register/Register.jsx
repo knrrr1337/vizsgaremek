@@ -216,7 +216,9 @@ function Register() {
                 </div>
                 <div className={styles.login}>
                     <Button  variant="contained" className={styles.registerButton} onClick={createAccount}>CREATE ACCOUNT</Button>
+                    <p onClick={() => {navigate("/login")}}>Already have an account?</p>
                 </div>
+                
             </div>
             <Snackbar
                 open={alreadyExistingUser}

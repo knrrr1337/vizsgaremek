@@ -426,7 +426,6 @@ function Post(props) {
     const dropdownRef = useRef(null);
     const [isLiked, setIsLiked] = useState(false);
     const [localLike, setLocalLike] = useState(0);
-    const [initialLikes, setInitialLikes] = useState(props.reactions.length);
 
     const { apad, setMousePos, likePost, commentOnPost, likedPosts, unLikePost, prettifyDate, editPost, tags, getPosts, getPostById, dreams } = useContext(PostHandlerContext);
     const { isUserFollowed, user } = useContext(UserContext);
@@ -457,8 +456,8 @@ function Post(props) {
     }, [likedPosts]);
 
     useEffect(() => {
-        setInitialLikes(props.reactions.length);
-    }, [props.reactions.length]);
+        setLocalLike(props.reactions.length)
+    }, [dreams]);
 
     const renderReadMore = () => {
         return (
@@ -556,13 +555,6 @@ function Post(props) {
     const [tagsValue, setTagsValue] = useState(() => [...tagonpost]);
     let [imagesValue, setImagesValue] = useState(() => [...props.images]);
 
-    useEffect(() => {
-        setLocalLike(0);
-    }, [dreams]);
-
-    useEffect(() => {
-        setLocalLike(0);
-    }, []);
 
     const checkIfValidd = () => {
         return titleValue !== "" && contentValue !== "";
@@ -601,10 +593,33 @@ function Post(props) {
         handleTags();
     }, [props.tags, tags]);
 
+    const [postObject, setPostObject] = useState({})
+
+    // {
+    //     id:0,
+    //     comments:[],
+    //     content:[],
+    //     createdAt:"",
+    //     privacy:"",
+    //     reactions:[],
+    //     tags:"",
+    //     title:"",
+    //     user:{
+    //         id:0,
+    //         username:"",
+    //         profilePicture:"",
+    //         bio:"",
+    //         created_at:""
+
+    //     }
+    
+
     return (
         <>
             <div className={style.content} onClick={() => {
-                console.log(getPostById(props.id));
+                getPostById(props.id).then((post) => {
+                    setPostObject(post)
+                })
                 setPostModal(true);
             }}>
                 <div style={{ marginRight: "10px" }} onClick={() => gotoProfile(props.authorId)}>
@@ -662,7 +677,7 @@ function Post(props) {
                                     {props.comments && props.comments.length}
                                 </div>
 
-                                <div className={style.d} title={`${props.reactions && props.reactions.length + localLike} likes`} onClick={(e) => {
+                                <div className={style.d} title={`${localLike} likes`} onClick={(e) => {
                                     e.stopPropagation();
                                     handleLike(props.id);
                                 }}>
@@ -671,7 +686,7 @@ function Post(props) {
                                     ) : (
                                         <FavoriteBorderIcon />
                                     )}
-                                    {initialLikes + localLike}
+                                    {localLike}
                                 </div>
                             </>
                         </div>
@@ -697,7 +712,7 @@ function Post(props) {
                 </div>
             </Modal>
             <Modal open={postModal} onClose={handlePostClose} style={{ zIndex: 101 }} className={style.modalContainer}>
-                <PostModalContent setPictureToDisplay={setPictureToDisplay} setPictureModal={setPictureModal} handleLike={handleLike} isLiked={isLiked} likes={localLike + initialLikes} comments={props.comments && props.comments.length} {...props} />
+                <PostModalContent setPictureToDisplay={setPictureToDisplay} setPictureModal={setPictureModal} handleLike={handleLike} isLiked={isLiked} likes={localLike} comments={props.comments && props.comments.length} {...props} />
             </Modal>
 
             <Modal open={commentModal} onClose={handleClose} style={{ zIndex: 1010111 }} className={style.modalContainer}>

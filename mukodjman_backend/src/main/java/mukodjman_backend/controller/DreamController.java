@@ -157,7 +157,8 @@ public class DreamController {
     public void removeLikePost(@PathVariable Long id, @RequestBody LikeRequest likeRequest) {
         dreamService.removeLikePost(id, likeRequest.getUserId());
 
-        webSocketHandler.sendMessageToAll("getposts");
+        webSocketHandler.sendMessageToAll(String.format("getpostsforuser-%d", likeRequest.getUserId()));
+
     }
 
     @GetMapping("get-followed/{userId}")
@@ -201,7 +202,7 @@ public class DreamController {
         System.out.println(likeRequest.getPostId() + " " + likeRequest.getUserId());
         dreamService.likePost(likeRequest.getPostId(), likeRequest.getUserId());
 
-        webSocketHandler.sendMessageToAll("getposts");
+        webSocketHandler.sendMessageToAll(String.format("getposts-%d", likeRequest.getUserId()));
     }
 
     @PostMapping("comment-on-dream/{id}")

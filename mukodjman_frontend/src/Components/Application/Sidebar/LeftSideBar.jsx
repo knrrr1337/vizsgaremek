@@ -17,7 +17,7 @@ import { PostHandlerContext } from "../../../Contexts/PostHandlerProvider/PostHa
 import SoGoodHadToDoItTwice from "../../GoatedPostMenu/SoGoodHadToDoItTwice";
 
 
-function LeftSideBar() {
+function LeftSideBar({width=300}) {
 
     const navigate = useNavigate()
     const {user, setUser} = useContext(AuthContext)
@@ -61,7 +61,7 @@ function LeftSideBar() {
 
     return (
 
-        <div className={style.sideBar}>
+        <div className={style.sideBar} style={{width:`${width}px`}}>
             <div className={style.headerContent}>
                 <div className={style.logo} onClick={gotoHome}>
                     <img src="/icon_white.png"></img>
@@ -111,7 +111,7 @@ function LeftSideBar() {
                     <div className={style.hererak}>
                     {which === "followers" ? (
                         <div>
-                            <div className={style.followMenu}>
+                            <div className={style.followMenu} style={{borderBottom: (followers.length === 0 || followedUsers.length === 0) ? "2px solid rgb(49, 44, 85)" : ""}}>
                                 <h2 style={{borderBottom: followType === "followed" ? "2px solid rgb(255,255,255)" : ""}} className={`${style.h2} ${style.followMenuType}`} onClick={() => setFollowType("followed")}>Followed <span className={style.size}>({followedUsers.length})</span></h2>
                                 <h2 style={{borderBottom: followType === "follower" ? "2px solid rgb(255,255,255)" : ""}} className={`${style.h2} ${style.followMenuType}`} onClick={() => setFollowType("follower")}>Followers <span className={style.size}>({followers.length})</span></h2>
                             </div>
@@ -119,13 +119,13 @@ function LeftSideBar() {
                                 {followType === "follower" ? (
                                     <>
                                     {followers.map((user, index) => {
-                                        return <ULI gotoProfile baszodId={user.id} setBaszosId={setBaszosId} baszos={baszos} setMousePos={setMousePos} isLast={index + 1 === followers.length} pfp={user.profilePicture} username={user.username} joined_at={user.created_at}/>
+                                        return <ULI isFirst={index === 0} gotoProfile baszodId={user.id} setBaszosId={setBaszosId} baszos={baszos} setMousePos={setMousePos} isLast={index + 1 === followers.length} pfp={user.profilePicture} username={user.username} joined_at={user.created_at}/>
                                     })}
                                     </>
                                 ) : (
                                     <>
                                     {followedUsers.map((user, index) => {
-                                        return <ULI gotoProfile={gotoProfile} baszodId={user.id} setBaszosId={setBaszosId} baszos={baszos} setMousePos={setMousePos} isLast={index + 1 === followedUsers.length} pfp={user.profilePicture} username={user.username} joined_at={user.created_at}/>
+                                        return <ULI isFirst={index === 0} gotoProfile={gotoProfile} baszodId={user.id} setBaszosId={setBaszosId} baszos={baszos} setMousePos={setMousePos} isLast={index + 1 === followedUsers.length} pfp={user.profilePicture} username={user.username} joined_at={user.created_at}/>
                                     })}
                                     </>)}
                             </div>
@@ -134,12 +134,12 @@ function LeftSideBar() {
                         </div>
                         ):(
                         <div>
-                            <div className={style.followMenu}>
+                            <div className={style.followMenu} style={{borderBottom: "2px solid rgb(49,44,75)"}}>
                                 <h2  className={`${style.h2} ${style.blockh2}`}>Blocked users<span className={style.size}>({blockedUsers.length})</span></h2>
                             </div>
                             {blockedUsers.map((user, index) => {
                                 
-                                return <ULI gotoProfile={gotoProfile} baszodId={user.id} setBaszosId={setBaszosId} isLast={index + 1 === blockedUsers.length} setMousePos={setMousePos} baszos={baszos} pfp={user.profilePicture} username={user.username} joined_at={user.created_at}/>
+                                return <ULI isFirst={index === 0} gotoProfile={gotoProfile} baszodId={user.id} setBaszosId={setBaszosId} isLast={index + 1 === blockedUsers.length} setMousePos={setMousePos} baszos={baszos} pfp={user.profilePicture} username={user.username} joined_at={user.created_at}/>
                             })}
                         </div>
                     )}

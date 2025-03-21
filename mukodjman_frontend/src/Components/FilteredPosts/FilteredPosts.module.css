@@ -12,6 +12,12 @@
     min-width: fit-content;   
 }
 
+.main {
+    width: 550px;
+    border-left: 2px solid rgb(49, 44, 85);
+    border-right: 2px solid rgb(49, 44, 85);
+}
+
 .footer {
     height: 50px;
     width: 100vw;

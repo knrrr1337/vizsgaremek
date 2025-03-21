@@ -15,8 +15,6 @@ body {
     box-shadow: 0px 0px 1000px rgb(15, 8, 44);
 
     height: 100vh;
-
-
 }
 
 * {
@@ -208,6 +206,14 @@ textarea {
     font-family: 'CustomFont';
 }
 
+.sidebarwrapper {
+    display: flex;
+    flex-shrink: 1;
+    min-width: 0px;
+    width: auto;
+}
+
+
 
 @media (max-width: 700px) {
     .nonabsolutecontent {
@@ -219,5 +225,8 @@ textarea {
 
     .feedType {
         width: 100vw;
+    }
+    .sidebarwrapper {
+        display: none;
     }
 }

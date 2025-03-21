@@ -5,7 +5,7 @@ import TAG from "../../../Contexts/TagsProvider/Tags/TAG";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../Contexts/UserProvider/UserProvider";
 
-function RightSideBar({zIndex=0}) {
+function RightSideBar({width=300}) {
 
     const navigate = useNavigate()
     const {lastWeekTags, popularTags, tags, allPostByTag, trendingPostByTag} = useContext(PostHandlerContext)
@@ -38,7 +38,7 @@ function RightSideBar({zIndex=0}) {
 
 
     return (
-        <div className={style.contentt}>
+        <div className={style.contentt} style={{width:`${width}px`}}>
             <div className={style.tagsWrapper}>
                 <div className={style.tagsContainer}>
                     <h4 className={style.h}>Trending tags</h4>

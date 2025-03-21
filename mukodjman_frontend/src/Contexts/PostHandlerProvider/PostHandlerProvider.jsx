@@ -130,27 +130,31 @@ export function PostHandlerProvider({children}) {
     };
 
 
-    const likePost = (id) => {
-        let likedDream = dreams.filter((dream) => dream.id === id)[0]
-        
-        setLikedPosts((prevDream) => [...prevDream, likedDream])
-        axios.post(`http://192.168.1.133:4400/dream/like-post/${id}`, {userId:user.id, postId:id}).then((response) => {
-        }).catch((error) => console.log(error))
-    }
+
 
     const getPostById = (id) => {
-        
-        axios.get(`http://192.168.1.133:4400/dream/get-post-by-id/${id}`).then((response) => {
-            return response.data
-        }).catch((error) => console.log(error))
+        return axios.get(`http://192.168.1.133:4400/dream/get-post-by-id/${id}`)
+            .then((response) => response.data)
+            .catch((error) => {
+                console.log(error);
+                throw error;
+            });
+    }
 
+    const likePost = (id) => {
+        let likedDream = dreams.filter((dream) => dream.id === id)[0]
+
+        setLikedPosts((prevDream) => [...prevDream, likedDream])
+        axios.post(`http://192.168.1.133:4400/dream/like-post/${id}`, {userId:user.id, postId:id}).then((response) => {
+            // getPosts(user.id)
+        }).catch((error) => console.log(error))
     }
 
     const unLikePost = (id) => {
         let newDreams = dreams.filter((dream) => dream.id !== id)
         setLikedPosts((prevLikedPosts) => prevLikedPosts.filter((post) => post.id !== id))
         axios.post(`http://192.168.1.133:4400/dream/remove-like-post/${id}`, {userId:user.id, postId:id}).then((response) => {
-
+            // getPosts(user.id)
         }).catch((error) => console.log(error))
     }
 

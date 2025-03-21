@@ -23,13 +23,13 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        String msg = message.getPayload();
-        switch (msg) {
-            case "invalidateSession":
-                sessions.remove(session);
-                System.out.println("Invalidating session...");
-                break;
-        }
+//        String msg = message.getPayload();
+//        switch (msg) {
+//            case "invalidateSession":
+//                sessions.remove(session);
+//                System.out.println("Invalidating session...");
+//                break;
+//        }
         System.out.println("Received message: " + message.getPayload());
 
         session.sendMessage(new TextMessage("Server received: " + message.getPayload()));

@@ -8,8 +8,10 @@
 }
 
 .registerCard {
-    width: 750px;
+    max-width: 750px;
     height: fit-content;
+    width: 75vw;
+    /* min-width: 325px; */
     background-color: rgb(46, 39, 76);
     border-radius: 10px;
     padding: 25px;
@@ -95,6 +97,8 @@ span {
 }
 
 
-
-
-
+@media (max-width: 700px) {
+    .registerCard {
+        width: 75vw
+    }
+}

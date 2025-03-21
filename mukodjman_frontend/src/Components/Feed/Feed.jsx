@@ -132,7 +132,7 @@ function Feed({feedType, setFeedType}) {
     return (
         <>
         <div className={style.createPost}>
-                    <div className={style.postpfpcont}>
+                    <div className={style.postpfpcont} onClick={() => {navigate(`/profile/${user.id}`)}}>
                         <PFP size={{width: 40, height:40}} profilePicture={user && user.profilePicture}/>
                     </div>
                     <div className={style.restbruh}>

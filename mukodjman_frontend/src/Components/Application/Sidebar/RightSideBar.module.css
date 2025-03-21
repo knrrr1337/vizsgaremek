@@ -10,6 +10,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
+    flex-shrink: 1;
     background-color: rgb(15, 8, 44);
     box-shadow: 0px 0px 1000px rgb(15, 8, 44);
 }
@@ -47,8 +48,3 @@
     gap: 10px;
 }
 
-@media (max-width: 700px) {
-    .contentt {
-        display: none;
-    }
-}

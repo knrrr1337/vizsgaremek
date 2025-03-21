@@ -30,7 +30,7 @@ function FilteredPosts(props) {
         {console.log("helo")}
         <div className={style.content}>
             <LeftSideBar/>
-            <main>
+            <main className={style.main}>
                 <div className={style.posts}>
                     {param.split("-")[1] === "Trending" ? (
                         tpbt.map((dream) => {

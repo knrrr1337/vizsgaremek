@@ -84,7 +84,9 @@ function Profile () {
         <>
         
            <div className={style.content}>
-                <LeftSideBar/>
+                <div className={style.sidebarwrapper}>
+                    <LeftSideBar/>
+                </div>
                 <main className={style.main}>
                     <div className={style.profile_container}>
                         <div className={style.pfp_name}>
@@ -131,10 +133,14 @@ function Profile () {
                         
                     </div>
                 </main>
-                <RightSideBar/>
+                <div className={style.sidebarwrapper}>
+                    <RightSideBar/>
+
+                </div>
             </div> 
-            {profileUser.id && profileUser.id === user.id ? (<GoatedPostMenu/>) : (<GoatedPostMenu/>)}
             <Footer/>
+
+            {profileUser.id && profileUser.id === user.id ? (<GoatedPostMenu/>) : (<GoatedPostMenu/>)}
         </>
     )
 

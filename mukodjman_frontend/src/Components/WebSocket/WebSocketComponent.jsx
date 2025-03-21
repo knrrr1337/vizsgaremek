@@ -17,10 +17,20 @@ function WebSocketComponent() {
         });
 
         ws.addEventListener("message", (event) => {
+             
+            if (event.data.includes("getpostsforuser")) {
+                let id = Number(event.data.split("-")[1])
+                if (user.id !== id) {
+                    console.log("getting posts by id :)))")
+                    getPosts(user.id)
+                }
+            }
             if (event.data === "getposts") {
                 console.log("getting posts")
                 getPosts(user.id)
-            }
+                return;
+            } 
+            
             console.log("Message from server:", event.data);
         });
 

@@ -29,7 +29,7 @@ function ULI(props) {
     return (
         <>
         
-        <div className={style.container} style={{borderBottom: props.isLast ? "2px solid rgb(49, 44, 85)" : ""}}>
+        <div className={style.container} style={{borderBottom: props.isLast ? "2px solid rgb(49, 44, 85)" : "", borderTop: props.isFirst ? "none" : "2px solid rgb(49, 44, 85)"}}>
             <div className={style.pfprow}>
                 <div className={style.bruh} onClick={() => {props.gotoProfile(props.baszodId)}}>
                     <PFP profilePicture={props.pfp} size={{width:40, height:40}}/>

@@ -29,7 +29,7 @@ function Footer(props) {
                 />
                 <div className={style.left} style={{left:`${left}px`}}>
                 <div className={style.sidebarcontainer}>
-                        <button onClick={() => {setLeft(-275)}}>BUTON</button>
+                        <LeftSideBar width={275}/>
                     </div>
                 </div>
                 <div className={style.wrapper}>
@@ -43,7 +43,7 @@ function Footer(props) {
                 </div>
                 <div className={style.right} style={{right:`${right}px`}}>
                     <div className={style.sidebarcontainer}>
-                        <RightSideBar zIndex={100}/>
+                        <RightSideBar width={275}/>
                         {/* <button onClick={() => {setRight(-275)}}>BUTON</button> */}
                     </div>
                 </div>

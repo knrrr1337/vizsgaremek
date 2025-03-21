@@ -88,7 +88,9 @@ function App() {
     return (
     <>
     <div className={style.content}>
-        <LeftSideBar/>
+        <div className={style.sidebarwrapper}>
+            <LeftSideBar/>
+        </div>
 
         <main className={style.main}>
             <div className={style.feedType}>
@@ -103,7 +105,9 @@ function App() {
                 <Feed feedType={feedType} setFeedType={setFeedType}/>
             </div>            
         </main>
-        <RightSideBar/>
+        <div className={style.sidebarwrapper}>
+            <RightSideBar/>
+        </div>
         
         
     </div>
