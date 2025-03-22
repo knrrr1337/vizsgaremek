@@ -132,9 +132,13 @@ export function PostHandlerProvider({children}) {
 
 
 
+    const [postData, setPostData] = useState({})
     const getPostById = (id) => {
         return axios.get(`http://192.168.1.133:4400/dream/get-post-by-id/${id}`)
-            .then((response) => response.data)
+            .then((response) => {
+                setPostData(response.data)
+                console.log(response.data)
+            })
             .catch((error) => {
                 console.log(error);
                 throw error;
@@ -345,14 +349,12 @@ export function PostHandlerProvider({children}) {
     const [tpbt, setTpbt] = useState([])
 
     const allPostByTag = (tag) => {
-        console.log("tag " + tag)
         axios.get(`http://192.168.1.133:4400/dream/get-all-post-by-tag/${tag}`).then((response) => {
             setApbt(response.data)
         }).catch((error) => console.log(error))
     }
 
     const trendingPostByTag = (tag) => {
-        console.log("tag " + tag)
         axios.get(`http://192.168.1.133:4400/dream/get-trending-post-by-tag/${tag}`).then((response) => {
             setTpbt(response.data)
         }).catch((error) => console.log(error))
@@ -361,7 +363,7 @@ export function PostHandlerProvider({children}) {
 
 
     return (
-        <PostHandlerContext.Provider key={keyy} value={{getPostById, apbt, tpbt, allPostByTag, trendingPostByTag, popularTags, lastWeekTags, tags, postContentt, setPostContentt, editOpen, setEditOpen, handleEditClose,getPosts,dreams, isOpen, setIsOpen, apad2, setDreams, getPosts, openPostMenu, apad, anyad, mousePos, setMousePos, authorId, followedDreams, setFollowedDreams, blockedDreams, keyy, likePost, commentOnPost, likedPosts, setLikedPosts, unLikePost, createPost, editPost, deletePost, postId, mydreams, setMydreams, prettifyDate, handleEditOpenFunc}}>
+        <PostHandlerContext.Provider key={keyy} value={{postData, setPostData, getPostById, apbt, tpbt, allPostByTag, trendingPostByTag, popularTags, lastWeekTags, tags, postContentt, setPostContentt, editOpen, setEditOpen, handleEditClose,getPosts,dreams, isOpen, setIsOpen, apad2, setDreams, getPosts, openPostMenu, apad, anyad, mousePos, setMousePos, authorId, followedDreams, setFollowedDreams, blockedDreams, keyy, likePost, commentOnPost, likedPosts, setLikedPosts, unLikePost, createPost, editPost, deletePost, postId, mydreams, setMydreams, prettifyDate, handleEditOpenFunc}}>
             {children}
         </PostHandlerContext.Provider>
     )

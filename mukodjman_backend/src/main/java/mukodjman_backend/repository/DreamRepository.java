@@ -31,9 +31,11 @@ public interface DreamRepository extends JpaRepository<Dream, Long> {
     @Query("SELECT d.tags FROM Dream d")
     List<String> findAllTags();
 
-    @Query("SELECT d FROM Dream d WHERE d.tags LIKE %:tag% AND d.created_at BETWEEN :lastweek AND :now")
-    List<Dream> findTrendingPostsByTag(@Param("lastweek") LocalDateTime lastweek, @Param("now") LocalDateTime now, @Param("tag") String tag);
+    @Query("SELECT d FROM Dream d WHERE " + "(:tag1 IS NULL OR d.tags LIKE %:tag1%) " + "AND (:tag2 IS NULL OR d.tags LIKE %:tag2%) " + "AND (:tag3 IS NULL OR d.tags LIKE %:tag3%) AND d.created_at BETWEEN :lastweek AND :now")
+    List<Dream> findTrendingPostsByTag(@Param("lastweek") LocalDateTime lastweek, @Param("now") LocalDateTime now, @Param("tag1") String tag, @Param("tag2") String tag2, @Param("tag3") String tag3);
 
-    @Query("SELECT d FROM Dream d WHERE d.tags LIKE %:tag%")
-    List<Dream> findAllPostsByTag(@Param("tag") String tag);
+//    @Query("SELECT d FROM Dream d WHERE d.tags LIKE %:tag%")
+    @Query("SELECT d FROM Dream d WHERE " + "(:tag1 IS NULL OR d.tags LIKE %:tag1%) " + "AND (:tag2 IS NULL OR d.tags LIKE %:tag2%) " + "AND (:tag3 IS NULL OR d.tags LIKE %:tag3%)")
+    List<Dream> findAllPostsByTag(@Param("tag1") String tag1, @Param("tag2") String tag2, @Param("tag3") String tag3);
 }
+

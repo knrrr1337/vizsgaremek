@@ -14,7 +14,7 @@ import TAG from "../../../../Contexts/TagsProvider/Tags/TAG";
 
 function PostModalContent(props) {
     
-    const {prettifyDate, tags} = useContext(PostHandlerContext)
+    const {prettifyDate, tags, getPostById, postData, setPostData} = useContext(PostHandlerContext)
         // const [pictureModal, setPictureModal] = useState(false)
         // const [pictureToDisplay, setPictureToDisplay] = useState("")
     
@@ -23,23 +23,32 @@ function PostModalContent(props) {
         //     setPictureToDisplay("")
         // }
 
-        const [tagonpost, setTagponpost] = useState([])
+    const [tagonpost, setTagponpost] = useState([])
 
-        const handleTags = () => {
-            let buh = props.tags && props.tags.split("#")
-            let cigany = []
-            buh && buh.forEach((b) => {
-                cigany.push(tags.filter((t) => t.name === b)[0])
-            })
-        
-            setTagponpost(cigany)
+    const handleTags = () => {
+
+        let buh =  props.tags && props.tags.split("#")
+        let cigany = []
+        buh && buh.forEach((b) => {
+            cigany.push(tags.filter((t) => t.name === b)[0])
+        })
     
-        }
-        
-    
-        useEffect(() => {
-            handleTags()
-        }, [props.tags, tags])
+        setTagponpost(cigany)
+
+    }
+
+    useEffect(() => {
+
+        getPostById(props.id)
+
+    },[props.open])
+
+    useEffect(() => {
+        handleTags()
+    }, [props.tags, tags])
+
+
+
 
     return (
         <>       
@@ -48,23 +57,23 @@ function PostModalContent(props) {
         <div className={style.container}>
             <div className={style.woah}>
                 <div className={style.pfpdiv}>
-                    <PFP size={{width:40, height:40}} isUser={false} profilePicture={props.pfp}/>
+                    <PFP size={{width:40, height:40}} isUser={false} profilePicture={postData.user && postData.user.profilePicture}/>
                 </div>
                 <div className={style.userRow}>
-                    <span>{props.username}</span>
+                    <span>{postData.user && postData.user.username}</span>
                     <span className={style.timeposted}>{prettifyDate(props.posted_at)}</span>
                 </div>
             </div>
             <div className={style.content}>
                 <div className={style.titlerow}>
-                    <h2>{props.title}</h2>
+                    <h2>{postData.title}</h2>
                 </div>
                 <div className={style.text}>
-                    <span>{props.content}</span>
+                    <span>{postData.content}</span>
                 </div>
 
-                <div className={style.images} style={{display: props.images && props.images.length === 0 ? "none" : "flex"}}>
-                        {props.images && props.images.map((image) => {
+                <div className={style.images} style={{display: postData.images && postData.images.length === 0 ? "none" : "flex"}}>
+                        {postData.images && postData.images.map((image) => {
                             return <div onClick={(e) => {
                                 e.stopPropagation()
                                 props.setPictureModal(true)
@@ -106,7 +115,7 @@ function PostModalContent(props) {
                             ) : (
                                 <FavoriteBorderIcon />
                             )}
-                            {props.likes}
+                            {postData.reactions && postData.reactions.length}
                         </div>
                             </>
                     </div>
@@ -114,8 +123,8 @@ function PostModalContent(props) {
 
 
                 <div className={style.commentsContainer}>
-                    {props.comments.length === 0 ? (<div className={style.nocomments}>No comments</div>) : (props.comments.map((comment, index) => {
-                        return <Comment last={index + 1 === props.comments.length} commentUser={comment.commentUser} content={comment.content} created_at={comment.created_at}/>
+                    {postData.comments && postData.comments.length === 0 ? (<div className={style.nocomments}>No comments</div>) : (postData.comments && postData.comments.map((comment, index) => {
+                        return <Comment last={postData.comments && index + 1 === postData.comments.length} commentUser={comment.commentUser} content={comment.content} created_at={comment.created_at}/>
                     }))}
                     
                 </div>

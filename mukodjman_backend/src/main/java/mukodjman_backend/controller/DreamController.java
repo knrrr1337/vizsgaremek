@@ -1,6 +1,7 @@
 package mukodjman_backend.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.transaction.Transactional;
 import mukodjman_backend.Handler.MyWebSocketHandler;
 import mukodjman_backend.dto.Login.LoginRequest;
 import mukodjman_backend.dto.customDream;
@@ -70,6 +71,7 @@ public class DreamController {
         return dreamService.getAllTimeTags();
     }
 
+    @Transactional
     @DeleteMapping("delete-dream/{id}")
     public void deleteDream(@PathVariable long id) {
         dreamService.deleteDream(id);
@@ -115,6 +117,7 @@ public class DreamController {
 //        dreamService.createDream(cdr.getUserId(), cdr.getTitle(), cdr.getContent(), cdr.getPrivacy());
 //    }
 
+    @Transactional
     @PostMapping(value = "create-dream", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void createDream(
             @RequestParam("title") String title,
@@ -153,10 +156,10 @@ public class DreamController {
         return anyad;
     }
 
+    @Transactional
     @PostMapping("remove-like-post/{id}")
     public void removeLikePost(@PathVariable Long id, @RequestBody LikeRequest likeRequest) {
         dreamService.removeLikePost(id, likeRequest.getUserId());
-
         webSocketHandler.sendMessageToAll(String.format("getpostsforuser-%d", likeRequest.getUserId()));
 
     }
@@ -172,6 +175,7 @@ public class DreamController {
         return anyad;
     }
 
+    @Transactional
     @PutMapping("edit-dream/{id}")
     public void editDream(@PathVariable long id, @RequestParam("title") String title, @RequestParam("content") String content, @RequestParam("images") List<String> images, @RequestParam("tags") List<String> tags) {
         dreamService.editDream(id, title, content, images,tags);
@@ -197,6 +201,7 @@ public class DreamController {
 //        dreamService.getLikedDreams(id);
     }
 
+    @Transactional
     @PostMapping("like-post/{id}")
     public void likeDream(@RequestBody LikeRequest likeRequest) {
         System.out.println(likeRequest.getPostId() + " " + likeRequest.getUserId());
@@ -205,6 +210,7 @@ public class DreamController {
         webSocketHandler.sendMessageToAll(String.format("getposts-%d", likeRequest.getUserId()));
     }
 
+    @Transactional
     @PostMapping("comment-on-dream/{id}")
     public void commentOnDream(@PathVariable long id, @RequestBody CommentRequest commentRequest) {
         commentService.saveComment(commentRequest.getUserId(), id, commentRequest.getComment());

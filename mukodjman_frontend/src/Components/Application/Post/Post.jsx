@@ -427,7 +427,7 @@ function Post(props) {
     const [isLiked, setIsLiked] = useState(false);
     const [localLike, setLocalLike] = useState(0);
 
-    const { apad, setMousePos, likePost, commentOnPost, likedPosts, unLikePost, prettifyDate, editPost, tags, getPosts, getPostById, dreams } = useContext(PostHandlerContext);
+    const { apad, setMousePos, likePost, commentOnPost, likedPosts, unLikePost, prettifyDate, editPost, tags, getPosts, getPostById, dreams, setPostData } = useContext(PostHandlerContext);
     const { isUserFollowed, user } = useContext(UserContext);
 
     const goToPost = (postId) => {
@@ -503,6 +503,7 @@ function Post(props) {
 
     const handlePostClose = () => {
         setPostModal(false);
+        setPostData({})
     };
 
     const [commentModal, setCommentModal] = useState(false);
@@ -712,7 +713,7 @@ function Post(props) {
                 </div>
             </Modal>
             <Modal open={postModal} onClose={handlePostClose} style={{ zIndex: 101 }} className={style.modalContainer}>
-                <PostModalContent setPictureToDisplay={setPictureToDisplay} setPictureModal={setPictureModal} handleLike={handleLike} isLiked={isLiked} likes={localLike} comments={props.comments && props.comments.length} {...props} />
+                <PostModalContent open={postModal} setPictureToDisplay={setPictureToDisplay} setPictureModal={setPictureModal} handleLike={handleLike} isLiked={isLiked} likes={localLike} comments={props.comments && props.comments.length} {...props} />
             </Modal>
 
             <Modal open={commentModal} onClose={handleClose} style={{ zIndex: 1010111 }} className={style.modalContainer}>

@@ -320,8 +320,10 @@
 
 .tags {
     display: flex;
+    justify-content: left;
     gap: 10px;
-    margin-bottom: 15px;
+    margin: 15px 0px;
+    flex-wrap: wrap;
 
 }
 
@@ -335,4 +337,5 @@
         gap: 20px;
         /* flex-basis: content; */
     }
+
 }

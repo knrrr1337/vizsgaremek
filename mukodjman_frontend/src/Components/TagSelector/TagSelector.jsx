@@ -11,7 +11,9 @@ function TagSelector({setSelectedTagIndex}) {
         <>
         <div className={style.innerModal}>
             {tags.map((tag, index) => {
-                return <TAG onClick={() => {setSelectedTagIndex(index)}} icon={tag.icon} color={tag.color} name={tag.name}/>
+                return <TAG onClick={() => {
+                    setSelectedTagIndex(index)
+                }} icon={tag.icon} color={tag.color} name={tag.name}/>
             })}
         </div>
         </>

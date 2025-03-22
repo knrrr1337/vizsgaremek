@@ -105,11 +105,21 @@ public class DreamService {
     public List<Dream> getTrendingPostsByTag(String tag) {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime week = now.minusDays(7);
-        return dreamRepository.findTrendingPostsByTag(week, now, tag);
+
+        String[] tags = tag.split("-");
+        String tag1 = tags.length > 0 ? tags[0] : null;
+        String tag2 = tags.length > 1 ? tags[1] : null;
+        String tag3 = tags.length > 2 ? tags[2] : null;
+        return dreamRepository.findTrendingPostsByTag(week, now, tag1, tag2, tag3);
     }
 
     public List<Dream> getAllPostsByTag(String tag) {
-        return dreamRepository.findAllPostsByTag(tag);
+        String[] tags = tag.split("-");
+        String tag1 = tags.length > 0 ? tags[0] : null;
+        String tag2 = tags.length > 1 ? tags[1] : null;
+        String tag3 = tags.length > 2 ? tags[2] : null;
+
+        return dreamRepository.findAllPostsByTag(tag1, tag2, tag3);
     }
 
     public Dream getDreamById(long id) {
@@ -154,7 +164,8 @@ public class DreamService {
             }
         }
         dream.setTags(taga);
-        dream.setCreated_at(LocalDateTime.now());
+//        dream.setCreated_at(LocalDateTime.now());
+        dream.setCreated_at(LocalDateTime.of(2025, 3, 2, 15, 32, 12));
         Dream savedDream = dreamRepository.save(dream);
 
         // Save images

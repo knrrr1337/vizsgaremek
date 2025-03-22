@@ -128,12 +128,13 @@ function Feed({feedType, setFeedType}) {
         handleTagsClose()
     }
 
-    const [selectedTagIndex, setSelectedTagIndex] = useState()
+    const [selectedTagIndex, setSelectedTagIndex] = useState(-1)
+
 
 
     useEffect(() => {
-        console.log(selectedTagIndex)
-        addTag(selectedTagIndex)
+        if (selectedTagIndex !== -1) addTag(selectedTagIndex) 
+        console.log(postTags)
     },[selectedTagIndex])
     
     
@@ -174,7 +175,12 @@ function Feed({feedType, setFeedType}) {
                             </div>
                             <div className={style.tags}>
                                 {postTags.map((tag, index) => {
-                                    return <TAG onClick={() => {setPostTags(postTags.filter((pt, i) => index !== i))}} name={tag.name} color={tag.color} icon={tag.icon}/>
+                                    try {
+                                        return <TAG onClick={() => {setPostTags(postTags.filter((pt, i) => index !== i))}} name={tag.name} color={tag.color} icon={tag.icon}/>
+
+                                    } catch(error) {
+                                        
+                                    }
                                 })}
                             </div>
                         </div>
@@ -189,12 +195,13 @@ function Feed({feedType, setFeedType}) {
                                 </select>
                                 <Button valid={valid} text="POST" onClick={() => {
                                     
-                                    if (titleContent.length  > 100) {
+                                    if (titleContent.length  > 50) {
                                         alert("Title cant be more than 100 characters long")
                                         return;
                                     }
                                     let taga = postTags.map((t) => t.name)
                                     createPost(titleContent, postContent, publicity, images, taga)
+                                    setValid(false)
                                     setPostContent("")
                                     setTitleContent("")
                                     setImages([])
