@@ -117,3 +117,10 @@
     margin: 10px 0px;
     flex-wrap: wrap;
 }
+
+@media (max-width: 700px) {
+    .container {
+        max-width: none;
+        width: 80vw;
+    }
+}

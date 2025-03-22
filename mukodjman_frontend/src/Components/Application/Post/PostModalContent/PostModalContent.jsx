@@ -62,6 +62,24 @@ function PostModalContent(props) {
                 <div className={style.text}>
                     <span>{props.content}</span>
                 </div>
+
+                <div className={style.images} style={{display: props.images && props.images.length === 0 ? "none" : "flex"}}>
+                        {props.images && props.images.map((image) => {
+                            return <div onClick={(e) => {
+                                e.stopPropagation()
+                                props.setPictureModal(true)
+                                props.setPictureToDisplay(image.imageUrl)
+                            }} style={{backgroundImage: `url(${`http://localhost:4400/uploads/${image.imageUrl}`})`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            width: '200px',
+                            height: '200px',
+                            position:"relative",
+                            zIndex:1,
+                            borderRadius: '8px',
+                            cursor: 'pointer'}}/>
+                        })}
+                </div>
                 <div className={style.tagsrow}>
                     {tagonpost.map((tag) => {
                         return <TAG name={tag.name} icon={tag.icon} color={tag.color}/>
@@ -93,23 +111,7 @@ function PostModalContent(props) {
                             </>
                     </div>
                 </div>
-                <div className={style.images} style={{display: props.images && props.images.length === 0 ? "none" : "flex"}}>
-                        {props.images && props.images.map((image) => {
-                            return <div onClick={(e) => {
-                                e.stopPropagation()
-                                props.setPictureModal(true)
-                                props.setPictureToDisplay(image.imageUrl)
-                            }} style={{backgroundImage: `url(${`http://localhost:4400/uploads/${image.imageUrl}`})`,
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                            width: '200px',
-                            height: '200px',
-                            position:"relative",
-                            zIndex:1,
-                            borderRadius: '8px',
-                            cursor: 'pointer'}}/>
-                        })}
-                </div>
+
 
                 <div className={style.commentsContainer}>
                     {props.comments.length === 0 ? (<div className={style.nocomments}>No comments</div>) : (props.comments.map((comment, index) => {

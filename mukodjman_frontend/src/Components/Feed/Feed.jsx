@@ -15,6 +15,7 @@ import PFP from "../PFP/PFP";
 import IUB from "../ImageUploadButton/IUB";
 import TagsButton from "../TagsButton/TagsButton";
 import TAG from "../../Contexts/TagsProvider/Tags/TAG";
+import TagSelector from "../TagSelector/TagSelector";
 
 
 
@@ -127,6 +128,13 @@ function Feed({feedType, setFeedType}) {
         handleTagsClose()
     }
 
+    const [selectedTagIndex, setSelectedTagIndex] = useState()
+
+
+    useEffect(() => {
+        console.log(selectedTagIndex)
+        addTag(selectedTagIndex)
+    },[selectedTagIndex])
     
     
     return (
@@ -241,11 +249,7 @@ function Feed({feedType, setFeedType}) {
                 </div>
                 <Modal className={style.modalContainer} open={tagsSelector} onClose={handleTagsClose}>
                     <>
-                    <div className={style.innerModal}>
-                        {tags.map((tag, index) => {
-                            return <TAG onClick={() => {addTag(index)}} icon={tag.icon} color={tag.color} name={tag.name}/>
-                        })}
-                    </div>
+                    <TagSelector setSelectedTagIndex={setSelectedTagIndex}/>
                     </>
                 </Modal>
 

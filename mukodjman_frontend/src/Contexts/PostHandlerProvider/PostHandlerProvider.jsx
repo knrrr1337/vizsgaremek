@@ -289,6 +289,11 @@ export function PostHandlerProvider({children}) {
             icon:<Creative size={25} color="rgb(24, 5, 192)"/>
         },
         {
+            name:"Sad",
+            color:"rgb(177, 8, 70)",
+            icon:<Sad size={25} color="rgb(177, 8, 70)"/>
+        },
+        {
             name:"Energetic",
             color:"rgb(255, 238, 0)",
             icon:<Energetic size={25} color="rgb(255, 238, 0)"/>
@@ -332,12 +337,8 @@ export function PostHandlerProvider({children}) {
             name:"Relaxed",
             color:"rgb(126, 168, 186)",
             icon:<Relaxed size={25} color="rgb(126, 168, 186)"/>
-        },
-        {
-            name:"Sad",
-            color:"rgb(177, 8, 70)",
-            icon:<Sad size={25} color="rgb(177, 8, 70)"/>
         }
+
     ])
 
     const [apbt, setApbt] = useState([])

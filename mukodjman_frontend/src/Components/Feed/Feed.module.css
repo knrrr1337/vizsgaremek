@@ -296,18 +296,25 @@
 }
 
 .innerModal {
-    width: 600px;
-    height: 800px;
-    overflow-y: scroll;
-    scrollbar-width: none;
+    width: 500px;
+    max-height: 400px;
     background-color: rgba(15, 8, 44, 1);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     padding: 20px;
     border: 0px;
     outline: none;
-    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+}
+
+.tagsContainer {
+    width: inherit;
+    height: inherit;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
 }
 
 
@@ -323,5 +330,9 @@
     .createPost {
         box-sizing: border-box;
         width: 100vw;
+    }
+    .postrowhelper {
+        gap: 20px;
+        /* flex-basis: content; */
     }
 }

@@ -27,9 +27,10 @@ function FilteredPosts(props) {
 
     return (
         <>
-        {console.log("helo")}
         <div className={style.content}>
-            <LeftSideBar/>
+            <div className={style.sidebarwrapper}>
+                <LeftSideBar/>
+            </div>
             <main className={style.main}>
                 <div className={style.posts}>
                     {param.split("-")[1] === "Trending" ? (
@@ -76,7 +77,10 @@ function FilteredPosts(props) {
                     )}
                 </div>
             </main>
-            <RightSideBar/>
+            <div className={style.sidebarwrapper}>
+                <RightSideBar/>            
+            </div>
+
         </div>
         <GoatedPostMenu/>
         <Footer/>
