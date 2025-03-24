@@ -16,7 +16,7 @@ function FilteredPosts(props) {
     const {param} = useParams()
     const navigate = useNavigate()
     const [paramTags, setParamTags] = useState([])
-    const {apbt, tpbt, allPostByTag, trendingPostByTag, tags} = useContext(PostHandlerContext)
+    const {apbt, tpbt, allPostByTag, trendingPostByTag, tags, setApbt, setTpbt} = useContext(PostHandlerContext)
     const {isUserBlocked} = useContext(UserContext)
     useEffect(() => {
         let p = param.split("-")
@@ -32,13 +32,11 @@ function FilteredPosts(props) {
             tempParamTags.push(p[i])
         }
         setParamTags(tempParamTags)
-        console.log("params")
-        console.log(params)
-        console.log("params")
-
-        if (p[p.length - 1] === "Trending") {
+        if (p[p.length - 1] === "trending") {
+            console.log("egyenlo trending")
             trendingPostByTag(params)
         } else {
+            console.log("egyenlo all")
             allPostByTag(params)
         }
             
@@ -48,7 +46,6 @@ function FilteredPosts(props) {
         // Filter out the tag that was clicked from the paramTags array
         const updatedTags = paramTags.filter(tag => tag !== tagName);
         setParamTags(updatedTags); // Update the paramTags state
-    
         // Update the URL by navigating to the new URL with the updated tag list
         let newParam = updatedTags.join("-");
     
@@ -58,6 +55,7 @@ function FilteredPosts(props) {
     
         if (isPopular) {
             if (newParam) {
+        
                 navigate(`/filter/${newParam}-popular`);
             } else {
                 navigate(`/filter/none-popular`);
@@ -74,6 +72,21 @@ function FilteredPosts(props) {
         }
     };
 
+    useEffect(() => {
+        console.log("param")
+        console.log(param)
+        console.log('param')
+    }, [param])
+
+    useEffect(() => {
+        allPostByTag()
+        if ((paramTags.length === 0 && paramTags[0] === "none") || paramTags.length === 0) {
+            console.log("setting bruh")
+            setApbt([])
+            setTpbt([])
+        }
+    }, [paramTags])
+
     const [triggerRemove, setTriggerRemove] = useState("")
 
     return (
@@ -87,7 +100,6 @@ function FilteredPosts(props) {
 
                 {param.includes("trending") ? (
                         <>
-                        {console.log(paramTags)}
                         <span>Filtering posts within the last 7 days for tags: </span>
                         <div className={style.filteringTags}>
                         {paramTags[0] === "none" ? "no tags selected" : ""}
@@ -105,7 +117,7 @@ function FilteredPosts(props) {
                             <>
                             <span>Filtering all posts for tags:</span>
                             <div className={style.filteringTags}>
-                                {/* {paramTags[0] === "none" ? "no tags selected" : ""} */}
+                                {paramTags[0] === "none" ? "no tags selected" : ""}
                                 {tags.map((tag) => {
                                     if (paramTags.includes(tag.name)) {
                                         return <TAG icon={tag.icon} onClick={() => {
@@ -120,16 +132,45 @@ function FilteredPosts(props) {
                 </div>
                 <div className={style.postswrapper}>
                     <div className={style.posts}>
-                        {param.split("-")[param.split("-").length - 1] === "trending" ? (
+                    {param.split("-")[param.split("-").length - 1] === "trending" ? (
+                        tpbt.length === 0 ? (
+                            <div>No posts with selected tag(s)</div>
+                        ) : (
                             
                             tpbt.map((dream) => {
-                                if (param.includes("none")) {
-                                    return;
-                                }
-                                if (isUserBlocked(dream.user.id)) {
-                                    return;
-                                }
-                                return <Post
+                                // if (param.includes("none") || isUserBlocked(dream.user.id)) {
+                                //     return null; // Skip rendering
+                                // }
+                                console.log(dream)
+                                return (
+                                    <Post
+                                        key={dream.id}
+                                        id={dream.id}
+                                        authorId={dream.user.id}
+                                        pfp={dream.user.profilePicture}
+                                        username={dream.user.username}
+                                        title={dream.title}
+                                        content={dream.content}
+                                        posted_at={dream.createdAt}
+                                        comments={dream.comments}
+                                        reactions={dream.reactions}
+                                        images={dream.images}
+                                        tags={dream.tags}
+                                    />
+                                );
+                            })
+                        )
+                    ) : (
+                        apbt.length === 0 ? (
+                            
+                            <div>No posts with selected tag(s)</div>
+                        ) : (
+                        apbt.map((dream) => {
+                            if (param.includes("none") || isUserBlocked(dream.user.id)) {
+                                return null;
+                            }
+                            return (
+                                <Post
                                     key={dream.id}
                                     id={dream.id}
                                     authorId={dream.user.id}
@@ -143,7 +184,33 @@ function FilteredPosts(props) {
                                     images={dream.images}
                                     tags={dream.tags}
                                 />
-                            })
+                            );
+                        }))
+                    )}
+                        {/* {param.split("-")[param.split("-").length - 1] === "trending" ? (
+                            tpbt.length === 0 ? () : ()
+                            // tpbt.map((dream) => {
+                            //     if (param.includes("none")) {
+                            //         return;
+                            //     }
+                            //     if (isUserBlocked(dream.user.id)) {
+                            //         return;
+                            //     }
+                            //     return <Post
+                            //         key={dream.id}
+                            //         id={dream.id}
+                            //         authorId={dream.user.id}
+                            //         pfp={dream.user.profilePicture}
+                            //         username={dream.user.username}
+                            //         title={dream.title}
+                            //         content={dream.content}
+                            //         posted_at={dream.createdAt}
+                            //         comments={dream.comments}
+                            //         reactions={dream.reactions}
+                            //         images={dream.images}
+                            //         tags={dream.tags}
+                            //     />
+                            // })
                         ) : (
                             apbt.map((dream) => {
                                 
@@ -168,13 +235,13 @@ function FilteredPosts(props) {
                                     tags={dream.tags}
                                 />
                             })
-                        )}
+                        )} */}
                     </div>
                 </div>
 
             </main>
             <div className={style.sidebarwrapper}>
-                <RightSideBar triggerRemove={triggerRemove} param={param}/>            
+                <RightSideBar triggerRemove={triggerRemove} paramTags={paramTags} param={param}/>            
             </div>
 
         </div>

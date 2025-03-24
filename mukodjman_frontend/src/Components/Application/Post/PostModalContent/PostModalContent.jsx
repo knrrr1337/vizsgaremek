@@ -37,23 +37,31 @@ function PostModalContent(props) {
 
     }
 
+    const [localLike, setLocalLike] = useState(0)
+    
+
     useEffect(() => {
+    }, [])
 
+
+    useEffect(() => {
+        setLocalLike(props.likes)
         getPostById(props.id)
-
+        console.log(localLike)
     },[props.open])
 
     useEffect(() => {
         handleTags()
     }, [props.tags, tags])
 
-
-
+    useEffect(() => {
+        console.log(localLike)
+    }, [localLike])
 
     return (
         <>       
         
-          
+          {console.log(localLike)}
         <div className={style.container}>
             <div className={style.woah}>
                 <div className={style.pfpdiv}>
@@ -103,11 +111,12 @@ function PostModalContent(props) {
                             
                         }}>
                             <NotesIcon />
-                            {props.comments.length}
+                            {postData.comments && postData.comments.length}
                         </div>
 
                         <div className={style.d} style={{cursor:"pointer"}} title={`${props.likes} likes`} onClick={(e) => {
                             e.stopPropagation();
+                            props.isLiked ? setLocalLike(localLike - 1) : setLocalLike(localLike + 1)
                             props.handleLike(props.id);
                         }}>
                             {props.isLiked ? (
@@ -115,7 +124,7 @@ function PostModalContent(props) {
                             ) : (
                                 <FavoriteBorderIcon />
                             )}
-                            {postData.reactions && postData.reactions.length}
+                            {localLike}
                         </div>
                             </>
                     </div>

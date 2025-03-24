@@ -42,7 +42,7 @@ function App() {
         }
         sortByDate()
 
-        // axios.get("http://192.168.1.133:4400/dream/list-dreams-all").then((response) => {
+        // axios.get("http://localhost:4400/dream/list-dreams-all").then((response) => {
         //     setDreams(response.data)
         //     console.log(response.data)
         // })

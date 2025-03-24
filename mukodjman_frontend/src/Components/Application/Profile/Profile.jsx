@@ -52,10 +52,10 @@ function Profile () {
 
         let userrr
 
-        axios.get(`http://192.168.1.133:4400/user/get-user/${id}`).then((response) => {
+        axios.get(`http://localhost:4400/user/get-user/${id}`).then((response) => {
             setProfileUser(response.data)
             userrr = response.data
-            axios.get(`http://192.168.1.133:4400/dream/get-user-dreams/${id}`).then((response2) => {
+            axios.get(`http://localhost:4400/dream/get-user-dreams/${id}`).then((response2) => {
                 let a = []
                 console.log('rrr')
                 console.log(isUserFollowed2(userrr.id))

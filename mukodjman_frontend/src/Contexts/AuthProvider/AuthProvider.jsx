@@ -20,7 +20,7 @@ export function AuthProvider({ children }) {
 
     const login = async (username, password, rememberMe, callback) => {
         try {
-            axios.post("http://192.168.1.133:4400/account/login", { username, password }).then((response) => {
+            axios.post("http://localhost:4400/account/login", { username, password }).then((response) => {
                 const userData = response.data;
 
                 if (userData.id !== undefined) { 

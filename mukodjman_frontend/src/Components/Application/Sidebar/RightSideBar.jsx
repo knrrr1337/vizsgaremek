@@ -7,7 +7,7 @@ import { UserContext } from "../../../Contexts/UserProvider/UserProvider";
 import { Modal } from "@mui/material";
 import TagSelector from "../../TagSelector/TagSelector";
 
-function RightSideBar({width=300, param, triggerRemove}) {
+function RightSideBar({width=300, param, triggerRemove, paramTags}) {
 
     const navigate = useNavigate()
     const {lastWeekTags, popularTags, tags, allPostByTag, trendingPostByTag} = useContext(PostHandlerContext)
@@ -81,8 +81,11 @@ function RightSideBar({width=300, param, triggerRemove}) {
         try {
             let pp = param.split("-")
             if (pp[pp.length - 1] === "popular") {
+                console.log(tagsParam)
+                trendingPostByTag(tagsParam)
                 navigate(`/filter/${tagsParam}-popular`);
             } else {
+                allPostByTag(tagsParam)
                 navigate(`/filter/${tagsParam}-trending`);
             }
         } catch (error) {
@@ -99,6 +102,14 @@ function RightSideBar({width=300, param, triggerRemove}) {
         if (selectedTagIndex !== -1) addTag(selectedTagIndex)
 
     },[selectedTagIndex])
+
+    useEffect(() => {
+        console.log(paramTags)
+        if (paramTags && ((paramTags.length === 0 && paramTags[0] === "none") || paramTags.length === 0)) {
+            console.log("setting bruh")
+            setTagsToSearchWith([])
+        }
+    }, [paramTags])
 
     return (
         <>

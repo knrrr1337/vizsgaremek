@@ -46,7 +46,7 @@ function Register() {
             formData.append("profilePicture", profilePicture); // Attach file
         }
 
-        axios.post("http://192.168.1.133:4400/account/register", formData, ).then((response) => {
+        axios.post("http://localhost:4400/account/register", formData, ).then((response) => {
             console.log(response)
             if (response.data == "") {
                 navigate("/login")

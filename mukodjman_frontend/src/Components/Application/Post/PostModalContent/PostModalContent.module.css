@@ -49,6 +49,7 @@
     width: 100%;
     margin: 10px 0px;
     justify-content: right;
+    border: 2px solid rgb(49, 44, 85);
 }
 
 .reactions {
