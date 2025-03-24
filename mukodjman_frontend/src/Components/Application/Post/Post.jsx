@@ -229,7 +229,7 @@ function Post(props) {
                 <div className={style.restbruh}>
                     <div className={style.valamiwrapper}>
                         <div className={style.userinfo}>
-                            <span className={`${style.username} ${style.userinfospan}`}>{props.username} {props.privacy ? <span style={{ margin: "0px", fontSize: "12px" }}> - {prettifyPrivacy(props.privacy)}</span> : ""}</span>
+                            <span className={`${style.username} ${style.userinfospan}`}>{props.username} {props.isBlocked && props.isBlocked ? <span style={{color:"red"}}> - BLOCKED</span> : ""} {props.privacy ? <span style={{ margin: "0px", fontSize: "12px" }}> - {prettifyPrivacy(props.privacy)}</span> : ""}</span>
                             <span className={`${style.timeposted} ${style.userinfospan}`}>{prettifyDate(props.posted_at)}</span>
                         </div>
                         <div className={style.hererakk} ref={dropdownRef} onClick={(event) => openDropdown(event, props.authorId, props)}>

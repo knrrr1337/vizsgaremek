@@ -33,10 +33,8 @@ function FilteredPosts(props) {
         }
         setParamTags(tempParamTags)
         if (p[p.length - 1] === "trending") {
-            console.log("egyenlo trending")
             trendingPostByTag(params)
         } else {
-            console.log("egyenlo all")
             allPostByTag(params)
         }
             
@@ -139,7 +137,7 @@ function FilteredPosts(props) {
                             
                             tpbt.map((dream) => {
                                 // if (param.includes("none") || isUserBlocked(dream.user.id)) {
-                                //     return null; // Skip rendering
+                                //     return null;
                                 // }
                                 console.log(dream)
                                 return (
@@ -156,6 +154,7 @@ function FilteredPosts(props) {
                                         reactions={dream.reactions}
                                         images={dream.images}
                                         tags={dream.tags}
+                                        isBlocked={isUserBlocked(dream.user.id)}
                                     />
                                 );
                             })
@@ -166,9 +165,9 @@ function FilteredPosts(props) {
                             <div>No posts with selected tag(s)</div>
                         ) : (
                         apbt.map((dream) => {
-                            if (param.includes("none") || isUserBlocked(dream.user.id)) {
-                                return null;
-                            }
+                            // if (param.includes("none") || isUserBlocked(dream.user.id)) {
+                            //     return null;
+                            // }
                             return (
                                 <Post
                                     key={dream.id}
@@ -183,6 +182,7 @@ function FilteredPosts(props) {
                                     reactions={dream.reactions}
                                     images={dream.images}
                                     tags={dream.tags}
+                                    isBlocked={isUserBlocked(dream.user.id)}
                                 />
                             );
                         }))
